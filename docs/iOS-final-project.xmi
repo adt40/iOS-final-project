@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_mGTagBUwEeirparnd37rPA" name="model">
+  <eAnnotations xmi:id="_mGTagRUwEeirparnd37rPA" source="genmymodel">
+    <details xmi:id="_mGTaghUwEeirparnd37rPA" key="uuid" value="_OhMRwBUtEeirparnd37rPA"/>
+    <details xmi:id="_mGTagxUwEeirparnd37rPA" key="author" value="adt40"/>
+  </eAnnotations>
+  <packageImport xmi:id="_mGTahBUwEeirparnd37rPA">
+    <eAnnotations xmi:id="_mGTahRUwEeirparnd37rPA" source="genmymodel">
+      <details xmi:id="_mGTahhUwEeirparnd37rPA" key="uuid" value="_OhMRwRUtEeirparnd37rPA"/>
+    </eAnnotations>
+    <importedPackage href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#/"/>
+  </packageImport>
+  <packagedElement xsi:type="uml:Class" xmi:id="_mGTahxUwEeirparnd37rPA" name="Grid">
+    <eAnnotations xmi:id="_mGTaiBUwEeirparnd37rPA" source="genmymodel">
+      <details xmi:id="_mGTaiRUwEeirparnd37rPA" key="uuid" value="_RRqXgPdbEDWw1cYP3E_2OQ"/>
+    </eAnnotations>
+    <ownedAttribute xmi:id="_mGTaihUwEeirparnd37rPA" name="state" isStatic="true" type="_mGTa4RUwEeirparnd37rPA">
+      <eAnnotations xmi:id="_mGTaixUwEeirparnd37rPA" source="genmymodel">
+        <details xmi:id="_mGTajBUwEeirparnd37rPA" key="uuid" value="_24mHIPdcEDWw1cYP3E_2OQ"/>
+      </eAnnotations>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_mGTajRUwEeirparnd37rPA" name="currentTime" isStatic="true" type="_mGTbAhUwEeirparnd37rPA">
+      <eAnnotations xmi:id="_mGTajhUwEeirparnd37rPA" source="genmymodel">
+        <details xmi:id="_mGTajxUwEeirparnd37rPA" key="uuid" value="_-PVrMPdcEDWw1cYP3E_2OQ"/>
+      </eAnnotations>
+    </ownedAttribute>
+    <ownedOperation xmi:id="_mGTakBUwEeirparnd37rPA" name="getGridObjectAt" isStatic="true">
+      <eAnnotations xmi:id="_mGTakRUwEeirparnd37rPA" source="genmymodel">
+        <details xmi:id="_mGTakhUwEeirparnd37rPA" key="uuid" value="_JsqDEPddEDWw1cYP3E_2OQ"/>
+      </eAnnotations>
+      <ownedParameter xmi:id="_mGTakxUwEeirparnd37rPA" name="returnParameter" type="_mGTbBRUwEeirparnd37rPA" isUnique="false" direction="return">
+        <eAnnotations xmi:id="_mGTalBUwEeirparnd37rPA" source="genmymodel">
+          <details xmi:id="_mGTalRUwEeirparnd37rPA" key="uuid" value="_MyM3sPddEDWw1cYP3E_2OQ"/>
+        </eAnnotations>
+      </ownedParameter>
+      <ownedParameter xmi:id="_mGTalhUwEeirparnd37rPA" name="parameter" type="_mGTa_BUwEeirparnd37rPA" isUnique="false">
+        <eAnnotations xmi:id="_mGTalxUwEeirparnd37rPA" source="genmymodel">
+          <details xmi:id="_mGTamBUwEeirparnd37rPA" key="uuid" value="_RYcqEPddEDWw1cYP3E_2OQ"/>
+        </eAnnotations>
+      </ownedParameter>
+    </ownedOperation>
+    <ownedOperation xmi:id="_mGTamRUwEeirparnd37rPA" name="getAdjacentGridObjectsAt" isStatic="true">
+      <eAnnotations xmi:id="_mGTamhUwEeirparnd37rPA" source="genmymodel">
+        <details xmi:id="_mGTamxUwEeirparnd37rPA" key="uuid" value="_WCq9gPddEDWw1cYP3E_2OQ"/>
+      </eAnnotations>
+      <ownedParameter xmi:id="_mGTanBUwEeirparnd37rPA" name="returnParameter" type="_mGTa_xUwEeirparnd37rPA" isUnique="false" direction="return">
+        <eAnnotations xmi:id="_mGTanRUwEeirparnd37rPA" source="genmymodel">
+          <details xmi:id="_mGTanhUwEeirparnd37rPA" key="uuid" value="_s83oYPddEDWw1cYP3E_2OQ"/>
+        </eAnnotations>
+      </ownedParameter>
+      <ownedParameter xmi:id="_mGTanxUwEeirparnd37rPA" name="position" type="_mGTa_BUwEeirparnd37rPA" isUnique="false">
+        <eAnnotations xmi:id="_mGTaoBUwEeirparnd37rPA" source="genmymodel">
+          <details xmi:id="_mGTaoRUwEeirparnd37rPA" key="uuid" value="_tQrVMPddEDWw1cYP3E_2OQ"/>
+        </eAnnotations>
+      </ownedParameter>
+    </ownedOperation>
+    <ownedOperation xmi:id="_mGTaohUwEeirparnd37rPA" name="advanceState" isStatic="true">
+      <eAnnotations xmi:id="_mGTaoxUwEeirparnd37rPA" source="genmymodel">
+        <details xmi:id="_mGTapBUwEeirparnd37rPA" key="uuid" value="_wtYFkPddEDWw1cYP3E_2OQ"/>
+      </eAnnotations>
+    </ownedOperation>
+  </packagedElement>
+  <packagedElement xsi:type="uml:Class" xmi:id="_mGTapRUwEeirparnd37rPA" name="GridObject">
+    <eAnnotations xmi:id="_mGTaphUwEeirparnd37rPA" source="genmymodel">
+      <details xmi:id="_mGTapxUwEeirparnd37rPA" key="uuid" value="_TtjyMPdbEDWw1cYP3E_2OQ"/>
+    </eAnnotations>
+    <ownedAttribute xmi:id="_mGTaqBUwEeirparnd37rPA" name="position" type="_mGTa3hUwEeirparnd37rPA">
+      <eAnnotations xmi:id="_mGTaqRUwEeirparnd37rPA" source="genmymodel">
+        <details xmi:id="_mGTaqhUwEeirparnd37rPA" key="uuid" value="_62xCUPdbEDWw1cYP3E_2OQ"/>
+      </eAnnotations>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_mGTaqxUwEeirparnd37rPA" name="canMove">
+      <eAnnotations xmi:id="_mGTarBUwEeirparnd37rPA" source="genmymodel">
+        <details xmi:id="_mGTarRUwEeirparnd37rPA" key="uuid" value="_79XeAPdbEDWw1cYP3E_2OQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//Boolean"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_mGTarhUwEeirparnd37rPA" name="hasHitbox">
+      <eAnnotations xmi:id="_mGTarxUwEeirparnd37rPA" source="genmymodel">
+        <details xmi:id="_mGTasBUwEeirparnd37rPA" key="uuid" value="_9QKioPdbEDWw1cYP3E_2OQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//Boolean"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_mGTasRUwEeirparnd37rPA" name="currentVelocity" type="_mGTa4RUwEeirparnd37rPA">
+      <eAnnotations xmi:id="_mGTashUwEeirparnd37rPA" source="genmymodel">
+        <details xmi:id="_mGTasxUwEeirparnd37rPA" key="uuid" value="_-evOkPdbEDWw1cYP3E_2OQ"/>
+      </eAnnotations>
+    </ownedAttribute>
+    <ownedOperation xmi:id="_mGTatBUwEeirparnd37rPA" name="move">
+      <eAnnotations xmi:id="_mGTatRUwEeirparnd37rPA" source="genmymodel">
+        <details xmi:id="_mGTathUwEeirparnd37rPA" key="uuid" value="_FYlbQPdcEDWw1cYP3E_2OQ"/>
+      </eAnnotations>
+    </ownedOperation>
+  </packagedElement>
+  <packagedElement xsi:type="uml:Class" xmi:id="_mGTatxUwEeirparnd37rPA" name="Module">
+    <eAnnotations xmi:id="_mGTauBUwEeirparnd37rPA" source="genmymodel">
+      <details xmi:id="_mGTauRUwEeirparnd37rPA" key="uuid" value="_WHuukfdbEDWw1cYP3E_2OQ"/>
+    </eAnnotations>
+    <generalization xmi:id="_mGTauhUwEeirparnd37rPA" general="_mGTapRUwEeirparnd37rPA">
+      <eAnnotations xmi:id="_mGTauxUwEeirparnd37rPA" source="genmymodel">
+        <details xmi:id="_mGTavBUwEeirparnd37rPA" key="uuid" value="_l-xfwvdbEDWw1cYP3E_2OQ"/>
+      </eAnnotations>
+    </generalization>
+    <ownedAttribute xmi:id="_mGTavRUwEeirparnd37rPA" name="triggerActive">
+      <eAnnotations xmi:id="_mGTavhUwEeirparnd37rPA" source="genmymodel">
+        <details xmi:id="_mGTavxUwEeirparnd37rPA" key="uuid" value="_OjJtYPdcEDWw1cYP3E_2OQ"/>
+      </eAnnotations>
+      <type xsi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#//Boolean"/>
+    </ownedAttribute>
+    <ownedOperation xmi:id="_mGTawBUwEeirparnd37rPA" name="listenForTrigger">
+      <eAnnotations xmi:id="_mGTawRUwEeirparnd37rPA" source="genmymodel">
+        <details xmi:id="_mGTawhUwEeirparnd37rPA" key="uuid" value="_QTAhcPdcEDWw1cYP3E_2OQ"/>
+      </eAnnotations>
+    </ownedOperation>
+    <ownedOperation xmi:id="_mGTawxUwEeirparnd37rPA" name="performAction" isAbstract="true">
+      <eAnnotations xmi:id="_mGTaxBUwEeirparnd37rPA" source="genmymodel">
+        <details xmi:id="_mGTaxRUwEeirparnd37rPA" key="uuid" value="_ZJtcYPdcEDWw1cYP3E_2OQ"/>
+      </eAnnotations>
+    </ownedOperation>
+    <ownedOperation xmi:id="_mGTaxhUwEeirparnd37rPA" name="attemptActivateTrigger" isAbstract="true">
+      <eAnnotations xmi:id="_mGTaxxUwEeirparnd37rPA" source="genmymodel">
+        <details xmi:id="_mGTayBUwEeirparnd37rPA" key="uuid" value="_amNPkPdcEDWw1cYP3E_2OQ"/>
+      </eAnnotations>
+    </ownedOperation>
+  </packagedElement>
+  <packagedElement xsi:type="uml:Class" xmi:id="_mGTayRUwEeirparnd37rPA" name="Piston">
+    <eAnnotations xmi:id="_mGTayhUwEeirparnd37rPA" source="genmymodel">
+      <details xmi:id="_mGTayxUwEeirparnd37rPA" key="uuid" value="_W4WTMfdbEDWw1cYP3E_2OQ"/>
+    </eAnnotations>
+    <generalization xmi:id="_mGTazBUwEeirparnd37rPA" general="_mGTatxUwEeirparnd37rPA">
+      <eAnnotations xmi:id="_mGTazRUwEeirparnd37rPA" source="genmymodel">
+        <details xmi:id="_mGTazhUwEeirparnd37rPA" key="uuid" value="_lRbRkPdbEDWw1cYP3E_2OQ"/>
+      </eAnnotations>
+    </generalization>
+    <ownedOperation xmi:id="_mGTazxUwEeirparnd37rPA" name="performAction">
+      <eAnnotations xmi:id="_mGTa0BUwEeirparnd37rPA" source="genmymodel">
+        <details xmi:id="_mGTa0RUwEeirparnd37rPA" key="uuid" value="_WrcDIPdcEDWw1cYP3E_2OQ"/>
+      </eAnnotations>
+    </ownedOperation>
+  </packagedElement>
+  <packagedElement xsi:type="uml:Class" xmi:id="_mGTa0hUwEeirparnd37rPA" name="TriggerPad">
+    <eAnnotations xmi:id="_mGTa0xUwEeirparnd37rPA" source="genmymodel">
+      <details xmi:id="_mGTa1BUwEeirparnd37rPA" key="uuid" value="_XZdcMfdbEDWw1cYP3E_2OQ"/>
+    </eAnnotations>
+    <generalization xmi:id="_mGTa1RUwEeirparnd37rPA" general="_mGTatxUwEeirparnd37rPA">
+      <eAnnotations xmi:id="_mGTa1hUwEeirparnd37rPA" source="genmymodel">
+        <details xmi:id="_mGTa1xUwEeirparnd37rPA" key="uuid" value="_lnoyIfdbEDWw1cYP3E_2OQ"/>
+      </eAnnotations>
+    </generalization>
+    <ownedAttribute xmi:id="_mGTa2BUwEeirparnd37rPA" name="triggerCondition" type="_mGTa5BUwEeirparnd37rPA">
+      <eAnnotations xmi:id="_mGTa2RUwEeirparnd37rPA" source="genmymodel">
+        <details xmi:id="_mGTa2hUwEeirparnd37rPA" key="uuid" value="_g7gkwfdcEDWw1cYP3E_2OQ"/>
+      </eAnnotations>
+    </ownedAttribute>
+    <ownedOperation xmi:id="_mGTa2xUwEeirparnd37rPA" name="attemptActivateTrigger">
+      <eAnnotations xmi:id="_mGTa3BUwEeirparnd37rPA" source="genmymodel">
+        <details xmi:id="_mGTa3RUwEeirparnd37rPA" key="uuid" value="_d-c9wPdcEDWw1cYP3E_2OQ"/>
+      </eAnnotations>
+    </ownedOperation>
+  </packagedElement>
+  <packagedElement xsi:type="uml:DataType" xmi:id="_mGTa3hUwEeirparnd37rPA" name="Vector">
+    <eAnnotations xmi:id="_mGTa3xUwEeirparnd37rPA" source="genmymodel">
+      <details xmi:id="_mGTa4BUwEeirparnd37rPA" key="uuid" value="_7qj2wPdbEDWw1cYP3E_2OQ"/>
+    </eAnnotations>
+  </packagedElement>
+  <packagedElement xsi:type="uml:DataType" xmi:id="_mGTa4RUwEeirparnd37rPA" name="(speed: Int, direction: Vector)">
+    <eAnnotations xmi:id="_mGTa4hUwEeirparnd37rPA" source="genmymodel">
+      <details xmi:id="_mGTa4xUwEeirparnd37rPA" key="uuid" value="_DqeToPdcEDWw1cYP3E_2OQ"/>
+    </eAnnotations>
+  </packagedElement>
+  <packagedElement xsi:type="uml:Enumeration" xmi:id="_mGTa5BUwEeirparnd37rPA" name="TriggerCondition">
+    <eAnnotations xmi:id="_mGTa5RUwEeirparnd37rPA" source="genmymodel">
+      <details xmi:id="_mGTa5hUwEeirparnd37rPA" key="uuid" value="_iOlWMPdcEDWw1cYP3E_2OQ"/>
+    </eAnnotations>
+  </packagedElement>
+  <packagedElement xsi:type="uml:Enumeration" xmi:id="_mGTa5xUwEeirparnd37rPA" name="TriggerCondition">
+    <eAnnotations xmi:id="_mGTa6BUwEeirparnd37rPA" source="genmymodel">
+      <details xmi:id="_mGTa6RUwEeirparnd37rPA" key="uuid" value="_jhJKQPdcEDWw1cYP3E_2OQ"/>
+    </eAnnotations>
+    <ownedLiteral xmi:id="_mGTa6hUwEeirparnd37rPA" name="Time(initial: Int, repeat: Int)" classifier="_mGTa5xUwEeirparnd37rPA">
+      <eAnnotations xmi:id="_mGTa6xUwEeirparnd37rPA" source="genmymodel">
+        <details xmi:id="_mGTa7BUwEeirparnd37rPA" key="uuid" value="_l24SkPdcEDWw1cYP3E_2OQ"/>
+      </eAnnotations>
+    </ownedLiteral>
+    <ownedLiteral xmi:id="_mGTa7RUwEeirparnd37rPA" name="OnEnter" classifier="_mGTa5xUwEeirparnd37rPA">
+      <eAnnotations xmi:id="_mGTa7hUwEeirparnd37rPA" source="genmymodel">
+        <details xmi:id="_mGTa7xUwEeirparnd37rPA" key="uuid" value="_o_rPgPdcEDWw1cYP3E_2OQ"/>
+      </eAnnotations>
+    </ownedLiteral>
+  </packagedElement>
+  <packagedElement xsi:type="uml:Usage" xmi:id="_mGTa8BUwEeirparnd37rPA" client="_mGTa5xUwEeirparnd37rPA" supplier="_mGTa0hUwEeirparnd37rPA">
+    <eAnnotations xmi:id="_mGTa8RUwEeirparnd37rPA" source="genmymodel">
+      <details xmi:id="_mGTa8hUwEeirparnd37rPA" key="uuid" value="_riRIEfdcEDWw1cYP3E_2OQ"/>
+    </eAnnotations>
+  </packagedElement>
+  <packagedElement xsi:type="uml:Usage" xmi:id="_mGTa8xUwEeirparnd37rPA" client="_mGTapRUwEeirparnd37rPA" supplier="_mGTahxUwEeirparnd37rPA">
+    <eAnnotations xmi:id="_mGTa9BUwEeirparnd37rPA" source="genmymodel">
+      <details xmi:id="_mGTa9RUwEeirparnd37rPA" key="uuid" value="_0exwEPdcEDWw1cYP3E_2OQ"/>
+    </eAnnotations>
+  </packagedElement>
+  <packagedElement xsi:type="uml:DataType" xmi:id="_mGTa9hUwEeirparnd37rPA" name="static [GridObject?]">
+    <eAnnotations xmi:id="_mGTa9xUwEeirparnd37rPA" source="genmymodel">
+      <details xmi:id="_mGTa-BUwEeirparnd37rPA" key="uuid" value="_89oLsPdcEDWw1cYP3E_2OQ"/>
+    </eAnnotations>
+  </packagedElement>
+  <packagedElement xsi:type="uml:DataType" xmi:id="_mGTa-RUwEeirparnd37rPA" name="static Int">
+    <eAnnotations xmi:id="_mGTa-hUwEeirparnd37rPA" source="genmymodel">
+      <details xmi:id="_mGTa-xUwEeirparnd37rPA" key="uuid" value="__3acQPdcEDWw1cYP3E_2OQ"/>
+    </eAnnotations>
+  </packagedElement>
+  <packagedElement xsi:type="uml:DataType" xmi:id="_mGTa_BUwEeirparnd37rPA" name="position: Vector">
+    <eAnnotations xmi:id="_mGTa_RUwEeirparnd37rPA" source="genmymodel">
+      <details xmi:id="_mGTa_hUwEeirparnd37rPA" key="uuid" value="_GwcwoPddEDWw1cYP3E_2OQ"/>
+    </eAnnotations>
+  </packagedElement>
+  <packagedElement xsi:type="uml:DataType" xmi:id="_mGTa_xUwEeirparnd37rPA" name="[GridObject?]">
+    <eAnnotations xmi:id="_mGTbABUwEeirparnd37rPA" source="genmymodel">
+      <details xmi:id="_mGTbARUwEeirparnd37rPA" key="uuid" value="_jzoL8PddEDWw1cYP3E_2OQ"/>
+    </eAnnotations>
+  </packagedElement>
+  <packagedElement xsi:type="uml:Enumeration" xmi:id="_mGTbAhUwEeirparnd37rPA" name="Int">
+    <eAnnotations xmi:id="_mGTbAxUwEeirparnd37rPA" source="genmymodel">
+      <details xmi:id="_mGTbBBUwEeirparnd37rPA" key="uuid" value="_nORt4PddEDWw1cYP3E_2OQ"/>
+    </eAnnotations>
+  </packagedElement>
+  <packagedElement xsi:type="uml:DataType" xmi:id="_mGTbBRUwEeirparnd37rPA" name="GridObject?">
+    <eAnnotations xmi:id="_mGTbBhUwEeirparnd37rPA" source="genmymodel">
+      <details xmi:id="_mGTbBxUwEeirparnd37rPA" key="uuid" value="_pvhiofddEDWw1cYP3E_2OQ"/>
+    </eAnnotations>
+  </packagedElement>
+</uml:Model>
