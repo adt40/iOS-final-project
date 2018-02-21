@@ -1,3 +1,4 @@
+//Make this a struct
 class Vector {
 	var x: Int
 	var y: Int

@@ -1,5 +1,3 @@
-//this might have to be a struct, I don't totally understand the difference yet but it will be obvious when I try to run this
-
 class GridObject {
 	var position : Vector
 	var canMove : Bool

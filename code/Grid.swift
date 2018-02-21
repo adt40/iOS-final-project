@@ -7,6 +7,8 @@ class Grid {
 		currentTime = 0
 	}
 
+	//If manipulating the return value of this does not change the original, this is gonna need some rethinking
+	//Probably will involve passing state by reference everywhere, which would super suck
 	static func getGridObjectAt(position: Vector) -> GridObject? {
 		for gridLocation in state {
 			if let gridObject = gridLocation {
@@ -28,7 +30,6 @@ class Grid {
 	}
 
 	static func advanceState() {
-		//can probably rewrite this using .map() and it would be faster
 		var gridObjects : [GridObject] = []
 		var modules : [Module] = []
 		for gridLocation in state {
@@ -39,15 +40,8 @@ class Grid {
 				}
 			}
 		}
-
-		for module in modules {
-			module.attemptActivateTrigger()
-		}
-		for module in modules {
-			module.listenForTrigger()
-		}
-		for gridObject in gridObjects {
-			gridObject.move()
-		}
+		modules.map({x as Module in x.attemptActivateTrigger()})
+		modules.map({x as Module in x.listenForTrigger()})
+		gridObjects.map({x as GridObject in x.move()})
 	}
 }

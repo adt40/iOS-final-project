@@ -1,3 +1,4 @@
+//Make this a protocol?
 class Module : GridObject {
 	var triggerActive = false
 	
