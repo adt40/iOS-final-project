@@ -35,7 +35,7 @@ class Grid {
 		for gridLocation in state {
 			if let gridObject = gridLocation {
 				gridObjects.append(gridObject)
-				if let module = gridObject as Module { //see Module.swift comment on same line
+				if let module = gridObject as? Module { //see Module.swift comment on same line
 					modules.append(module)
 				}
 			}
