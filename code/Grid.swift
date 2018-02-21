@@ -28,12 +28,13 @@ class Grid {
 	}
 
 	static func advanceState() {
+		//can probably rewrite this using .map() and it would be faster
 		var gridObjects : [GridObject] = []
 		var modules : [Module] = []
 		for gridLocation in state {
 			if let gridObject = gridLocation {
 				gridObjects.append(gridObject)
-				if let module = Module(gridObject) { //see Module.swift comment on same line
+				if let module = gridObject as Module { //see Module.swift comment on same line
 					modules.append(module)
 				}
 			}
