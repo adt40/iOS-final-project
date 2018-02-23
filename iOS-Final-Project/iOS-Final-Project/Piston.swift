@@ -12,12 +12,12 @@
 
 class Piston : Module {
 	init(position: Vector) {
-		super.init(position: position, canMove: true, hasHitbox: true, currentVelocity: (0, Vector(1, 0)))
+		super.init(position: position, canMove: true, hasHitbox: true, facingDirection: Vector(0, 1), currentVelocity: (0, Vector(0, 1))) //default to up direction
 	}
 
 	override func performAction() {
-        if let gridObject = Grid.getGridObjectAt(position: position + currentVelocity.direction) {
-            gridObject.currentVelocity = (1, currentVelocity.direction)
+        if let gridObject = Grid.getHittableGridObjectsAt(position: position + facingDirection) {
+            gridObject.currentVelocity = (1, facingDirection)
         }
 	}
 }

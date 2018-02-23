@@ -17,7 +17,7 @@ class Module : GridObject {
 	func attemptActivateTrigger() {}
 
 	func listenForTrigger() {
-		let adjacents = Grid.getAdjacentGridObjectsAt(position: position);
+		let adjacents = Grid.getAllAdjacentGridObjectsAt(position: position)
 		for gridObject in adjacents {
             if let module = gridObject as? Module {
                 if module.triggerActive {

@@ -13,11 +13,13 @@ class GridObject {
 	var position : Vector
 	var canMove : Bool
 	var hasHitbox : Bool
+    var facingDirection : Vector
 	var currentVelocity : (speed: Int, direction: Vector)
-    init(position: Vector, canMove: Bool, hasHitbox: Bool, currentVelocity: (speed: Int, direction: Vector)) {
+    init(position: Vector, canMove: Bool, hasHitbox: Bool, facingDirection: Vector, currentVelocity: (speed: Int, direction: Vector)) {
 		self.position = position
 		self.canMove = canMove
 		self.hasHitbox = hasHitbox
+        self.facingDirection = facingDirection
 		self.currentVelocity = currentVelocity
 	}
 
@@ -25,7 +27,7 @@ class GridObject {
 		if canMove {
 			let newPosition = position + currentVelocity.direction * currentVelocity.speed
             
-            if let _ = Grid.getGridObjectAt(position: newPosition) {
+            if !Grid.isGridObjectAt(position: newPosition) {
                 position = newPosition
             }
 		}

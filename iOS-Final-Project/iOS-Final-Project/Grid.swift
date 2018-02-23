@@ -32,10 +32,17 @@ class Grid {
     static func getState() -> [GridObject]{
         return state
     }
+    
+    static func isGridObjectAt(position: Vector) -> Bool {
+        for gridObject in state {
+            if gridObject.position == position && gridObject.hasHitbox {
+                return true
+            }
+        }
+        return false
+    }
 
-	//If manipulating the return value of this does not change the original, this is gonna need some rethinking
-	//Probably will involve passing state by reference everywhere, which would super suck
-	static func getGridObjectAt(position: Vector) -> GridObject? {
+	static func getHittableGridObjectsAt(position: Vector) -> GridObject? {
 		for gridObject in state {
             if gridObject.position == position && gridObject.hasHitbox {
                 return gridObject
@@ -43,23 +50,42 @@ class Grid {
         }
 		return nil
 	}
+    
+    static func getAllGridObjectsAt(position: Vector) -> [GridObject] {
+        var gridObjects : [GridObject] = []
+        for gridObject in state {
+            if gridObject.position == position {
+                gridObjects.append(gridObject)
+            }
+        }
+        return gridObjects
+    }
 
-	static func getAdjacentGridObjectsAt(position: Vector) -> [GridObject] {
+	static func getAdjacentHittableGridObjectsAt(position: Vector) -> [GridObject] {
 		var adjacents : [GridObject] = []
-        if let up = getGridObjectAt(position: position + Vector(0, 1)) {
+        if let up = getHittableGridObjectsAt(position: position + Vector(0, 1)) {
             adjacents.append(up)
         }
-        if let right = getGridObjectAt(position: position + Vector(0, 1)) {
+        if let right = getHittableGridObjectsAt(position: position + Vector(0, 1)) {
             adjacents.append(right)
         }
-        if let down = getGridObjectAt(position: position + Vector(0, -1)) {
+        if let down = getHittableGridObjectsAt(position: position + Vector(0, -1)) {
             adjacents.append(down)
         }
-        if let left = getGridObjectAt(position: position + Vector(-1, 0)) {
+        if let left = getHittableGridObjectsAt(position: position + Vector(-1, 0)) {
             adjacents.append(left)
         }
 		return adjacents
 	}
+    
+    static func getAllAdjacentGridObjectsAt(position: Vector) -> [GridObject] {
+        var adjacents : [GridObject] = []
+        adjacents.append(contentsOf: getAllGridObjectsAt(position: position + Vector(0, 1)))
+        adjacents.append(contentsOf: getAllGridObjectsAt(position: position + Vector(1, 0)))
+        adjacents.append(contentsOf: getAllGridObjectsAt(position: position + Vector(0, -1)))
+        adjacents.append(contentsOf: getAllGridObjectsAt(position: position + Vector(-1, 0)))
+        return adjacents
+    }
 
 	static func advanceState() {
 		var modules : [Module] = []
@@ -69,12 +95,6 @@ class Grid {
             }
 		}
         for module in modules {
-            /*
-             Big problem:
-             This calls the Module definition of this, rather than the overridden definition like I'd like it to.
-             In hindsight this is obviously what will happen, but I can't think of a way to do this that would involve horrible hardcoding.
-             Gonna need to think on this one...
-            */
             module.attemptActivateTrigger()
         }
         for module in modules {
