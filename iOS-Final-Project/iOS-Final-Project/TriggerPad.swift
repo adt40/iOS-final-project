@@ -20,16 +20,15 @@ class TriggerPad : Module {
 		triggerOnEnter = false
         triggerOnTimeStart = 0
         triggerOnTimeRepeat = 0
-		super.init(position: position, canMove: false, hasHitbox: false, facingDirection: Vector(1, 0), currentVelocity: (0, Vector(1, 0)))
+		super.init(position: position, canMove: false, hasHitbox: false, facingDirection: Direction.neutral, currentVelocity: (0, Direction.neutral))
 	}
     
-    init(position: Vector, onEnter: Bool, startAt: Int, repeatAt: Int) {
-        triggerOnEnter = onEnter
-        triggerOnTimeStart = startAt
-        triggerOnTimeRepeat = repeatAt
-        super.init(position: position, canMove: false, hasHitbox: false, facingDirection: Vector(1, 0), currentVelocity: (0, Vector(1, 0)))
+    func setTriggerParameters(triggerOnEnter: Bool, triggerOnTimeStart: Int, triggerOnTimeRepeat: Int) {
+        self.triggerOnEnter = triggerOnEnter
+        self.triggerOnTimeStart = triggerOnTimeStart
+        self.triggerOnTimeRepeat = triggerOnTimeRepeat
     }
-
+    
 	override func attemptActivateTrigger() {
         if triggerOnEnter {
             if let _ = Grid.getHittableGridObjectsAt(position: position) {

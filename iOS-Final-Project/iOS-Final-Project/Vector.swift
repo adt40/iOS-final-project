@@ -17,10 +17,6 @@ struct Vector : CustomStringConvertible{
 		self.x = x
 		self.y = y
 	}
-    
-    static func isOutside(gridBoundry: Vector, position: Vector) -> Bool {
-        return gridBoundry.x < position.x || gridBoundry.y < position.y
-    }
 
 	static func + (left: Vector, right: Vector) -> Vector {
 		return Vector(left.x + right.x, left.y + right.y)

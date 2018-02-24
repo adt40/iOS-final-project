@@ -2,7 +2,7 @@
  Grid
  
  Description:
- Fingers crossed this works! Saves the state of the board into a static array
+ Saves the state of the board into a static array
  
  Important things to know:
  state is an array of all GridObjects currently in the Grid.
@@ -25,8 +25,14 @@ class Grid {
         state.append(gridObject)
     }
     
+    //A grid object is uniquely determined by its position and whether it has a hitbox or not
     static func removeGridObject(gridObject: GridObject) {
-        //oh boy this is kinda hard
+        for i in 0..<state.count {
+            if (state[i].position == gridObject.position) && (state[i].hasHitbox == gridObject.hasHitbox) {
+                state.remove(at: i)
+                break
+            }
+        }
     }
     
     static func getState() -> [GridObject]{
@@ -63,16 +69,16 @@ class Grid {
 
 	static func getAdjacentHittableGridObjectsAt(position: Vector) -> [GridObject] {
 		var adjacents : [GridObject] = []
-        if let up = getHittableGridObjectsAt(position: position + Vector(0, 1)) {
+        if let up = getHittableGridObjectsAt(position: position + Direction.up.toVector()) {
             adjacents.append(up)
         }
-        if let right = getHittableGridObjectsAt(position: position + Vector(0, 1)) {
+        if let right = getHittableGridObjectsAt(position: position + Direction.right.toVector()) {
             adjacents.append(right)
         }
-        if let down = getHittableGridObjectsAt(position: position + Vector(0, -1)) {
+        if let down = getHittableGridObjectsAt(position: position + Direction.down.toVector()) {
             adjacents.append(down)
         }
-        if let left = getHittableGridObjectsAt(position: position + Vector(-1, 0)) {
+        if let left = getHittableGridObjectsAt(position: position + Direction.left.toVector()) {
             adjacents.append(left)
         }
 		return adjacents
@@ -80,14 +86,18 @@ class Grid {
     
     static func getAllAdjacentGridObjectsAt(position: Vector) -> [GridObject] {
         var adjacents : [GridObject] = []
-        adjacents.append(contentsOf: getAllGridObjectsAt(position: position + Vector(0, 1)))
-        adjacents.append(contentsOf: getAllGridObjectsAt(position: position + Vector(1, 0)))
-        adjacents.append(contentsOf: getAllGridObjectsAt(position: position + Vector(0, -1)))
-        adjacents.append(contentsOf: getAllGridObjectsAt(position: position + Vector(-1, 0)))
+        adjacents.append(contentsOf: getAllGridObjectsAt(position: position + Direction.up.toVector()))
+        adjacents.append(contentsOf: getAllGridObjectsAt(position: position + Direction.right.toVector()))
+        adjacents.append(contentsOf: getAllGridObjectsAt(position: position + Direction.down.toVector()))
+        adjacents.append(contentsOf: getAllGridObjectsAt(position: position + Direction.left.toVector()))
         return adjacents
     }
 
-	static func advanceState() {
+    static func isOutside(position: Vector) -> Bool {
+        return maxGridPosition.x < position.x || maxGridPosition.y < position.y || 0 > position.x || 0 > position.y
+    }
+    
+	static func advanceState() -> Bool {
 		var modules : [Module] = []
 		for gridObject in state {
             if let module = gridObject as? Module {
@@ -103,5 +113,18 @@ class Grid {
         for gridObject in state {
             gridObject.move()
         }
+        return testForWin()
 	}
+    
+    //Game is won when there are no more colors or sockets left
+    static func testForWin() -> Bool {
+        var isWin = true
+        for gridObject in state {
+            if gridObject is GridColorSocket || gridObject is GridColor {
+                isWin = false
+                break
+            }
+        }
+        return isWin
+    }
 }

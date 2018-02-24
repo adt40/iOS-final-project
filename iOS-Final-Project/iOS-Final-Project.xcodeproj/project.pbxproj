@@ -18,6 +18,11 @@
 		0190C8A3203FC0B7001AE736 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0190C89C203FC0B6001AE736 /* Vector.swift */; };
 		0190C8A4203FC0B7001AE736 /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0190C89D203FC0B6001AE736 /* Grid.swift */; };
 		0190C8A5203FC0B7001AE736 /* TriggerPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0190C89E203FC0B6001AE736 /* TriggerPad.swift */; };
+		8212ABA92041F4A300A5328B /* Wall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8212ABA82041F4A300A5328B /* Wall.swift */; };
+		8212ABAB2041F59500A5328B /* GridColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8212ABAA2041F59500A5328B /* GridColor.swift */; };
+		8212ABAD2041F61700A5328B /* MixableColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8212ABAC2041F61700A5328B /* MixableColor.swift */; };
+		8212ABB12041FECF00A5328B /* GridColorSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8212ABB02041FECF00A5328B /* GridColorSocket.swift */; };
+		8212ABB32042043A00A5328B /* Direction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8212ABB22042043A00A5328B /* Direction.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +39,11 @@
 		0190C89C203FC0B6001AE736 /* Vector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vector.swift; sourceTree = "<group>"; };
 		0190C89D203FC0B6001AE736 /* Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
 		0190C89E203FC0B6001AE736 /* TriggerPad.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggerPad.swift; sourceTree = "<group>"; };
+		8212ABA82041F4A300A5328B /* Wall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wall.swift; sourceTree = "<group>"; };
+		8212ABAA2041F59500A5328B /* GridColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridColor.swift; sourceTree = "<group>"; };
+		8212ABAC2041F61700A5328B /* MixableColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MixableColor.swift; sourceTree = "<group>"; };
+		8212ABB02041FECF00A5328B /* GridColorSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridColorSocket.swift; sourceTree = "<group>"; };
+		8212ABB22042043A00A5328B /* Direction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Direction.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,9 +78,14 @@
 			children = (
 				0190C886203FC001001AE736 /* AppDelegate.swift */,
 				0190C888203FC001001AE736 /* ViewController.swift */,
+				8212ABB22042043A00A5328B /* Direction.swift */,
 				0190C89D203FC0B6001AE736 /* Grid.swift */,
 				0190C89A203FC0B5001AE736 /* GridObject.swift */,
 				0190C898203FC0B4001AE736 /* Module.swift */,
+				8212ABA82041F4A300A5328B /* Wall.swift */,
+				8212ABAA2041F59500A5328B /* GridColor.swift */,
+				8212ABB02041FECF00A5328B /* GridColorSocket.swift */,
+				8212ABAC2041F61700A5328B /* MixableColor.swift */,
 				0190C89B203FC0B5001AE736 /* Piston.swift */,
 				0190C89E203FC0B6001AE736 /* TriggerPad.swift */,
 				0190C89C203FC0B6001AE736 /* Vector.swift */,
@@ -155,13 +170,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				0190C8A2203FC0B7001AE736 /* Piston.swift in Sources */,
+				8212ABA92041F4A300A5328B /* Wall.swift in Sources */,
 				0190C8A1203FC0B7001AE736 /* GridObject.swift in Sources */,
 				0190C8A4203FC0B7001AE736 /* Grid.swift in Sources */,
 				0190C8A3203FC0B7001AE736 /* Vector.swift in Sources */,
 				0190C889203FC001001AE736 /* ViewController.swift in Sources */,
 				0190C8A5203FC0B7001AE736 /* TriggerPad.swift in Sources */,
+				8212ABAB2041F59500A5328B /* GridColor.swift in Sources */,
+				8212ABAD2041F61700A5328B /* MixableColor.swift in Sources */,
 				0190C887203FC001001AE736 /* AppDelegate.swift in Sources */,
+				8212ABB12041FECF00A5328B /* GridColorSocket.swift in Sources */,
 				0190C89F203FC0B7001AE736 /* Module.swift in Sources */,
+				8212ABB32042043A00A5328B /* Direction.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

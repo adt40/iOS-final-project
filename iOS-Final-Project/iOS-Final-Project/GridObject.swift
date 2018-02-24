@@ -6,6 +6,7 @@
  
  Important things to know:
  move() will only go if the GridObject can move. If it cannot move, it will set its current speed to zero
+ Each GridObject will have its own unique (position, hasHitbox) tuple. This can be used to find specific GridObjects
  
 */
 
@@ -13,9 +14,9 @@ class GridObject {
 	var position : Vector
 	var canMove : Bool
 	var hasHitbox : Bool
-    var facingDirection : Vector
-	var currentVelocity : (speed: Int, direction: Vector)
-    init(position: Vector, canMove: Bool, hasHitbox: Bool, facingDirection: Vector, currentVelocity: (speed: Int, direction: Vector)) {
+    var facingDirection : Direction
+	var currentVelocity : (speed: Int, direction: Direction)
+    init(position: Vector, canMove: Bool, hasHitbox: Bool, facingDirection: Direction, currentVelocity: (speed: Int, direction: Direction)) {
 		self.position = position
 		self.canMove = canMove
 		self.hasHitbox = hasHitbox
@@ -25,10 +26,15 @@ class GridObject {
 
 	func move() {
 		if canMove {
-			let newPosition = position + currentVelocity.direction * currentVelocity.speed
-            
-            if !Grid.isGridObjectAt(position: newPosition) {
-                position = newPosition
+            if currentVelocity.speed > 0 {
+                let newPosition = position + currentVelocity.direction.toVector() * currentVelocity.speed
+                
+                if !Grid.isOutside(position: newPosition) && !Grid.isGridObjectAt(position: newPosition) {
+                    position = newPosition
+                } else {
+                    currentVelocity.speed = 0
+                    currentVelocity.direction = Direction.neutral
+                }
             }
 		}
 	}
