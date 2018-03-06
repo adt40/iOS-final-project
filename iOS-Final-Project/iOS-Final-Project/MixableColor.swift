@@ -5,6 +5,7 @@
  This is the color of a GridColor, and contains the logic for mixing colors.
  
  Important things to know:
+ This is not in RGB. It uses primary colors, so it is RYB. This is because it is far more intuitive for most people to mix paint than to mix light. Call toRGB to get the rgb values
  maxColorValue determines how granular the coloring will get (the higher, the more granular)
  
  */
@@ -13,54 +14,96 @@ import Foundation
 
 struct MixableColor {
     var r : Int
-    var g : Int
+    var y : Int
     var b : Int
     
     static let maxColorValue = 1
     
-    init(_ r: Int, _ g: Int, _ b: Int) {
+    init(_ r: Int, _ y: Int, _ b: Int) {
         self.r = r
-        self.g = g
+        self.y = y
         self.b = b
     }
     
+    func toRGB() -> (r: Int, g: Int, b: Int) {
+        //Found on the internet. Hope this works!
+        var red : Int =    r * 255 / MixableColor.maxColorValue
+        var yellow : Int = y * 255 / MixableColor.maxColorValue
+        var blue : Int =   b * 255 / MixableColor.maxColorValue
+        
+        let white = min(red, yellow, blue)
+        
+        red    -= white
+        yellow -= white
+        blue   -= white
+        
+        let maxYellow = max(red, yellow, blue)
+        var green = min(yellow, blue)
+        
+        yellow -= green
+        blue   -= green
+        
+        if (blue > 0 && green > 0) {
+            blue  *= 2
+            green *= 2
+        }
+        
+        red   += yellow
+        green += yellow
+        
+        let maxGreen = max(red, green, blue)
+        
+        if maxGreen > 0 {
+            let N = maxYellow / maxGreen
+            red   *= N
+            green *= N
+            blue  *= N
+        }
+        
+        red   += white
+        green += white
+        blue  += white
+        
+        return (r: red, g: green, b: blue)
+    }
+    
     static func == (left: MixableColor, right: MixableColor) -> Bool {
-        return (left.r == right.r) && (left.g == right.g) && (left.b == right.b)
+        return (left.r == right.r) && (left.y == right.y) && (left.b == right.b)
     }
     
     static func + (left: MixableColor, right: MixableColor) -> MixableColor {
         var r = left.r + right.r
-        var g = left.g + right.g
+        var y = left.y + right.y
         var b = left.b + right.b
         
         if r > maxColorValue {
             r = maxColorValue
         }
-        if g > maxColorValue {
-            g = maxColorValue
+        if y > maxColorValue {
+            y = maxColorValue
         }
         if b > maxColorValue {
             b = maxColorValue
         }
         
-        return MixableColor(r, g, b)
+        return MixableColor(r, y, b)
     }
     
     static func - (left: MixableColor, right: MixableColor) -> MixableColor {
         var r = left.r + right.r
-        var g = left.g + right.g
+        var y = left.y + right.y
         var b = left.b + right.b
         
         if r < 0 {
             r = 0
         }
-        if g < 0 {
-            g = 0
+        if y < 0 {
+            y = 0
         }
         if b < 0 {
             b = 0
         }
         
-        return MixableColor(r, g, b)
+        return MixableColor(r, y, b)
     }
 }

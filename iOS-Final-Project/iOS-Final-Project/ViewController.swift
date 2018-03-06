@@ -16,8 +16,8 @@ class ViewController: UIViewController {
         //level setup
         Grid.initialize(size: Vector(4, 4))
         let gridColorRed = GridColor(position: Vector(2, 2), color: MixableColor(1, 0, 0))
-        let gridColorBlue = GridColor(position: Vector(1, 2), color: MixableColor(0, 0, 1))
-        let gridSocket = GridColorSocket(position: Vector(3, 0), desiredColor: MixableColor(1, 0, 1))
+        let gridColorBlue = GridColor(position: Vector(1, 2), color: MixableColor(0, 1, 0))
+        let gridSocket = GridColorSocket(position: Vector(3, 0), desiredColor: MixableColor(1, 1, 0))
         
         //player additions
         let piston1 = Piston(position: Vector(0, 2))

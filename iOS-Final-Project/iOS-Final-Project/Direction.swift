@@ -26,4 +26,34 @@ enum Direction {
             return Vector(0, 0)
         }
     }
+    
+    func clockwise() -> Direction {
+        switch self {
+        case .up:
+            return .right
+        case .right:
+            return .down
+        case .down:
+            return .left
+        case .left:
+            return .up
+        case .neutral:
+            return .neutral
+        }
+    }
+    
+    func counterClockwise() -> Direction {
+        switch self {
+        case .up:
+            return .left
+        case .right:
+            return .up
+        case .down:
+            return .right
+        case .left:
+            return .down
+        case .neutral:
+            return .neutral
+        }
+    }
 }
