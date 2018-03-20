@@ -56,4 +56,21 @@ enum Direction {
             return .neutral
         }
     }
+    
+    static func fromString(_ str : String) -> Direction {
+        switch str {
+        case "up":
+            return .up
+        case "left":
+            return .left
+        case "down":
+            return .down
+        case "right":
+            return .right
+        case "neutral":
+            return .neutral
+        default:
+            return .neutral
+        }
+    }
 }

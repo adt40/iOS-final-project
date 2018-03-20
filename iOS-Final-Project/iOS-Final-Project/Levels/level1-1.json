@@ -1,0 +1,53 @@
+{
+    "world" : 1,
+    "level" : 1,
+    "name" : "Test Level",
+    "GridSize" : {
+        "x" : 3,
+        "y" : 5
+    },
+    "GridObjects" : [
+        {
+            "type" : "piston",
+            "position" : {
+                "x" : 1,
+                "y" : 0
+            },
+            "direction" : "down"
+        },
+        {
+            "type" : "trigger",
+            "position" : {
+                "x" : 1,
+                "y" : 1
+            },
+            "onEnter" : true,
+            "startTime" : 0,
+            "repeatTime" : 0
+        },
+        {
+            "type" : "color",
+            "position" : {
+                "x" : 1,
+                "y" : 1
+            },
+            "color" : {
+                "r" : 1,
+                "y" : 0,
+                "b" : 0
+            }
+        },
+        {
+            "type" : "socket",
+            "position" : {
+                "x" : 1,
+                "y" : 4
+            },
+            "color" : {
+                "r" : 1,
+                "y" : 0,
+                "b" : 0
+            }
+        }
+    ]
+}

@@ -23,6 +23,13 @@ class TriggerPad : Module {
 		super.init(position: position, canMove: false, hasHitbox: false, facingDirection: Direction.neutral, currentVelocity: (0, Direction.neutral))
 	}
     
+    init(position: Vector, triggerOnEnter: Bool, triggerOnTimeStart: Int, triggerOnTimeRepeat: Int) {
+        self.triggerOnEnter = triggerOnEnter
+        self.triggerOnTimeStart = triggerOnTimeStart
+        self.triggerOnTimeRepeat = triggerOnTimeRepeat
+        super.init(position: position, canMove: false, hasHitbox: false, facingDirection: Direction.neutral, currentVelocity: (0, Direction.neutral))
+    }
+    
     func setTriggerParameters(triggerOnEnter: Bool, triggerOnTimeStart: Int, triggerOnTimeRepeat: Int) {
         self.triggerOnEnter = triggerOnEnter
         self.triggerOnTimeStart = triggerOnTimeStart
