@@ -22,10 +22,13 @@ class LevelFileReader {
         json = try! JSON(data: jsonData!)
     }
     
-    func loadLevel(world: Int, level: Int) -> (name: String, gridSize: Vector, gridObjects: [GridObject]){
+    func loadLevel(world: Int, level: Int) -> (name: String, gridSize: Vector, availableModules: [String], gridObjects: [GridObject]){
         initJSON(filename: "level" + String(world) + "-" + String(level))
+        
         let name = json["name"].stringValue
         let gridSize = Vector(json["GridSize"]["x"].intValue, json["GridSize"]["y"].intValue)
+        let availableModules = json["AvailableModules"].arrayValue.map{ $0.stringValue }
+        
         var gridObjects : [GridObject] = []
         for gridObject in json["GridObjects"].arrayValue {
             let type = gridObject["type"].stringValue
@@ -44,12 +47,18 @@ class LevelFileReader {
                 let position = Vector(gridObject["position", "x"].intValue, gridObject["position", "y"].intValue)
                 let direction = Direction.fromString(gridObject["direction"].stringValue)
                 let piston = Piston(position: position, direction: direction)
+                if gridObject["canMove"].exists() {
+                    piston.canMove = gridObject["canMove"].boolValue
+                }
                 gridObjects.append(piston)
             case "rotator":
                 let position = Vector(gridObject["position", "x"].intValue, gridObject["position", "y"].intValue)
                 let direction = Direction.fromString(gridObject["direction"].stringValue)
                 let clockwise = gridObject["clockwise"].boolValue
                 let rotator = Rotator(position: position, direction: direction, clockwise: clockwise)
+                if gridObject["canMove"].exists() {
+                    rotator.canMove = gridObject["canMove"].boolValue
+                }
                 gridObjects.append(rotator)
             case "trigger":
                 let position = Vector(gridObject["position", "x"].intValue, gridObject["position", "y"].intValue)
@@ -61,11 +70,14 @@ class LevelFileReader {
             case "wall":
                 let position = Vector(gridObject["position", "x"].intValue, gridObject["position", "y"].intValue)
                 let wall = Wall(position: position)
+                if gridObject["canMove"].exists() {
+                    wall.canMove = gridObject["canMove"].boolValue
+                }
                 gridObjects.append(wall)
             default:
-                print("invalid JSON type: " + type)
+                print("invalid JSON module of type: " + type)
             }
         }
-        return (name: name, gridSize: gridSize, gridObjects: gridObjects)
+        return (name: name, gridSize: gridSize, availableModules: availableModules, gridObjects: gridObjects)
     }
 }
