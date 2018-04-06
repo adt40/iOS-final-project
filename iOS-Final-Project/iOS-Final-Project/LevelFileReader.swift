@@ -80,4 +80,53 @@ class LevelFileReader {
         }
         return (name: name, gridSize: gridSize, availableModules: availableModules, gridObjects: gridObjects)
     }
+    
+    func getScore(world: Int, level: Int) -> (runtimeScore: Int, moduleScore: Int) {
+        initJSON(filename: "level" + String(world) + "-" + String(level))
+        let runtimeScore = json["runtimeScore"].intValue
+        let moduleScore = json["moduleScore"].intValue
+        return (runtimeScore: runtimeScore, moduleScore: moduleScore)
+    }
+    
+    //will check to see if scores should be updated, so call this whenever a level is beaten regardless if it is a high score or not
+    func updateScore(world: Int, level: Int, runtimeScore: Int, moduleScore: Int) {
+        initJSON(filename: "level" + String(world) + "-" + String(level))
+        let oldRuntimeScore = json["runtimeScore"].intValue
+        let oldModuleScore = json["moduleScore"].intValue
+        
+        //low scores are good, but a score of 0 means it hasn't been beaten yet
+        if (runtimeScore < oldRuntimeScore || oldRuntimeScore == 0) {
+            json["runtimeScore"].int = runtimeScore
+        }
+        
+        if (moduleScore < oldModuleScore || oldModuleScore == 0) {
+            json["moduleScore"].int = moduleScore
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

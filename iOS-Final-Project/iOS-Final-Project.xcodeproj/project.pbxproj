@@ -17,6 +17,7 @@
 		0190C8A3203FC0B7001AE736 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0190C89C203FC0B6001AE736 /* Vector.swift */; };
 		0190C8A4203FC0B7001AE736 /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0190C89D203FC0B6001AE736 /* Grid.swift */; };
 		0190C8A5203FC0B7001AE736 /* TriggerPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0190C89E203FC0B6001AE736 /* TriggerPad.swift */; };
+		820E94562076EE2A003795C5 /* LevelSelectPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820E94552076EE2A003795C5 /* LevelSelectPopupViewController.swift */; };
 		8212ABA92041F4A300A5328B /* Wall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8212ABA82041F4A300A5328B /* Wall.swift */; };
 		8212ABAB2041F59500A5328B /* GridColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8212ABAA2041F59500A5328B /* GridColor.swift */; };
 		8212ABAD2041F61700A5328B /* MixableColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8212ABAC2041F61700A5328B /* MixableColor.swift */; };
@@ -45,6 +46,7 @@
 		0190C89C203FC0B6001AE736 /* Vector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vector.swift; sourceTree = "<group>"; };
 		0190C89D203FC0B6001AE736 /* Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
 		0190C89E203FC0B6001AE736 /* TriggerPad.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggerPad.swift; sourceTree = "<group>"; };
+		820E94552076EE2A003795C5 /* LevelSelectPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelSelectPopupViewController.swift; sourceTree = "<group>"; };
 		8212ABA82041F4A300A5328B /* Wall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wall.swift; sourceTree = "<group>"; };
 		8212ABAA2041F59500A5328B /* GridColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridColor.swift; sourceTree = "<group>"; };
 		8212ABAC2041F61700A5328B /* MixableColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MixableColor.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 				0190C892203FC001001AE736 /* Info.plist */,
 				8229DBE020682A2C00ACEC82 /* MainMenuViewController.swift */,
 				8229DBE220682A3B00ACEC82 /* LevelSelectViewController.swift */,
+				820E94552076EE2A003795C5 /* LevelSelectPopupViewController.swift */,
 				8229DBE420682A4800ACEC82 /* LevelViewController.swift */,
 			);
 			path = "iOS-Final-Project";
@@ -209,6 +212,7 @@
 				0190C8A3203FC0B7001AE736 /* Vector.swift in Sources */,
 				8260EDD7204E227C001C44A9 /* Rotator.swift in Sources */,
 				8229DBE520682A4800ACEC82 /* LevelViewController.swift in Sources */,
+				820E94562076EE2A003795C5 /* LevelSelectPopupViewController.swift in Sources */,
 				0190C8A5203FC0B7001AE736 /* TriggerPad.swift in Sources */,
 				8212ABAB2041F59500A5328B /* GridColor.swift in Sources */,
 				8212ABAD2041F61700A5328B /* MixableColor.swift in Sources */,

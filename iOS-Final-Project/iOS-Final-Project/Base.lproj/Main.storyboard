@@ -64,7 +64,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Start Level 1"/>
                                 <connections>
-                                    <action selector="startLevelPressed:" destination="C6V-2H-W6R" eventType="touchUpInside" id="4EY-jg-I7T"/>
+                                    <action selector="startLevelPressed:" destination="C6V-2H-W6R" eventType="touchUpInside" id="2v0-ET-Rwq"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -81,6 +81,63 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t78-e6-QoX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1335" y="116"/>
+        </scene>
+        <!--Level Select Popup View Controller-->
+        <scene sceneID="eqN-ap-Jyj">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="R8g-qY-Tdu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController storyboardIdentifier="LevelPopup" id="efp-hr-b13" customClass="LevelSelectPopupViewController" customModule="iOS_Final_Project" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Io2-Zl-1FW">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IPA-0P-SLF">
+                                <rect key="frame" x="81.5" y="212" width="211" height="242"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Popup Window" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UDr-ei-gIR">
+                                        <rect key="frame" x="48" y="26" width="116" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jkb-kt-leB">
+                                        <rect key="frame" x="86" y="204" width="39" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Close"/>
+                                        <connections>
+                                            <action selector="closePressed:" destination="efp-hr-b13" eventType="touchUpInside" id="DQe-cG-HFZ"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PnO-UK-54c">
+                                        <rect key="frame" x="69" y="166" width="74" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Start Level"/>
+                                        <connections>
+                                            <action selector="startLevelPressed:" destination="efp-hr-b13" eventType="touchUpInside" id="KM2-oe-cyS"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.77767720526223305" green="0.80869232021737991" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="242" id="JEA-pf-8gO"/>
+                                    <constraint firstAttribute="width" constant="211" id="wXJ-bS-A2d"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="IPA-0P-SLF" firstAttribute="centerY" secondItem="Io2-Zl-1FW" secondAttribute="centerY" id="cll-Rh-g78"/>
+                            <constraint firstItem="IPA-0P-SLF" firstAttribute="centerX" secondItem="Io2-Zl-1FW" secondAttribute="centerX" id="wmz-Hi-Duy"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="wZU-Vi-ZSU"/>
+                    </view>
+                    <connections>
+                        <outlet property="levelNameLabel" destination="UDr-ei-gIR" id="Vyz-vh-gb8"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="1334" y="853"/>
         </scene>
         <!--Level View Controller-->
         <scene sceneID="Bhf-kE-b6R">

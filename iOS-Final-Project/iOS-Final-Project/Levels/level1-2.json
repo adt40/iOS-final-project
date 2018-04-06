@@ -2,6 +2,8 @@
   "world": 1,
   "level": 1,
   "name": "Oh damn another level",
+  "RuntimeScore": 0,
+  "ModuleScore": 0,
   "GridSize": {
     "x": 5,
     "y": 6
