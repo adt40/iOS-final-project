@@ -39,8 +39,12 @@ class GridColor : GridObject {
         }
     }
     
-    private func mix(with gridColor: GridColor) {
-        color = color + gridColor.color
+    func mix(with gridColor: GridColor) {
+        addColor(gridColor.color)
         Grid.removeGridObject(gridObject: gridColor)
+    }
+    
+    func addColor(_ color: MixableColor) {
+        self.color = self.color + color
     }
 }

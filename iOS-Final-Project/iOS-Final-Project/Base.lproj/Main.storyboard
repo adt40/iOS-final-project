@@ -52,7 +52,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rA8-Er-rhT">
-                                <rect key="frame" x="144" y="189" width="87" height="30"/>
+                                <rect key="frame" x="144" y="190" width="87" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Start Level 2"/>
                                 <connections>
@@ -60,7 +60,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Evw-7j-K6Y">
-                                <rect key="frame" x="145" y="151" width="85" height="30"/>
+                                <rect key="frame" x="145" y="152" width="85" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Start Level 1"/>
                                 <connections>
@@ -75,69 +75,77 @@
                     <connections>
                         <outlet property="Level1Button" destination="Evw-7j-K6Y" id="sTf-q8-NTf"/>
                         <outlet property="Level2Button" destination="rA8-Er-rhT" id="6eh-ye-TZO"/>
+                        <outlet property="PopupWindowCloseButton" destination="OW9-Sf-Ope" id="Jz6-fw-LUT"/>
+                        <outlet property="PopupWindowLabel" destination="Z04-eV-YMw" id="fAf-E6-dlA"/>
+                        <outlet property="PopupWindowModuleScoreLabel" destination="5s2-W3-Srr" id="6Ee-r5-y9b"/>
+                        <outlet property="PopupWindowRuntimeScoreLabel" destination="kYT-sL-1w0" id="yoY-rR-sI7"/>
+                        <outlet property="PopupWindowStartLevelButton" destination="uyQ-uv-5aZ" id="Bb9-Uo-Qwc"/>
+                        <outlet property="PopupWindowView" destination="3Se-Rq-p4d" id="Sps-Gm-vNJ"/>
                         <segue destination="64s-Xg-GvJ" kind="show" identifier="LevelSelected" id="1FI-L1-uhw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t78-e6-QoX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="3Se-Rq-p4d">
+                    <rect key="frame" x="0.0" y="0.0" width="276" height="211"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uyQ-uv-5aZ">
+                            <rect key="frame" x="100" y="120" width="74" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Start Level"/>
+                            <connections>
+                                <action selector="popupWindowStartLevelPressed:" destination="C6V-2H-W6R" eventType="touchUpInside" id="xmB-uZ-tDI"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OW9-Sf-Ope">
+                            <rect key="frame" x="118" y="158" width="39" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Close"/>
+                            <connections>
+                                <action selector="popupWindowClosePressed:" destination="C6V-2H-W6R" eventType="touchUpInside" id="exS-3O-Hm3"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Popup Window" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z04-eV-YMw">
+                            <rect key="frame" x="16" y="20" width="243" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Runtime Score: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vTU-Wh-QVC">
+                            <rect key="frame" x="51" y="49" width="121" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Module Score: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GpE-YL-VxJ">
+                            <rect key="frame" x="51" y="78" width="115" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="score" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kYT-sL-1w0">
+                            <rect key="frame" x="180" y="49" width="43" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="score" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5s2-W3-Srr">
+                            <rect key="frame" x="180" y="78" width="43" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" red="0.77778494327853775" green="0.86722511012547021" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <viewLayoutGuide key="safeArea" id="A9w-RP-eaz"/>
+                </view>
             </objects>
             <point key="canvasLocation" x="1335" y="116"/>
-        </scene>
-        <!--Level Select Popup View Controller-->
-        <scene sceneID="eqN-ap-Jyj">
-            <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="R8g-qY-Tdu" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController storyboardIdentifier="LevelPopup" id="efp-hr-b13" customClass="LevelSelectPopupViewController" customModule="iOS_Final_Project" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Io2-Zl-1FW">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IPA-0P-SLF">
-                                <rect key="frame" x="81.5" y="212" width="211" height="242"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Popup Window" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UDr-ei-gIR">
-                                        <rect key="frame" x="48" y="26" width="116" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jkb-kt-leB">
-                                        <rect key="frame" x="86" y="204" width="39" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Close"/>
-                                        <connections>
-                                            <action selector="closePressed:" destination="efp-hr-b13" eventType="touchUpInside" id="DQe-cG-HFZ"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PnO-UK-54c">
-                                        <rect key="frame" x="69" y="166" width="74" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Start Level"/>
-                                        <connections>
-                                            <action selector="startLevelPressed:" destination="efp-hr-b13" eventType="touchUpInside" id="KM2-oe-cyS"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" red="0.77767720526223305" green="0.80869232021737991" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="242" id="JEA-pf-8gO"/>
-                                    <constraint firstAttribute="width" constant="211" id="wXJ-bS-A2d"/>
-                                </constraints>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="IPA-0P-SLF" firstAttribute="centerY" secondItem="Io2-Zl-1FW" secondAttribute="centerY" id="cll-Rh-g78"/>
-                            <constraint firstItem="IPA-0P-SLF" firstAttribute="centerX" secondItem="Io2-Zl-1FW" secondAttribute="centerX" id="wmz-Hi-Duy"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="wZU-Vi-ZSU"/>
-                    </view>
-                    <connections>
-                        <outlet property="levelNameLabel" destination="UDr-ei-gIR" id="Vyz-vh-gb8"/>
-                    </connections>
-                </viewController>
-            </objects>
-            <point key="canvasLocation" x="1334" y="853"/>
         </scene>
         <!--Level View Controller-->
         <scene sceneID="Bhf-kE-b6R">
@@ -146,17 +154,46 @@
                     <view key="view" contentMode="scaleToFill" id="Wdp-eI-5Io">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NdA-zM-jHb">
+                                <rect key="frame" x="24" y="73" width="50" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Play"/>
+                                <connections>
+                                    <action selector="playPausePressed:" destination="64s-Xg-GvJ" eventType="touchUpInside" id="mT8-zd-wWp"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xw2-gC-50o">
+                                <rect key="frame" x="130" y="73" width="32" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Stop"/>
+                                <connections>
+                                    <action selector="stopPressed:" destination="64s-Xg-GvJ" eventType="touchUpInside" id="OD9-wq-Ivz"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XWP-jr-KuA">
+                                <rect key="frame" x="82" y="73" width="32" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Step"/>
+                                <connections>
+                                    <action selector="stepPressed:" destination="64s-Xg-GvJ" eventType="touchUpInside" id="RtU-hc-5Vp"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="N9N-MN-bKH"/>
                     </view>
                     <navigationItem key="navigationItem" id="bsD-ms-j8w"/>
                     <connections>
                         <outlet property="levelNavItem" destination="bsD-ms-j8w" id="yzy-pn-Qn0"/>
+                        <outlet property="playPauseButton" destination="NdA-zM-jHb" id="LNp-Jy-y2P"/>
+                        <outlet property="stepButton" destination="XWP-jr-KuA" id="Pci-ja-wwk"/>
+                        <outlet property="stopButton" destination="xw2-gC-50o" id="2QK-6j-ET3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VEY-FV-huV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2103" y="117"/>
+            <point key="canvasLocation" x="2101.5999999999999" y="116.49175412293854"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="2q4-aD-sRX">
