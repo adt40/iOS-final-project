@@ -8,32 +8,56 @@
 
 import UIKit
 
-class LevelSelectViewController: UIViewController {
-
-    //These should probably be generated programatically, since we have an arbitrary number of levels
-    @IBOutlet weak var Level1Button: UIButton!
-    @IBOutlet weak var Level2Button: UIButton!
+class LevelSelectViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+    
+    @IBOutlet weak var NavBar: UINavigationItem!
     @IBOutlet weak var PopupWindowStartLevelButton: UIButton!
     @IBOutlet weak var PopupWindowCloseButton: UIButton!
     @IBOutlet weak var PopupWindowLabel: UILabel!
     @IBOutlet weak var PopupWindowRuntimeScoreLabel: UILabel!
     @IBOutlet weak var PopupWindowModuleScoreLabel: UILabel!
+    @IBOutlet weak var leftArrowButton: UIButton!
+    @IBOutlet weak var rightArrowButton: UIButton!
     
     @IBOutlet var PopupWindowView: UIView!
     
-    var currentlySelectedData : (world: Int, level: Int, name: String, runtimeScore: Int, moduleScore: Int, sender: UIButton) = (world: 0, level: 0, name: "", runtimeScore: 0, moduleScore: 0, sender: UIButton())
+    var currentlySelectedData : (world: Int, level: Int, name: String, runtimeScore: Int, moduleScore: Int) = (world: 0, level: 0, name: "", runtimeScore: 0, moduleScore: 0)
+    var levels = [Int]()
+    var currentWorld = 1
+    var maxWorld = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        let levelReader = LevelFileReader()
+        levels = levelReader.getLevelCounts()
+        maxWorld = levels.count
+        updateArrayButtonStatus()
     }
 
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return levels[currentWorld - 1]
+    }
     
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath as IndexPath) as! LevelSelectCollectionViewCell
+        
+        cell.label.text = String(currentWorld) + "-" + String(indexPath.item + 1)
+        cell.label.backgroundColor = UIColor.init(red: 0.388, green: 0.604, blue: 0.867, alpha: 1)
+        cell.layer.borderColor = UIColor.black.cgColor
+        cell.layer.borderWidth = 1
+        cell.layer.cornerRadius = 10
+        
+        return cell
+    }
     
-    //connect this with any buttons created
-    @IBAction func startLevelPressed(_ sender: UIButton) {
-        updateLevelData(sender)
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        startLevelPressed(index: indexPath.item + 1)
+    }
+    
+    func startLevelPressed(index: Int) {
+        updateLevelData(index: index)
         PopupWindowLabel.text = currentlySelectedData.name
         PopupWindowRuntimeScoreLabel.text = String(currentlySelectedData.runtimeScore)
         PopupWindowModuleScoreLabel.text = String(currentlySelectedData.moduleScore)
@@ -46,7 +70,7 @@ class LevelSelectViewController: UIViewController {
     }
     
     @IBAction func popupWindowStartLevelPressed(_ sender: UIButton) {
-        performSegue(withIdentifier: "LevelSelected", sender: currentlySelectedData.sender)
+        performSegue(withIdentifier: "LevelSelected", sender: self) //sender might cause problems
     }
     
     @IBAction func popupWindowClosePressed(_ sender: UIButton) {
@@ -57,21 +81,11 @@ class LevelSelectViewController: UIViewController {
         }
     }
     
-    
-    func updateLevelData(_ sender: UIButton){
-        switch (sender) {
-            //Also do this programmatically. Not sure how yet, but it can be done
-        case Level1Button:
-            currentlySelectedData.world = 1
-            currentlySelectedData.level = 1
-        case Level2Button:
-            currentlySelectedData.world = 1
-            currentlySelectedData.level = 2
-        default:
-            currentlySelectedData.world = 1
-            currentlySelectedData.level = 1
-        }
-        currentlySelectedData.sender = sender
+    func updateLevelData(index: Int){
+
+        currentlySelectedData.world = currentWorld
+        currentlySelectedData.level = index
+        
         let levelReader = LevelFileReader()
         let levelData = levelReader.getLevelSelectData(world: currentlySelectedData.world, level: currentlySelectedData.level)
         currentlySelectedData.name = levelData.name
@@ -79,6 +93,40 @@ class LevelSelectViewController: UIViewController {
         currentlySelectedData.moduleScore = levelData.moduleScore
     }
     
+    func updateArrayButtonStatus() {
+        if currentWorld == 1 {
+            leftArrowButton.isHidden = true
+        } else {
+            leftArrowButton.isHidden = false
+        }
+        
+        if currentWorld == maxWorld {
+            rightArrowButton.isHidden = true
+        } else {
+            rightArrowButton.isHidden = false
+        }
+        
+        NavBar.title = "World " + String(currentWorld)
+    }
+    
+    func reloadCollectionView() {
+        guard let collectionView = self.view.viewWithTag(1) as? UICollectionView else {
+            fatalError("no collection subview")
+        }
+        collectionView.reloadData()
+    }
+    
+    @IBAction func rightArrowButtonPressed(_ sender: UIButton) {
+        currentWorld += 1
+        updateArrayButtonStatus()
+        reloadCollectionView()
+    }
+    
+    @IBAction func leftArrowButtonPressed(_ sender: UIButton) {
+        currentWorld -= 1
+        updateArrayButtonStatus()
+        reloadCollectionView()
+    }
     
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

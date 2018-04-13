@@ -60,6 +60,15 @@ class LevelFileReader {
                     rotator.canMove = gridObject["canMove"].boolValue
                 }
                 gridObjects.append(rotator)
+            case "colorzapper":
+                let position = Vector(gridObject["position", "x"].intValue, gridObject["position", "y"].intValue)
+                let direction = Direction.fromString(gridObject["direction"].stringValue)
+                let color = MixableColor(gridObject["color", "r"].intValue, gridObject["color", "y"].intValue, gridObject["color", "b"].intValue)
+                let colorZapper = ColorZapper(position: position, direction: direction, color: color)
+                if gridObject["canMove"].exists() {
+                    colorZapper.canMove = gridObject["canMove"].boolValue
+                }
+                gridObjects.append(colorZapper)
             case "trigger":
                 let position = Vector(gridObject["position", "x"].intValue, gridObject["position", "y"].intValue)
                 let onEnter = gridObject["onEnter"].boolValue
@@ -103,6 +112,52 @@ class LevelFileReader {
         if (moduleScore < oldModuleScore || oldModuleScore == 0) {
             json["ModuleScore"].int = moduleScore
         }
+    }
+    
+    func getLevelCounts() -> [Int] {
+        var levels = [Int]()
+        let fileManager = FileManager.default
+        do {
+            //get files
+            var files = try fileManager.contentsOfDirectory(atPath: Bundle.main.bundlePath)
+            
+            //get only files that start with "level"
+            var workingIndex = 0
+            for file in files {
+                if file.prefix(through: file.index(file.startIndex, offsetBy: 4)) != "level" {
+                    files.remove(at: workingIndex)
+                } else {
+                    workingIndex += 1
+                }
+            }
+            
+            //find highest world
+            var maxWorld = 0
+            for file in files {
+                guard let world = Int(String(file[file.index(file.startIndex, offsetBy: 5)])) else {
+                    fatalError("File world is not valid")
+                }
+                if world > maxWorld {
+                    maxWorld = world
+                }
+            }
+            
+            //initialize bucket array based on highest world
+            levels = Array(repeating: 0, count: maxWorld)
+            
+            //fill bucket
+            for file in files {
+                guard let world = Int(String(file[file.index(file.startIndex, offsetBy: 5)])) else {
+                    fatalError("File world is not valid")
+                }
+                levels[world - 1] += 1
+            }
+            
+        } catch let error as NSError {
+            print("oopsie woopsie: \(error)")
+        }
+        
+        return levels
     }
 }
 

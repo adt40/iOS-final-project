@@ -1,0 +1,56 @@
+{
+  "world": 2,
+  "level": 1,
+  "name": "World two babyyy",
+  "RuntimeScore": 2,
+  "ModuleScore": 6,
+  "GridSize": {
+    "x": 4,
+    "y": 4
+  },
+  "AvailableModules": [
+    "piston",
+    "trigger",
+    "rotator",
+    "colorzapper"
+  ],
+  "GridObjects": [
+    {
+      "type": "colorzapper",
+      "position": {
+        "x": 0,
+        "y": 1
+      },
+      "direction": "right",
+      "color": {
+        "r": 0,
+        "y": 0,
+        "b": 1
+      }
+    },
+    {
+      "type": "color",
+      "position": {
+        "x": 2,
+        "y": 3
+      },
+      "color": {
+        "r": 1,
+        "y": 0,
+        "b": 0
+      }
+    },
+    {
+      "type": "socket",
+      "position": {
+        "x": 3,
+        "y": 0
+      },
+      "color": {
+        "r": 1,
+        "y": 0,
+        "b": 1
+      }
+    }
+  ]
+}

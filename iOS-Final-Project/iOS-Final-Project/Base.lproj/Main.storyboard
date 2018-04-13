@@ -51,20 +51,63 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rA8-Er-rhT">
-                                <rect key="frame" x="144" y="190" width="87" height="30"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="scaleToFill" fixedFrame="YES" scrollEnabled="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="pxd-G0-B5m">
+                                <rect key="frame" x="50" y="91" width="275" height="556"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Start Level 2"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="onf-ol-mOp">
+                                    <size key="itemSize" width="110" height="110"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="4Gd-H4-jgW" customClass="LevelSelectCollectionViewCell" customModule="iOS_Final_Project" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="110" height="110"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="110" height="110"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iYq-Qb-o7G">
+                                                    <rect key="frame" x="0.0" y="0.0" width="109" height="109"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </view>
+                                        <connections>
+                                            <outlet property="label" destination="iYq-Qb-o7G" id="Ooc-7I-AXb"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
                                 <connections>
-                                    <action selector="startLevelPressed:" destination="C6V-2H-W6R" eventType="touchUpInside" id="GgM-a4-Nff"/>
+                                    <outlet property="dataSource" destination="C6V-2H-W6R" id="uDs-iv-lcI"/>
+                                    <outlet property="delegate" destination="C6V-2H-W6R" id="TQs-Hc-5aD"/>
+                                </connections>
+                            </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eJR-58-785">
+                                <rect key="frame" x="325" y="291" width="50" height="84"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="48"/>
+                                <state key="normal" title="&gt;">
+                                    <color key="titleColor" red="0.36395089285714288" green="0.79748883928571423" blue="0.57215401785714282" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="rightArrowButtonPressed:" destination="C6V-2H-W6R" eventType="touchUpInside" id="gHz-aT-Sao"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Evw-7j-K6Y">
-                                <rect key="frame" x="145" y="152" width="85" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IJ2-E5-ZPu">
+                                <rect key="frame" x="0.0" y="291" width="50" height="84"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Start Level 1"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="48"/>
+                                <state key="normal" title="&lt;">
+                                    <color key="titleColor" red="0.36395089289999999" green="0.79748883930000003" blue="0.57215401789999998" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
-                                    <action selector="startLevelPressed:" destination="C6V-2H-W6R" eventType="touchUpInside" id="2v0-ET-Rwq"/>
+                                    <action selector="leftArrowButtonPressed:" destination="C6V-2H-W6R" eventType="touchUpInside" id="iK0-p8-DE3"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -73,14 +116,15 @@
                     </view>
                     <navigationItem key="navigationItem" title="Level Select" id="HN3-nX-1MV"/>
                     <connections>
-                        <outlet property="Level1Button" destination="Evw-7j-K6Y" id="sTf-q8-NTf"/>
-                        <outlet property="Level2Button" destination="rA8-Er-rhT" id="6eh-ye-TZO"/>
+                        <outlet property="NavBar" destination="HN3-nX-1MV" id="hop-aZ-OYA"/>
                         <outlet property="PopupWindowCloseButton" destination="OW9-Sf-Ope" id="Jz6-fw-LUT"/>
                         <outlet property="PopupWindowLabel" destination="Z04-eV-YMw" id="fAf-E6-dlA"/>
                         <outlet property="PopupWindowModuleScoreLabel" destination="5s2-W3-Srr" id="6Ee-r5-y9b"/>
                         <outlet property="PopupWindowRuntimeScoreLabel" destination="kYT-sL-1w0" id="yoY-rR-sI7"/>
                         <outlet property="PopupWindowStartLevelButton" destination="uyQ-uv-5aZ" id="Bb9-Uo-Qwc"/>
                         <outlet property="PopupWindowView" destination="3Se-Rq-p4d" id="Sps-Gm-vNJ"/>
+                        <outlet property="leftArrowButton" destination="IJ2-E5-ZPu" id="uW2-Gy-Xj4"/>
+                        <outlet property="rightArrowButton" destination="eJR-58-785" id="UgM-1H-6Ib"/>
                         <segue destination="64s-Xg-GvJ" kind="show" identifier="LevelSelected" id="1FI-L1-uhw"/>
                     </connections>
                 </viewController>
@@ -145,7 +189,7 @@
                     <viewLayoutGuide key="safeArea" id="A9w-RP-eaz"/>
                 </view>
             </objects>
-            <point key="canvasLocation" x="1335" y="116"/>
+            <point key="canvasLocation" x="1333.5999999999999" y="115.59220389805098"/>
         </scene>
         <!--Level View Controller-->
         <scene sceneID="Bhf-kE-b6R">
