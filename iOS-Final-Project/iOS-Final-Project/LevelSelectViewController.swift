@@ -43,8 +43,12 @@ class LevelSelectViewController: UIViewController, UICollectionViewDataSource, U
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath as IndexPath) as! LevelSelectCollectionViewCell
         
-        cell.label.text = String(currentWorld) + "-" + String(indexPath.item + 1)
-        cell.label.backgroundColor = UIColor.init(red: 0.388, green: 0.604, blue: 0.867, alpha: 1)
+        let level = indexPath.item + 1
+        
+        let cellColor = getVariableLevelSelectColor(world: currentWorld, level: level, maxLevel: indexPath.count)
+        
+        cell.label.text = String(currentWorld) + "-" + String(level)
+        cell.label.backgroundColor = UIColor.init(red: cellColor.r, green: cellColor.g, blue: cellColor.b, alpha: 1)
         cell.layer.borderColor = UIColor.black.cgColor
         cell.layer.borderWidth = 1
         cell.layer.cornerRadius = 10
@@ -53,10 +57,10 @@ class LevelSelectViewController: UIViewController, UICollectionViewDataSource, U
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        startLevelPressed(index: indexPath.item + 1)
+        levelSelected(index: indexPath.item + 1)
     }
     
-    func startLevelPressed(index: Int) {
+    func levelSelected(index: Int) {
         updateLevelData(index: index)
         PopupWindowLabel.text = currentlySelectedData.name
         PopupWindowRuntimeScoreLabel.text = String(currentlySelectedData.runtimeScore)
@@ -70,7 +74,7 @@ class LevelSelectViewController: UIViewController, UICollectionViewDataSource, U
     }
     
     @IBAction func popupWindowStartLevelPressed(_ sender: UIButton) {
-        performSegue(withIdentifier: "LevelSelected", sender: self) //sender might cause problems
+        performSegue(withIdentifier: "LevelSelected", sender: self)
     }
     
     @IBAction func popupWindowClosePressed(_ sender: UIButton) {
@@ -126,6 +130,46 @@ class LevelSelectViewController: UIViewController, UICollectionViewDataSource, U
         currentWorld -= 1
         updateArrayButtonStatus()
         reloadCollectionView()
+    }
+    
+    
+    func getVariableLevelSelectColor(world: Int, level: Int, maxLevel: Int) -> (r: CGFloat, g: CGFloat, b: CGFloat) {
+        var rgb : (r: CGFloat, g: CGFloat, b: CGFloat)
+        var dir : (Int, Int, Int)
+        switch ((world - 1) % 6) {
+        case 0:
+            dir = (-1, 1, 0)
+        case 1:
+            dir = (0, -1, 1)
+        case 2:
+            dir = (1, 0, -1)
+        case 3:
+            dir = (-1, 0, 1)
+        case 4:
+            dir = (0, 1, -1)
+        case 5:
+            dir = (1, -1, 0)
+        default:
+            dir = (1, 1, 1)
+        }
+        
+        let fraction = CGFloat(level - 1) / CGFloat(maxLevel - 1)
+        
+        rgb.r = decodeDir(fraction: fraction, dir: dir.0)
+        rgb.g = decodeDir(fraction: fraction, dir: dir.1)
+        rgb.b = decodeDir(fraction: fraction, dir: dir.2)
+
+        return rgb
+    }
+    
+    func decodeDir(fraction: CGFloat, dir: Int) -> CGFloat {
+        if (dir == 1) {
+            return fraction
+        } else if dir == -1 {
+            return 1 - fraction
+        } else {
+            return 0
+        }
     }
     
     // MARK: - Navigation

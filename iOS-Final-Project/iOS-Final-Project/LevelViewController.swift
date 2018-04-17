@@ -14,12 +14,22 @@ class LevelViewController: UIViewController {
     @IBOutlet weak var stepButton: UIButton!
     @IBOutlet weak var stopButton: UIButton!
     
+    @IBOutlet var settingsPopupView: UIView!
+    @IBOutlet weak var popupSpeedSlider: UISlider!
+    @IBOutlet weak var popupCloseButton: UIButton!
+    
     @IBOutlet weak var levelNavItem: UINavigationItem!
+    
+    
     var world : Int!
     var level : Int!
     var levelData : (name: String, gridSize: Vector, availableModules: [String], gridObjects: [GridObject])!
     
     var playing = false
+    
+    var speed = 0.5
+    
+    var win = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +46,8 @@ class LevelViewController: UIViewController {
         reloadGrid()
     }
     
+    //-----------------------------------------------------------------------------
+    
     func reloadGrid() {
         Grid.initialize(size: levelData.gridSize)
         for gridObject in levelData.gridObjects {
@@ -50,15 +62,18 @@ class LevelViewController: UIViewController {
         while !isWin && iterator < maxIterations && playing {
             isWin = Grid.advanceState()
             iterator += 1
+            
         }
         return isWin
     }
+    
+    //-----------------------------------------------------------------------------
     
     @IBAction func playPausePressed(_ sender: UIButton) {
         if (!playing) {
             playPauseButton.setTitle("Pause", for: .normal)
             stopButton.isEnabled = true
-            run(maxIterations: 20)
+            win = run(maxIterations: 20)
             playing = true
         } else {
             playPauseButton.setTitle("Play", for: .normal)
@@ -68,7 +83,7 @@ class LevelViewController: UIViewController {
     
     @IBAction func stepPressed(_ sender: UIButton) {
         stopButton.isEnabled = true
-        Grid.advanceState()
+        win = Grid.advanceState()
     }
     
     @IBAction func stopPressed(_ sender: UIButton) {
@@ -78,4 +93,23 @@ class LevelViewController: UIViewController {
         reloadGrid()
     }
     
+    //-----------------------------------------------------------------------------
+    
+    @IBAction func settingsPressed(_ sender: UIBarButtonItem) {
+        settingsPopupView.frame = CGRect(x: self.view.bounds.width / 2 - 120, y: 200, width: 240, height: 128)
+        settingsPopupView.alpha = 0
+        UIView.animate(withDuration: 0.5) {
+            self.settingsPopupView.alpha = 1
+        }
+        self.view.addSubview(settingsPopupView)
+    }
+    
+    @IBAction func popupCloseButtonPressed(_ sender: UIButton) {
+        speed = Double(popupSpeedSlider.value)
+        UIView.animate(withDuration: 0.5, animations: {
+            self.settingsPopupView.alpha = 0
+        }) { (true) in
+            self.settingsPopupView.removeFromSuperview()
+        }
+    }
 }
