@@ -56,7 +56,7 @@ class LevelViewController: UIViewController {
         boardScene!.renderGrid(gridSize: levelData.gridSize);
         
         //Render all initial modules
-        boardScene!.renderInitialModules();
+        boardScene!.renderInitialModules(gridObjects: levelData.gridObjects);
     }
     
     //-----------------------------------------------------------------------------
