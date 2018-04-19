@@ -11,6 +11,14 @@ import SpriteKit
 
 class BoardScene: SKScene {
 
+    var bufferWidth = CGFloat(0)
+    var tileSize = CGFloat(0)
+    var moduleSize = CGFloat(0)
+    var gridRoot: SKNode?
+    var moduleRoot: SKNode?
+    
+    let GRID_LAYER = CGFloat(1)
+    let MODULE_LAYER = CGFloat(10)
     
     //Only needs to be called once (renders actual grid lines)
     func renderGrid(gridSize: Vector) {
@@ -20,17 +28,17 @@ class BoardScene: SKScene {
         //var tileSize = (size.width - glowEffectSize * 2) / CGFloat(gridSize.x)
         
         //At first, assign tile size based on width
-        var tileSize = size.width / CGFloat(gridSize.x)
-        var bufferWidth = CGFloat(0)
+        tileSize = size.width / CGFloat(gridSize.x)
+        bufferWidth = CGFloat(0)
         //If the tiles are going to overflow vertically, shrink them and add a buffer on the sides
         if (tileSize * CGFloat(gridSize.y) > size.height) {
             tileSize = size.height / CGFloat(gridSize.y)
             bufferWidth = (size.width - tileSize * CGFloat(gridSize.x)) / 2
         }
+        moduleSize = tileSize - 4
         
-        var gridRoot = SKNode()
-        gridRoot.position = CGPoint(x: 0, y: 0)
-        addChild(gridRoot)
+        gridRoot = SKNode()
+        addChild(gridRoot!)
         var filename: String
         var newSprite: SKSpriteNode
         var currentXpos = tileSize / 2 + bufferWidth
@@ -68,6 +76,8 @@ class BoardScene: SKScene {
                 newSprite = SKSpriteNode(imageNamed: filename)
                 //Set its position
                 newSprite.position = CGPoint(x: currentXpos, y: currentYpos)
+                //Set its rendering layer
+                newSprite.zPosition = GRID_LAYER
                 
                 //Set its size
                 newSprite.size = CGSize(width: tileSize, height: tileSize)
@@ -81,7 +91,7 @@ class BoardScene: SKScene {
                     currentXpos = tileSize / 2 + bufferWidth
                     currentYpos -= tileSize
                 }
-                gridRoot.addChild(newSprite)
+                gridRoot!.addChild(newSprite)
             }
         }
         //var testTile = SKSpriteNode(imageNamed: "tile-corner-gray.png")
@@ -90,7 +100,30 @@ class BoardScene: SKScene {
     }
     
     //Only needs to be called once (renders all modules)
-    func renderInitialModules() {
+    func renderInitialModules(gridObjects: [GridObject]) {
+        var newSprite: SKSpriteNode
+        var filename: String
+        moduleRoot = SKNode()
         
+        for gridObject in gridObjects {
+            filename = "module-"
+            //TEMP until we have icons for all modules (will be gridObject.type rather than "temp")
+            filename += "temp"
+            filename += ".png"
+            
+            newSprite = SKSpriteNode(imageNamed: filename)
+            newSprite.position = CGPoint(x: bufferWidth + tileSize * CGFloat(gridObject.position.x) - moduleSize / 2, y: size.height - tileSize * CGFloat(gridObject.position.y) + moduleSize / 2)
+            newSprite.zPosition = MODULE_LAYER
+            
+            if (gridObject.facingDirection == Direction.left) {
+                newSprite.zRotation = CGFloat.pi / 2
+            } else if (gridObject.facingDirection == Direction.down) {
+                newSprite.zRotation = CGFloat.pi
+            } else if (gridObject.facingDirection == Direction.right) {
+                newSprite.zRotation = 3 * CGFloat.pi / 2
+            }
+            
+            moduleRoot!.addChild(newSprite)
+        }
     }
 }
