@@ -18,17 +18,27 @@ class BoardScene: SKScene {
         print("Grid Width: \(gridSize.x)")
         print("Grid Height: \(gridSize.y)")
         //var tileSize = (size.width - glowEffectSize * 2) / CGFloat(gridSize.x)
+        
+        //At first, assign tile size based on width
         var tileSize = size.width / CGFloat(gridSize.x)
+        var bufferWidth = CGFloat(0)
+        //If the tiles are going to overflow vertically, shrink them and add a buffer on the sides
+        if (tileSize * CGFloat(gridSize.y) > size.height) {
+            tileSize = size.height / CGFloat(gridSize.y)
+            bufferWidth = (size.width - tileSize * CGFloat(gridSize.x)) / 2
+        }
+        
         var gridRoot = SKNode()
         gridRoot.position = CGPoint(x: 0, y: 0)
         addChild(gridRoot)
         var filename: String
         var newSprite: SKSpriteNode
-        var currentXpos = tileSize / 2
+        var currentXpos = tileSize / 2 + bufferWidth
         var currentYpos = size.height - tileSize / 2
         var isCorner = true
         var isEdge = false
         var isCentral = false
+        
         for y in 0..<gridSize.y {
             for x in 0..<gridSize.x {
                 print("New Sprite!")
@@ -68,7 +78,7 @@ class BoardScene: SKScene {
                     currentXpos += tileSize
                 //If this was the last tile in the row, reset X and add to Y
                 } else {
-                    currentXpos = tileSize / 2
+                    currentXpos = tileSize / 2 + bufferWidth
                     currentYpos -= tileSize
                 }
                 gridRoot.addChild(newSprite)
