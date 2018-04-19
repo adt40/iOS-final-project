@@ -53,10 +53,10 @@ class LevelViewController: UIViewController {
         initScene();
         
         //Render the grid
-        renderGrid();
+        boardScene!.renderGrid(gridSize: levelData.gridSize);
         
         //Render all initial modules
-        renderInitialModules();
+        boardScene!.renderInitialModules();
     }
     
     //-----------------------------------------------------------------------------
@@ -90,24 +90,10 @@ class LevelViewController: UIViewController {
       //Keey an eye on number of nodes to ensure it everything is generated properly
         BoardView.showsNodeCount = true
        //I think this means things can be rendered in whatever order we want, not sure though. Will check.
-        BoardView.ignoresSiblingOrder = false
+        BoardView.ignoresSiblingOrder = true
         boardScene!.scaleMode = .resizeFill
        //Present the scene!
         BoardView.presentScene(boardScene)
-    }
-    
-    //Only needs to be called once (renders actual grid lines)
-    func renderGrid() {
-        for x in 0..<levelData.gridSize.x {
-            for y in 0..<levelData.gridSize.y {
-                
-            }
-        }
-    }
-    
-    //Only needs to be called once (renders all modules)
-    func renderInitialModules() {
-        
     }
     
     //-----------------------------------------------------------------------------
