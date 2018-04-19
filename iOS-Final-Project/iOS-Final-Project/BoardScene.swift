@@ -101,8 +101,30 @@ class BoardScene: SKScene {
         addChild(moduleRoot!)
         
         for gridObject in gridObjects {
-            if let module = gridObject as? GridColor {
+            
+            //Determine type of module
+            var type: String
+            if let _ = gridObject as? Piston {
+                type = "piston"
+            } else if let obj = gridObject as? TriggerPad {
+                type = "triggerpad-"
+                if (!obj.triggerActive) {
+                    type += "in"
+                }
+                type += "active"
+            } else if let _ = gridObject as? Rotator {
+                type = "rotator"
+            } else if let module = gridObject as? GridColor {
+                type = "gridcolor"
+            } else if let module = gridObject as? GridColorSocket {
+                type = "gridcolorsocket"
+            } else {
+                type = "temp"
+            }
+            
+            if type == "gridcolor" {
                 let path = CGMutablePath()
+                let module = gridObject as! GridColor
                 path.addArc(center: CGPoint.zero, radius: moduleSize / 4, startAngle: 0, endAngle: CGFloat.pi * 2, clockwise: true)
                 var newShape = SKShapeNode(path: path)
                 newShape.lineWidth = 1
@@ -113,22 +135,31 @@ class BoardScene: SKScene {
                 newShape.position = CGPoint(x: bufferWidth + tileSize * CGFloat(gridObject.position.x) + moduleSize / 2 + (tileSize - moduleSize) / 2, y: size.height - tileSize * CGFloat(gridObject.position.y) - moduleSize / 2 - (tileSize - moduleSize) / 2)
                 newShape.zPosition = MODULE_LAYER + 1
                 moduleRoot!.addChild(newShape)
+            } else if type == "gridcolorsocket" {
+                let module = gridObject as! GridColorSocket
+                var path = CGMutablePath()
+                path.addRect(CGRect(x: -moduleSize / 2, y: -moduleSize / 2, width: moduleSize, height: moduleSize))
+                var newShape = SKShapeNode(path: path)
+                newShape.lineWidth = 1
+                var color = module.desiredColor.toRGB()
+                newShape.fillColor = SKColor(red: CGFloat(color.r)/255, green: CGFloat(color.g)/255, blue: CGFloat(color.b)/255, alpha: 0.8)
+                newShape.strokeColor = SKColor.white
+                
+                newShape.position = CGPoint(x: bufferWidth + tileSize * CGFloat(gridObject.position.x) + moduleSize / 2 + (tileSize - moduleSize) / 2, y: size.height - tileSize * CGFloat(gridObject.position.y) - moduleSize / 2 - (tileSize - moduleSize) / 2)
+                newShape.zPosition = MODULE_LAYER - 1
+                moduleRoot!.addChild(newShape)
+                
+                path = CGMutablePath()
+                path.addArc(center: CGPoint.zero, radius: moduleSize / 4, startAngle: 0, endAngle: 2 * CGFloat.pi, clockwise: true)
+                var holeShape = SKShapeNode(path: path)
+                holeShape.fillColor = SKColor.white
+                holeShape.strokeColor = SKColor.black
+                holeShape.position = CGPoint.zero
+                holeShape.zPosition = 1
+                
+                newShape.addChild(holeShape)
             } else {
                 //Select image file
-                var type: String
-                if let _ = gridObject as? Piston {
-                    type = "piston"
-                } else if let obj = gridObject as? TriggerPad {
-                    type = "triggerpad-"
-                    if (!obj.triggerActive) {
-                        type += "in"
-                    }
-                    type += "active"
-                } else if let _ = gridObject as? Rotator {
-                    type = "rotator"
-                } else {
-                    type = "temp"
-                }
                 
                 filename = "module-\(type).png"
                 
@@ -141,6 +172,8 @@ class BoardScene: SKScene {
                 //Set sprite rendering order
                 if (type == "triggerpad-active" || type == "triggerpad-inactive") {
                     newSprite.zPosition = MODULE_LAYER - 2
+                } else if (type == "rotator") {
+                    newSprite.zPosition = MODULE_LAYER + 2
                 } else {
                     newSprite.zPosition = MODULE_LAYER
                 }
