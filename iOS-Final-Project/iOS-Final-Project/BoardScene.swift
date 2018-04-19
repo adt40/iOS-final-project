@@ -18,7 +18,8 @@ class BoardScene: SKScene {
         print("Grid Width: \(gridSize.x)")
         print("Grid Height: \(gridSize.y)")
         let glowEffectSize = CGFloat(39)
-        var tileSize = (size.width - glowEffectSize * 2) / CGFloat(gridSize.x)
+        //var tileSize = (size.width - glowEffectSize * 2) / CGFloat(gridSize.x)
+        var tileSize = size.width / CGFloat(gridSize.x)
         var gridRoot = SKNode()
         gridRoot.position = CGPoint(x: 0, y: 0)
         addChild(gridRoot)
@@ -55,7 +56,6 @@ class BoardScene: SKScene {
                 } else {
                     filename += "central-"
                 }
-                
                 //Decide on color. Fun fact: on a checkerboard, the manhattan distance determines color!
                 if ((x + y) % 2 == 1) {
                     filename += "white"
@@ -97,7 +97,7 @@ class BoardScene: SKScene {
                 //Figure out position of next tile
                 //If this tile was the first in the row, add a little extra for the glow effect
                 if (x == 0) {
-                    currentXpos += (newSprite.size.width + tileSize) / 2
+                    currentXpos += glowEffectSize / 2 + tileSize
                 //If this tile was not the first, add a standard tile size
                 } else if (x < gridSize.x - 1) {
                     currentXpos += tileSize
