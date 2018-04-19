@@ -68,22 +68,47 @@ class LevelViewController: UIViewController {
         }
     }
     
-    func run(maxIterations: Int) -> Bool {
-        var isWin = false
+    func run(maxIterations: Int) {
         var iterator = 0
         //can rework this stuff depending on how we wait for each advanceState call
-        while !isWin && iterator < maxIterations && playing {
-            isWin = Grid.advanceState()
-            iterator += 1
-            
+        runRecursive(iterator: iterator, maxIterations: maxIterations)
+    }
+    
+    func runRecursive(iterator: Int, maxIterations: Int) {
+        win = Grid.advanceState()
+        //Super inefficient way of doing this, will animate transitions directly later. For now though, this will get it working
+        boardScene!.moduleRoot!.isHidden = true
+        boardScene!.moduleRoot!.removeFromParent()
+        boardScene!.renderInitialModules(gridObjects: Grid.getState())
+        
+        if (!win && playing && iterator < maxIterations) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + speed) {
+                if (self.playing) {
+                    self.runRecursive(iterator: iterator + 1, maxIterations: maxIterations)
+                }
+            }
+        } else if (playing && iterator < maxIterations) {
+            //If we won, we actually need to render one more time
+            DispatchQueue.main.asyncAfter(deadline: .now() + speed) {
+                if (self.playing) {
+                    self.runRecursive(iterator: maxIterations, maxIterations: maxIterations)
+                }
+            }
+        } else if (playing) {
+            //If we ran out of iterations
+            //TODO: Indicate to user that max iterations has been reached
         }
-        return isWin
     }
     
     //-------------------------------------GRAPHICS--------------------------------
     
     //Initialize the BoardScene to display sprites
     func initScene() {
+        //If we still have a previous boardScene
+        if (boardScene != nil) {
+            boardScene!.removeAllActions()
+            boardScene!.removeAllChildren()
+        }
         boardScene = BoardScene(size: BoardView.bounds.size)
         //Allow us to monitor FPS to keep an eye on performance
         BoardView.showsFPS = true
@@ -102,8 +127,8 @@ class LevelViewController: UIViewController {
         if (!playing) {
             playPauseButton.setTitle("Pause", for: .normal)
             stopButton.isEnabled = true
-            win = run(maxIterations: 20)
             playing = true
+            run(maxIterations: 20)
         } else {
             playPauseButton.setTitle("Play", for: .normal)
             playing = false
@@ -112,7 +137,8 @@ class LevelViewController: UIViewController {
     
     @IBAction func stepPressed(_ sender: UIButton) {
         stopButton.isEnabled = true
-        win = Grid.advanceState()
+        //Only render one step
+        run(maxIterations: 0)
     }
     
     @IBAction func stopPressed(_ sender: UIButton) {

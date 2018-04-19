@@ -102,6 +102,7 @@ class BoardScene: SKScene {
     
     //Only needs to be called once (renders all modules)
     func renderInitialModules(gridObjects: [GridObject]) {
+        print("Rendering Modules")
         var newSprite: SKSpriteNode
         var filename: String
         moduleRoot = SKNode()
@@ -109,6 +110,10 @@ class BoardScene: SKScene {
         addChild(moduleRoot!)
         
         for gridObject in gridObjects {
+            print("Module!")
+            print("X: \(gridObject.position.x)")
+            print("Y: \(gridObject.position.y)")
+            print("Direction: \(gridObject.facingDirection)")
             filename = "module-"
             //TEMP until we have icons for all modules (will be gridObject.type rather than "temp")
             filename += "temp"
