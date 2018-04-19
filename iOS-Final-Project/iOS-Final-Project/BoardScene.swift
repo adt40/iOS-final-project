@@ -215,15 +215,7 @@ class BoardScene: SKScene {
                     pistonArm.position = CGPoint.zero
                     let piston = gridObject as! Piston
                     if (piston.extended) {
-                        if (gridObject.facingDirection == Direction.up) {
-                            pistonArm.position = CGPoint(x: 0, y: -moduleSize * (6/8))
-                        } else if (gridObject.facingDirection == Direction.right) {
-                            pistonArm.position = CGPoint(x: moduleSize * (6/8), y: 0)
-                        } else if (gridObject.facingDirection == Direction.down) {
-                            pistonArm.position = CGPoint(x: 0, y: moduleSize * (6/8))
-                        } else {
-                            pistonArm.position = CGPoint(x: -moduleSize * (6/8), y: 0)
-                        }
+                        pistonArm.position = CGPoint(x: 0, y: moduleSize * (6/8))
                     }
                     pistonArm.zPosition = -1
                     newSprite.addChild(pistonArm)

@@ -8,6 +8,7 @@
 
 import UIKit
 import SpriteKit
+import Foundation
 
 class LevelViewController: UIViewController {
     
@@ -29,11 +30,13 @@ class LevelViewController: UIViewController {
     
     var playing = false
     
-    var speed = 0.5
+    var speed = Double(2)
     
     var win = false
     
     var boardScene: BoardScene?
+    
+    var totalIterations = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,35 +71,28 @@ class LevelViewController: UIViewController {
         }
     }
     
-    func run(maxIterations: Int) {
-        var iterator = 0
-        //can rework this stuff depending on how we wait for each advanceState call
-        runRecursive(iterator: iterator, maxIterations: maxIterations)
-    }
-    
-    func runRecursive(iterator: Int, maxIterations: Int) {
+    func runRecursive() {
+        totalIterations += 1
         win = Grid.advanceState()
         //Super inefficient way of doing this, will animate transitions directly later. For now though, this will get it working
         boardScene!.moduleRoot!.isHidden = true
         boardScene!.moduleRoot!.removeFromParent()
         boardScene!.renderInitialModules(gridObjects: Grid.getState())
         
-        if (!win && playing && iterator < maxIterations) {
-            DispatchQueue.main.asyncAfter(deadline: .now() + speed) {
+        if (!win && playing) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + getSpeed()) {
                 if (self.playing) {
-                    self.runRecursive(iterator: iterator + 1, maxIterations: maxIterations)
-                }
-            }
-        } else if (playing && iterator < maxIterations) {
-            //If we won, we actually need to render one more time
-            DispatchQueue.main.asyncAfter(deadline: .now() + speed) {
-                if (self.playing) {
-                    self.runRecursive(iterator: maxIterations, maxIterations: maxIterations)
+                    self.runRecursive()
                 }
             }
         } else if (playing) {
-            //If we ran out of iterations
-            //TODO: Indicate to user that max iterations has been reached
+            //If we won, we actually need to render one more time
+            DispatchQueue.main.asyncAfter(deadline: .now() + getSpeed()) {
+                if (self.playing) {
+                    self.playing = false
+                    self.runRecursive()
+                }
+            }
         }
     }
     
@@ -117,6 +113,10 @@ class LevelViewController: UIViewController {
         BoardView.presentScene(boardScene)
     }
     
+    func getSpeed() -> Double {
+        return 1 / pow(speed, 1.5)
+    }
+    
     //-----------------------------------------------------------------------------
     
     @IBAction func playPausePressed(_ sender: UIButton) {
@@ -124,7 +124,7 @@ class LevelViewController: UIViewController {
             playPauseButton.setTitle("Pause", for: .normal)
             stopButton.isEnabled = true
             playing = true
-            run(maxIterations: 20)
+            runRecursive()
         } else {
             playPauseButton.setTitle("Play", for: .normal)
             playing = false
@@ -134,13 +134,14 @@ class LevelViewController: UIViewController {
     @IBAction func stepPressed(_ sender: UIButton) {
         stopButton.isEnabled = true
         //Only render one step
-        run(maxIterations: 0)
+        runRecursive()
     }
     
     @IBAction func stopPressed(_ sender: UIButton) {
         playPauseButton.setTitle("Play", for: .normal)
         stopButton.isEnabled = false
         playing = false
+        totalIterations = 0
         reloadGrid()
     }
     
