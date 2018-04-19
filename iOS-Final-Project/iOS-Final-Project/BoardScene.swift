@@ -113,16 +113,42 @@ class BoardScene: SKScene {
                 newShape.zPosition = MODULE_LAYER + 1
                 moduleRoot!.addChild(newShape)
             } else {
-                filename = "module-"
-                //TEMP until we have icons for all modules (will be gridObject.type rather than "temp")
-                filename += "temp"
-                filename += ".png"
+                //Select image file
+                var type: String
+                if let _ = gridObject as? Piston {
+                    type = "piston"
+                } else if let obj = gridObject as? TriggerPad {
+                    type = "triggerpad-"
+                    if (obj.triggerActive) {
+                        type += "in"
+                    }
+                    type += "active"
+                } else if let _ = gridObject as? Rotator {
+                    type = "rotator"
+                } else {
+                    type = "temp"
+                }
                 
+                filename = "module-\(type).png"
+                
+                //Generate Sprite
                 var newSprite = SKSpriteNode(imageNamed: filename)
+                
+                //Set Sprite position
                 newSprite.position = CGPoint(x: bufferWidth + tileSize * CGFloat(gridObject.position.x) + moduleSize / 2 + (tileSize - moduleSize) / 2, y: size.height - tileSize * CGFloat(gridObject.position.y) - moduleSize / 2 - (tileSize - moduleSize) / 2)
+                
+                //Set sprite rendering order
                 newSprite.zPosition = MODULE_LAYER
-                newSprite.size = CGSize(width: moduleSize, height: moduleSize)
+                
+                //Account for minor differences in size between modules
+                if (type == "rotator") {
+                    //Rotator is bigger so that it stretches into adjacent tiles to make rotation ability more intuitive
+                    newSprite.size = CGSize(width: moduleSize * 1.5, height: moduleSize * 1.5)
+                } else {
+                    newSprite.size = CGSize(width: moduleSize, height: moduleSize)
+                }
             
+                //Set Sprite direction
                 if (gridObject.facingDirection == Direction.left) {
                     newSprite.zRotation = CGFloat.pi / 2
                 } else if (gridObject.facingDirection == Direction.down) {
@@ -131,6 +157,25 @@ class BoardScene: SKScene {
                     newSprite.zRotation = 3 * CGFloat.pi / 2
                 }
             
+                //Render any relevant subcomponents
+                if (type == "piston") {
+                    var pistonArm = SKSpriteNode(imageNamed: "module-piston-extension.png")
+                    pistonArm.size = newSprite.size
+                    pistonArm.position = CGPoint.zero
+                    if ((gridObject as? Module)!.triggerActive) {
+                        if (gridObject.facingDirection == Direction.up) {
+                            pistonArm.position = CGPoint(x: 0, y: moduleSize * (7/8))
+                        } else if (gridObject.facingDirection == Direction.right) {
+                            pistonArm.position = CGPoint(x: moduleSize * (7/8), y: 0)
+                        } else if (gridObject.facingDirection == Direction.down) {
+                            pistonArm.position = CGPoint(x: 0, y: -moduleSize * (7/8))
+                        } else {
+                            pistonArm.position = CGPoint(x: -moduleSize * (7/8), y: 0)
+                        }
+                    }
+                    pistonArm.zPosition = -1
+                    newSprite.addChild(pistonArm)
+                }
                 moduleRoot!.addChild(newSprite)
             }
         }
