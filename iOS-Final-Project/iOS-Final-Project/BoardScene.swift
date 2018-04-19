@@ -20,6 +20,17 @@ class BoardScene: SKScene {
     let GRID_LAYER = CGFloat(1)
     let MODULE_LAYER = CGFloat(10)
     
+    deinit {
+        self.removeAllActions()
+        self.removeAllChildren()
+        gridRoot!.removeAllActions()
+        gridRoot!.removeAllChildren()
+        gridRoot = nil
+        moduleRoot!.removeAllActions()
+        moduleRoot!.removeAllChildren()
+        moduleRoot = nil
+    }
+    
     //Only needs to be called once (renders actual grid lines)
     func renderGrid(gridSize: Vector) {
         //Have to subtract 78 because of the 39 point blue glow on the edges on either side of grid
@@ -118,6 +129,8 @@ class BoardScene: SKScene {
                 type = "gridcolor"
             } else if let module = gridObject as? GridColorSocket {
                 type = "gridcolorsocket"
+            } else if let module = gridObject as? Wall {
+                type = "wall"
             } else {
                 type = "temp"
             }
