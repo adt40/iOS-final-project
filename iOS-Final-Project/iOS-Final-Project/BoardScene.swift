@@ -23,8 +23,6 @@ class BoardScene: SKScene {
     //Only needs to be called once (renders actual grid lines)
     func renderGrid(gridSize: Vector) {
         //Have to subtract 78 because of the 39 point blue glow on the edges on either side of grid
-        print("Grid Width: \(gridSize.x)")
-        print("Grid Height: \(gridSize.y)")
         //var tileSize = (size.width - glowEffectSize * 2) / CGFloat(gridSize.x)
         
         //At first, assign tile size based on width
@@ -50,11 +48,6 @@ class BoardScene: SKScene {
         
         for y in 0..<gridSize.y {
             for x in 0..<gridSize.x {
-                print("New Sprite!")
-                print("Grid X: \(x)")
-                print("Grid Y: \(y)")
-                print("X Pos: \(currentXpos)")
-                print("Y Pos: \(currentYpos)")
                 //Initialize filename
                 filename = "tile-central-"
                 
@@ -102,37 +95,44 @@ class BoardScene: SKScene {
     
     //Only needs to be called once (renders all modules)
     func renderInitialModules(gridObjects: [GridObject]) {
-        print("Rendering Modules")
-        var newSprite: SKSpriteNode
         var filename: String
         moduleRoot = SKNode()
         moduleRoot!.zPosition = MODULE_LAYER
         addChild(moduleRoot!)
         
         for gridObject in gridObjects {
-            print("Module!")
-            print("X: \(gridObject.position.x)")
-            print("Y: \(gridObject.position.y)")
-            print("Direction: \(gridObject.facingDirection)")
-            filename = "module-"
-            //TEMP until we have icons for all modules (will be gridObject.type rather than "temp")
-            filename += "temp"
-            filename += ".png"
+            if let module = gridObject as? GridColor {
+                let path = CGMutablePath()
+                path.addArc(center: CGPoint.zero, radius: moduleSize / 2, startAngle: 0, endAngle: CGFloat.pi * 2, clockwise: true)
+                var newShape = SKShapeNode(path: path)
+                newShape.lineWidth = 1
+                var color = module.color.toRGB()
+                newShape.fillColor = SKColor(red: CGFloat(color.r)/255, green: CGFloat(color.g)/255, blue: CGFloat(color.b)/255, alpha: 0.8)
+                
+                newShape.position = CGPoint(x: bufferWidth + tileSize * CGFloat(gridObject.position.x) + moduleSize / 2 + (tileSize - moduleSize) / 2, y: size.height - tileSize * CGFloat(gridObject.position.y) - moduleSize / 2 - (tileSize - moduleSize) / 2)
+                newShape.zPosition = MODULE_LAYER + 1
+                moduleRoot!.addChild(newShape)
+            } else {
+                filename = "module-"
+                //TEMP until we have icons for all modules (will be gridObject.type rather than "temp")
+                filename += "temp"
+                filename += ".png"
+                
+                var newSprite = SKSpriteNode(imageNamed: filename)
+                newSprite.position = CGPoint(x: bufferWidth + tileSize * CGFloat(gridObject.position.x) + moduleSize / 2 + (tileSize - moduleSize) / 2, y: size.height - tileSize * CGFloat(gridObject.position.y) - moduleSize / 2 - (tileSize - moduleSize) / 2)
+                newSprite.zPosition = MODULE_LAYER
+                newSprite.size = CGSize(width: moduleSize, height: moduleSize)
             
-            newSprite = SKSpriteNode(imageNamed: filename)
-            newSprite.position = CGPoint(x: bufferWidth + tileSize * CGFloat(gridObject.position.x) + moduleSize / 2 + (tileSize - moduleSize) / 2, y: size.height - tileSize * CGFloat(gridObject.position.y) - moduleSize / 2 - (tileSize - moduleSize) / 2)
-            newSprite.zPosition = MODULE_LAYER
-            newSprite.size = CGSize(width: moduleSize, height: moduleSize)
+                if (gridObject.facingDirection == Direction.left) {
+                    newSprite.zRotation = CGFloat.pi / 2
+                } else if (gridObject.facingDirection == Direction.down) {
+                    newSprite.zRotation = CGFloat.pi
+                } else if (gridObject.facingDirection == Direction.right) {
+                    newSprite.zRotation = 3 * CGFloat.pi / 2
+                }
             
-            if (gridObject.facingDirection == Direction.left) {
-                newSprite.zRotation = CGFloat.pi / 2
-            } else if (gridObject.facingDirection == Direction.down) {
-                newSprite.zRotation = CGFloat.pi
-            } else if (gridObject.facingDirection == Direction.right) {
-                newSprite.zRotation = 3 * CGFloat.pi / 2
+                moduleRoot!.addChild(newSprite)
             }
-            
-            moduleRoot!.addChild(newSprite)
         }
     }
 }

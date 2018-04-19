@@ -105,10 +105,6 @@ class LevelViewController: UIViewController {
     //Initialize the BoardScene to display sprites
     func initScene() {
         //If we still have a previous boardScene
-        if (boardScene != nil) {
-            boardScene!.removeAllActions()
-            boardScene!.removeAllChildren()
-        }
         boardScene = BoardScene(size: BoardView.bounds.size)
         //Allow us to monitor FPS to keep an eye on performance
         BoardView.showsFPS = true
