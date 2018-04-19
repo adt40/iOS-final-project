@@ -40,11 +40,15 @@ class TriggerPad : Module {
         if triggerOnEnter {
             if let _ = Grid.getHittableGridObjectsAt(position: position) {
                 triggerActive = true
+            } else {
+                triggerActive = false
             }
         } else {
             //if currentTime is at initial time, or if repeat is nonzero and currentTime is at a repeat time
             if Grid.currentTime == triggerOnTimeStart || (triggerOnTimeRepeat != 0 && (Grid.currentTime - triggerOnTimeStart) % triggerOnTimeRepeat == 0) {
                 triggerActive = true
+            } else {
+                triggerActive = false
             }
         }
 	}
