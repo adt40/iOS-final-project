@@ -19,6 +19,7 @@ class Grid {
     static func initialize(size: Vector) {
         maxGridPosition = Vector(size.x - 1, size.y - 1)
 		currentTime = 0
+        state = []
 	}
     
     static func addGridObject(gridObject: GridObject) {
