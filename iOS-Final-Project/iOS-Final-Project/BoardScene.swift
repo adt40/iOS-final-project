@@ -38,6 +38,7 @@ class BoardScene: SKScene {
         moduleSize = tileSize - 4
         
         gridRoot = SKNode()
+        gridRoot!.zPosition = GRID_LAYER
         addChild(gridRoot!)
         var filename: String
         var newSprite: SKSpriteNode
@@ -104,6 +105,8 @@ class BoardScene: SKScene {
         var newSprite: SKSpriteNode
         var filename: String
         moduleRoot = SKNode()
+        moduleRoot!.zPosition = MODULE_LAYER
+        addChild(moduleRoot!)
         
         for gridObject in gridObjects {
             filename = "module-"
