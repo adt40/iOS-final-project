@@ -169,7 +169,6 @@ class BoardScene: SKScene {
                     pistonArm.position = CGPoint.zero
                     let piston = gridObject as! Piston
                     if (piston.extended) {
-                        piston.extended = false
                         if (gridObject.facingDirection == Direction.up) {
                             pistonArm.position = CGPoint(x: 0, y: -moduleSize * (6/8))
                         } else if (gridObject.facingDirection == Direction.right) {

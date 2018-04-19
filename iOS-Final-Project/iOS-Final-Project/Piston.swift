@@ -24,4 +24,8 @@ class Piston : Module {
         //TODO: Don't extend piston if extending it would push arm off grid or if it is blocked
         extended = true
 	}
+    
+    override func deactivate() {
+        extended = false
+    }
 }

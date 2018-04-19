@@ -18,15 +18,23 @@ class Module : GridObject {
 
 	func listenForTrigger() {
 		let adjacents = Grid.getAllAdjacentGridObjectsAt(position: position)
+        var actionPerformed = false
 		for gridObject in adjacents {
             if let module = gridObject as? Module {
                 if module.triggerActive {
                     performAction()
+                    actionPerformed = true
                 }
             }
+        }
+        if !actionPerformed {
+            deactivate()
         }
     }
 
 	//override in child if applicable
 	func performAction() {}
+    
+    //override in child if applicable
+    func deactivate() {}
 }
