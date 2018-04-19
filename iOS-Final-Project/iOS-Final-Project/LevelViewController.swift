@@ -44,6 +44,12 @@ class LevelViewController: UIViewController {
         
         //Initialize and fill the grid
         reloadGrid()
+        
+        //Render the grid
+        renderGrid();
+        
+        //Render all initial modules
+        renderInitialModules();
     }
     
     //-----------------------------------------------------------------------------
@@ -65,6 +71,18 @@ class LevelViewController: UIViewController {
             
         }
         return isWin
+    }
+    
+    //-----------------------------------------------------------------------------
+    
+    //Only needs to be called once (renders actual grid lines)
+    func renderGrid() {
+        
+    }
+    
+    //Only needs to be called once (renders all modules)
+    func renderInitialModules() {
+        
     }
     
     //-----------------------------------------------------------------------------
