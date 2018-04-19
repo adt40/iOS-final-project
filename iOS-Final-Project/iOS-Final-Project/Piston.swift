@@ -21,5 +21,7 @@ class Piston : Module {
         if let gridObject = Grid.getHittableGridObjectsAt(position: position + facingDirection.toVector()) {
             gridObject.currentVelocity = (1, facingDirection)
         }
+        //TODO: Don't extend piston if extending it would push arm off grid or if it is blocked
+        extended = true
 	}
 }

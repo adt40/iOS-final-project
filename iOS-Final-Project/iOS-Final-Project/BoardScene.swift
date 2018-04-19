@@ -119,7 +119,7 @@ class BoardScene: SKScene {
                     type = "piston"
                 } else if let obj = gridObject as? TriggerPad {
                     type = "triggerpad-"
-                    if (obj.triggerActive) {
+                    if (!obj.triggerActive) {
                         type += "in"
                     }
                     type += "active"
@@ -138,7 +138,11 @@ class BoardScene: SKScene {
                 newSprite.position = CGPoint(x: bufferWidth + tileSize * CGFloat(gridObject.position.x) + moduleSize / 2 + (tileSize - moduleSize) / 2, y: size.height - tileSize * CGFloat(gridObject.position.y) - moduleSize / 2 - (tileSize - moduleSize) / 2)
                 
                 //Set sprite rendering order
-                newSprite.zPosition = MODULE_LAYER
+                if (type == "triggerpad-active" || type == "triggerpad-inactive") {
+                    newSprite.zPosition = MODULE_LAYER - 2
+                } else {
+                    newSprite.zPosition = MODULE_LAYER
+                }
                 
                 //Account for minor differences in size between modules
                 if (type == "rotator") {
@@ -162,15 +166,17 @@ class BoardScene: SKScene {
                     var pistonArm = SKSpriteNode(imageNamed: "module-piston-extension.png")
                     pistonArm.size = newSprite.size
                     pistonArm.position = CGPoint.zero
-                    if ((gridObject as? Module)!.triggerActive) {
+                    let piston = gridObject as! Piston
+                    if (piston.extended) {
+                        piston.extended = false
                         if (gridObject.facingDirection == Direction.up) {
-                            pistonArm.position = CGPoint(x: 0, y: moduleSize * (7/8))
+                            pistonArm.position = CGPoint(x: 0, y: -moduleSize * (6/8))
                         } else if (gridObject.facingDirection == Direction.right) {
-                            pistonArm.position = CGPoint(x: moduleSize * (7/8), y: 0)
+                            pistonArm.position = CGPoint(x: moduleSize * (6/8), y: 0)
                         } else if (gridObject.facingDirection == Direction.down) {
-                            pistonArm.position = CGPoint(x: 0, y: -moduleSize * (7/8))
+                            pistonArm.position = CGPoint(x: 0, y: moduleSize * (6/8))
                         } else {
-                            pistonArm.position = CGPoint(x: -moduleSize * (7/8), y: 0)
+                            pistonArm.position = CGPoint(x: -moduleSize * (6/8), y: 0)
                         }
                     }
                     pistonArm.zPosition = -1
