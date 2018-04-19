@@ -115,8 +115,9 @@ class BoardScene: SKScene {
             filename += ".png"
             
             newSprite = SKSpriteNode(imageNamed: filename)
-            newSprite.position = CGPoint(x: bufferWidth + tileSize * CGFloat(gridObject.position.x) - moduleSize / 2, y: size.height - tileSize * CGFloat(gridObject.position.y) + moduleSize / 2)
+            newSprite.position = CGPoint(x: bufferWidth + tileSize * CGFloat(gridObject.position.x) + moduleSize / 2 + (tileSize - moduleSize) / 2, y: size.height - tileSize * CGFloat(gridObject.position.y) - moduleSize / 2 - (tileSize - moduleSize) / 2)
             newSprite.zPosition = MODULE_LAYER
+            newSprite.size = CGSize(width: moduleSize, height: moduleSize)
             
             if (gridObject.facingDirection == Direction.left) {
                 newSprite.zRotation = CGFloat.pi / 2
