@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SpriteKit
 
 class LevelViewController: UIViewController {
     
@@ -20,6 +21,7 @@ class LevelViewController: UIViewController {
     
     @IBOutlet weak var levelNavItem: UINavigationItem!
     
+    @IBOutlet weak var BoardView: SKView!
     
     var world : Int!
     var level : Int!
@@ -30,6 +32,8 @@ class LevelViewController: UIViewController {
     var speed = 0.5
     
     var win = false
+    
+    var boardScene: BoardScene?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +48,9 @@ class LevelViewController: UIViewController {
         
         //Initialize and fill the grid
         reloadGrid()
+        
+        //Instantiate the board scene
+        initScene();
         
         //Render the grid
         renderGrid();
@@ -73,11 +80,29 @@ class LevelViewController: UIViewController {
         return isWin
     }
     
-    //-----------------------------------------------------------------------------
+    //-------------------------------------GRAPHICS--------------------------------
+    
+    //Initialize the BoardScene to display sprites
+    func initScene() {
+        boardScene = BoardScene(size: BoardView.bounds.size)
+        //Allow us to monitor FPS to keep an eye on performance
+        BoardView.showsFPS = true
+      //Keey an eye on number of nodes to ensure it everything is generated properly
+        BoardView.showsNodeCount = true
+       //I think this means things can be rendered in whatever order we want, not sure though. Will check.
+        BoardView.ignoresSiblingOrder = false
+        boardScene!.scaleMode = .resizeFill
+       //Present the scene!
+        BoardView.presentScene(boardScene)
+    }
     
     //Only needs to be called once (renders actual grid lines)
     func renderGrid() {
-        
+        for x in 0..<levelData.gridSize.x {
+            for y in 0..<levelData.gridSize.y {
+                
+            }
+        }
     }
     
     //Only needs to be called once (renders all modules)

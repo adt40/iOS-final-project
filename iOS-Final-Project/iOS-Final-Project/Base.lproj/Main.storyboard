@@ -223,6 +223,10 @@
                                     <action selector="stepPressed:" destination="64s-Xg-GvJ" eventType="touchUpInside" id="RtU-hc-5Vp"/>
                                 </connections>
                             </button>
+                            <skView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G1n-5w-GrU">
+                                <rect key="frame" x="0.0" y="120" width="375" height="547"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            </skView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="N9N-MN-bKH"/>
@@ -235,6 +239,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="BoardView" destination="G1n-5w-GrU" id="LaT-WK-neM"/>
                         <outlet property="levelNavItem" destination="bsD-ms-j8w" id="yzy-pn-Qn0"/>
                         <outlet property="playPauseButton" destination="NdA-zM-jHb" id="LNp-Jy-y2P"/>
                         <outlet property="popupCloseButton" destination="EPK-zk-ifa" id="fwb-rU-6Pu"/>
