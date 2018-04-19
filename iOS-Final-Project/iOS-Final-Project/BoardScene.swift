@@ -110,13 +110,13 @@ class BoardScene: SKScene {
                     currentXpos = (glowEffectSize + tileSize) / 2
                     //If this was the first row, add a little extra for the glow effect
                     if (y == 0) {
-                        currentYpos += (newSprite.size.height + tileSize) / 2
+                        currentYpos -= (newSprite.size.height + tileSize) / 2
                     //If not, add a standard tile size
                     } else if (y < gridSize.y - 1) {
-                        currentYpos += tileSize
+                        currentYpos -= tileSize
                         //If this was the second-to-last row, add a little adjustment for the glow effect on the bottom
                         if (y == gridSize.y - 2) {
-                            currentYpos += glowEffectSize / 2
+                            currentYpos -= glowEffectSize / 2
                         }
                     }
                 }
