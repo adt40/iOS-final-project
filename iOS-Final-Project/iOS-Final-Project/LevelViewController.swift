@@ -50,13 +50,13 @@ class LevelViewController: UIViewController {
         reloadGrid()
         
         //Instantiate the board scene
-        initScene();
+        initScene()
         
         //Render the grid
-        boardScene!.renderGrid(gridSize: levelData.gridSize);
+        boardScene!.renderGrid(gridSize: levelData.gridSize)
         
         //Render all initial modules
-        boardScene!.renderInitialModules(gridObjects: levelData.gridObjects);
+        boardScene!.renderInitialModules(gridObjects: levelData.gridObjects)
     }
     
     //-----------------------------------------------------------------------------
