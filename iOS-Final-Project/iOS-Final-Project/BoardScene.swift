@@ -124,7 +124,7 @@ class BoardScene: SKScene {
                 }
                 type += "active"
             } else if let _ = gridObject as? Rotator {
-                type = "rotator"
+                type = "rotator-noarrow"
             } else if let module = gridObject as? GridColor {
                 type = "gridcolor"
             } else if let module = gridObject as? GridColorSocket {
@@ -190,14 +190,6 @@ class BoardScene: SKScene {
                 } else {
                     newSprite.zPosition = MODULE_LAYER
                 }
-                
-                //Account for minor differences in size between modules
-                if (type == "rotator") {
-                    //Rotator is bigger so that it stretches into adjacent tiles to make rotation ability more intuitive
-                    newSprite.size = CGSize(width: moduleSize * 1.5, height: moduleSize * 1.5)
-                } else {
-                    newSprite.size = CGSize(width: moduleSize, height: moduleSize)
-                }
             
                 //Set Sprite direction
                 if (gridObject.facingDirection == Direction.left) {
@@ -206,6 +198,24 @@ class BoardScene: SKScene {
                     newSprite.zRotation = CGFloat.pi
                 } else if (gridObject.facingDirection == Direction.right) {
                     newSprite.zRotation = 3 * CGFloat.pi / 2
+                }
+                
+                //Account for minor differences in size between modules
+                if (type == "rotator-noarrow") {
+                    //Rotator is bigger so that it stretches into adjacent tiles to make rotation ability more intuitive
+                    newSprite.size = CGSize(width: moduleSize, height: moduleSize * (73 / 60))
+                    //Adjust position
+                    if (gridObject.facingDirection == Direction.left) {
+                        newSprite.position.x -= moduleSize * (13/120)
+                    } else if (gridObject.facingDirection == Direction.down) {
+                        newSprite.position.y -= moduleSize * (13/120)
+                    } else if (gridObject.facingDirection == Direction.right) {
+                        newSprite.position.x += moduleSize * (13/120)
+                    } else {
+                        newSprite.position.y += moduleSize * (13/120)
+                    }
+                } else {
+                    newSprite.size = CGSize(width: moduleSize, height: moduleSize)
                 }
             
                 //Render any relevant subcomponents
@@ -219,6 +229,32 @@ class BoardScene: SKScene {
                     }
                     pistonArm.zPosition = -1
                     newSprite.addChild(pistonArm)
+                } else if (type == "rotator-noarrow") {
+                    var arrow: SKSpriteNode
+                    if (gridObject as! Rotator).clockwise {
+                        arrow = SKSpriteNode(imageNamed: "module-rotator-arrow-clockwise.png")
+                    } else {
+                        arrow = SKSpriteNode(imageNamed: "module-rotator-arrow-counterclockwise.png")
+                    }
+                    arrow.position = CGPoint(x: 0, y: -moduleSize * (13/120))
+                    arrow.zPosition = 1
+                    
+                    newSprite.addChild(arrow)
+                    
+                    var gear1 = SKSpriteNode(imageNamed: "module-rotator-gear.png")
+                    var gear2 = SKSpriteNode(imageNamed: "module-rotator-gear.png")
+                    
+                    gear1.zPosition = -1
+                    gear2.zPosition = -1
+                    
+                    gear1.position = CGPoint(x: -moduleSize * (3/8), y: moduleSize / 2 + moduleSize * (1/10))
+                    gear2.position = CGPoint(x: moduleSize * (3/8), y: moduleSize / 2 + moduleSize * (1/10))
+                    
+                    gear1.size = CGSize(width: moduleSize * (14 / 60), height: moduleSize * (14 / 60))
+                    gear2.size = CGSize(width: moduleSize * (14 / 60), height: moduleSize * (14 / 60))
+                    
+                    newSprite.addChild(gear1)
+                    newSprite.addChild(gear2)
                 }
                 moduleRoot!.addChild(newSprite)
             }
