@@ -14,6 +14,8 @@ import Foundation
 
 class GridColorSocket : GridObject {
     let desiredColor : MixableColor
+    var waitATurn = false
+    var gridColorToRemove : GridColor?
     
     init(position: Vector, desiredColor: MixableColor) {
         self.desiredColor = desiredColor
@@ -21,14 +23,21 @@ class GridColorSocket : GridObject {
     }
     
     override func move() {
-        if let gridObject = Grid.getHittableGridObjectsAt(position: position) {
-            if let gridColor = gridObject as? GridColor {
-                if gridColor.color == desiredColor {
-                    //You did it!
-                    Grid.removeGridObject(gridObject: gridColor)
-                    Grid.removeGridObject(gridObject: self)
+        if !waitATurn {
+            if let gridObject = Grid.getHittableGridObjectsAt(position: position) {
+                if let gridColor = gridObject as? GridColor {
+                    if gridColor.color == desiredColor {
+                        //You did it!
+                        waitATurn = true
+                        gridColorToRemove = gridColor
+                    }
                 }
             }
+        } else {
+            Grid.removeGridObject(gridObject: gridColorToRemove!)
+            Grid.removeGridObject(gridObject: self)
+            waitATurn = false
         }
+        
     }
 }

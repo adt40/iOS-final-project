@@ -99,6 +99,11 @@ class Grid {
     }
     
 	static func advanceState() -> Bool {
+        let win = testForWin()
+        if win {
+            return win
+        }
+        
 		var modules : [Module] = []
 		for gridObject in state {
             if let module = gridObject as? Module {
@@ -114,7 +119,7 @@ class Grid {
         for gridObject in state {
             gridObject.move()
         }
-        return testForWin()
+        return false
 	}
     
     //Game is won when there are no more colors or sockets left

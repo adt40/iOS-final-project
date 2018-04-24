@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LevelSelectViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class LevelSelectViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var NavBar: UINavigationItem!
     @IBOutlet weak var PopupWindowStartLevelButton: UIButton!
@@ -45,7 +45,7 @@ class LevelSelectViewController: UIViewController, UICollectionViewDataSource, U
         
         let level = indexPath.item + 1
         
-        let cellColor = getVariableLevelSelectColor(world: currentWorld, level: level, maxLevel: indexPath.count)
+        let cellColor = getVariableLevelSelectColor(world: currentWorld, level: level, maxLevel: collectionView.numberOfItems(inSection: 0))
         
         cell.label.text = String(currentWorld) + "-" + String(level)
         cell.label.backgroundColor = UIColor.init(red: cellColor.r, green: cellColor.g, blue: cellColor.b, alpha: 1)
@@ -58,6 +58,13 @@ class LevelSelectViewController: UIViewController, UICollectionViewDataSource, U
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         levelSelected(index: indexPath.item + 1)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let cellsAcross: CGFloat = 2
+        let spaceBetweenCells: CGFloat = 10
+        let dim = (collectionView.bounds.width - (cellsAcross - 1) * spaceBetweenCells) / cellsAcross
+        return CGSize(width: dim, height: dim)
     }
     
     func levelSelected(index: Int) {

@@ -125,11 +125,11 @@ class BoardScene: SKScene {
                 type += "active"
             } else if let _ = gridObject as? Rotator {
                 type = "rotator-noarrow"
-            } else if let module = gridObject as? GridColor {
+            } else if gridObject is GridColor {
                 type = "gridcolor"
-            } else if let module = gridObject as? GridColorSocket {
+            } else if gridObject is GridColorSocket {
                 type = "gridcolorsocket"
-            } else if let module = gridObject as? Wall {
+            } else if gridObject is Wall {
                 type = "wall"
             } else {
                 type = "temp"
@@ -139,9 +139,9 @@ class BoardScene: SKScene {
                 let path = CGMutablePath()
                 let module = gridObject as! GridColor
                 path.addArc(center: CGPoint.zero, radius: moduleSize / 4, startAngle: 0, endAngle: CGFloat.pi * 2, clockwise: true)
-                var newShape = SKShapeNode(path: path)
+                let newShape = SKShapeNode(path: path)
                 newShape.lineWidth = 1
-                var color = module.color.toRGB()
+                let color = module.color.toRGB()
                 newShape.fillColor = SKColor(red: CGFloat(color.r)/255, green: CGFloat(color.g)/255, blue: CGFloat(color.b)/255, alpha: 0.8)
                 newShape.strokeColor = SKColor.white
                 
@@ -152,9 +152,9 @@ class BoardScene: SKScene {
                 let module = gridObject as! GridColorSocket
                 var path = CGMutablePath()
                 path.addRect(CGRect(x: -moduleSize / 2, y: -moduleSize / 2, width: moduleSize, height: moduleSize))
-                var newShape = SKShapeNode(path: path)
+                let newShape = SKShapeNode(path: path)
                 newShape.lineWidth = 1
-                var color = module.desiredColor.toRGB()
+                let color = module.desiredColor.toRGB()
                 newShape.fillColor = SKColor(red: CGFloat(color.r)/255, green: CGFloat(color.g)/255, blue: CGFloat(color.b)/255, alpha: 0.8)
                 newShape.strokeColor = SKColor.white
                 
@@ -164,7 +164,7 @@ class BoardScene: SKScene {
                 
                 path = CGMutablePath()
                 path.addArc(center: CGPoint.zero, radius: moduleSize / 4, startAngle: 0, endAngle: 2 * CGFloat.pi, clockwise: true)
-                var holeShape = SKShapeNode(path: path)
+                let holeShape = SKShapeNode(path: path)
                 holeShape.fillColor = SKColor.white
                 holeShape.strokeColor = SKColor.black
                 holeShape.position = CGPoint.zero
@@ -177,7 +177,7 @@ class BoardScene: SKScene {
                 filename = "module-\(type).png"
                 
                 //Generate Sprite
-                var newSprite = SKSpriteNode(imageNamed: filename)
+                let newSprite = SKSpriteNode(imageNamed: filename)
                 
                 //Set Sprite position
                 newSprite.position = CGPoint(x: bufferWidth + tileSize * CGFloat(gridObject.position.x) + moduleSize / 2 + (tileSize - moduleSize) / 2, y: size.height - tileSize * CGFloat(gridObject.position.y) - moduleSize / 2 - (tileSize - moduleSize) / 2)
@@ -220,7 +220,7 @@ class BoardScene: SKScene {
             
                 //Render any relevant subcomponents
                 if (type == "piston") {
-                    var pistonArm = SKSpriteNode(imageNamed: "module-piston-extension.png")
+                    let pistonArm = SKSpriteNode(imageNamed: "module-piston-extension.png")
                     pistonArm.size = newSprite.size
                     pistonArm.position = CGPoint.zero
                     let piston = gridObject as! Piston
@@ -241,8 +241,8 @@ class BoardScene: SKScene {
                     
                     newSprite.addChild(arrow)
                     
-                    var gear1 = SKSpriteNode(imageNamed: "module-rotator-gear.png")
-                    var gear2 = SKSpriteNode(imageNamed: "module-rotator-gear.png")
+                    let gear1 = SKSpriteNode(imageNamed: "module-rotator-gear.png")
+                    let gear2 = SKSpriteNode(imageNamed: "module-rotator-gear.png")
                     
                     gear1.zPosition = -1
                     gear2.zPosition = -1
