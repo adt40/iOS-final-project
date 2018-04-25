@@ -7,13 +7,25 @@
 //
 
 import UIKit
+import SpriteKit
 
-class MainMenuViewController: UIViewController {
+class MainMenuViewController: UIViewController, UIGestureRecognizerDelegate {
 
+    @IBOutlet weak var spriteView: SKView!
+    var mainMenuScene : MainMenuScene?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        mainMenuScene = MainMenuScene(size: spriteView.bounds.size)
+        mainMenuScene!.scaleMode = .resizeFill
+        spriteView.presentScene(mainMenuScene)
+        
+        mainMenuScene?.initialize()
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        tap.delegate = self
+        self.view.addGestureRecognizer(tap)
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,15 +33,7 @@ class MainMenuViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @objc func handleTap(_ sender: UITapGestureRecognizer) {
+        performSegue(withIdentifier: "ToLevelSelect", sender: self)
     }
-    */
-
 }

@@ -30,6 +30,7 @@
 		8260EDD9204E308E001C44A9 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8260EDD8204E308E001C44A9 /* SwiftyJSON.swift */; };
 		8260EDDB204E30AA001C44A9 /* LevelFileReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8260EDDA204E30AA001C44A9 /* LevelFileReader.swift */; };
 		8260EDDD204E3189001C44A9 /* level1-1.json in Resources */ = {isa = PBXBuildFile; fileRef = 8260EDDC204E3188001C44A9 /* level1-1.json */; };
+		82DA31C6208FF83400030AF6 /* MainMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82DA31C5208FF83400030AF6 /* MainMenuScene.swift */; };
 		82EB4BD8208133FD00C072E5 /* LevelSelectCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EB4BD7208133FD00C072E5 /* LevelSelectCollectionViewCell.swift */; };
 		82EB4BDA208147FF00C072E5 /* level1-3.json in Resources */ = {isa = PBXBuildFile; fileRef = 82EB4BD9208147FF00C072E5 /* level1-3.json */; };
 		82F07AD9207D38B700EF6CE0 /* ColorZapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F07AD8207D38B700EF6CE0 /* ColorZapper.swift */; };
@@ -63,6 +64,7 @@
 		8260EDD8204E308E001C44A9 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		8260EDDA204E30AA001C44A9 /* LevelFileReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelFileReader.swift; sourceTree = "<group>"; };
 		8260EDDC204E3188001C44A9 /* level1-1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "level1-1.json"; sourceTree = "<group>"; };
+		82DA31C5208FF83400030AF6 /* MainMenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuScene.swift; sourceTree = "<group>"; };
 		82EB4BD7208133FD00C072E5 /* LevelSelectCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelSelectCollectionViewCell.swift; sourceTree = "<group>"; };
 		82EB4BD9208147FF00C072E5 /* level1-3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "level1-3.json"; sourceTree = "<group>"; };
 		82F07AD8207D38B700EF6CE0 /* ColorZapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorZapper.swift; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 				0190C88F203FC001001AE736 /* LaunchScreen.storyboard */,
 				0190C892203FC001001AE736 /* Info.plist */,
 				8229DBE020682A2C00ACEC82 /* MainMenuViewController.swift */,
+				82DA31C5208FF83400030AF6 /* MainMenuScene.swift */,
 				9317384F208828A40043CF0B /* LevelBoardViewController.swift */,
 				9317385120882B660043CF0B /* BoardScene.swift */,
 				8229DBE220682A3B00ACEC82 /* LevelSelectViewController.swift */,
@@ -241,6 +244,7 @@
 				0190C8A4203FC0B7001AE736 /* Grid.swift in Sources */,
 				0190C8A3203FC0B7001AE736 /* Vector.swift in Sources */,
 				8260EDD7204E227C001C44A9 /* Rotator.swift in Sources */,
+				82DA31C6208FF83400030AF6 /* MainMenuScene.swift in Sources */,
 				8229DBE520682A4800ACEC82 /* LevelViewController.swift in Sources */,
 				82EB4BD8208133FD00C072E5 /* LevelSelectCollectionViewCell.swift in Sources */,
 				0190C8A5203FC0B7001AE736 /* TriggerPad.swift in Sources */,

@@ -25,11 +25,11 @@ struct MixableColor {
         self.b = b
     }
     
-    func toRGB() -> (r: Int, g: Int, b: Int) {
+    func toRGB() -> (r: Double, g: Double, b: Double) {
         //Found on the internet. Hope this works!
-        var red : Int =    r * 255 / MixableColor.maxColorValue
-        var yellow : Int = y * 255 / MixableColor.maxColorValue
-        var blue : Int =   b * 255 / MixableColor.maxColorValue
+        var red : Double =    Double(r * 255) / Double(MixableColor.maxColorValue)
+        var yellow : Double = Double(y * 255) / Double(MixableColor.maxColorValue)
+        var blue : Double =   Double(b * 255) / Double(MixableColor.maxColorValue)
         
         let white = min(red, yellow, blue)
         
@@ -54,7 +54,7 @@ struct MixableColor {
         let maxGreen = max(red, green, blue)
         
         if maxGreen > 0 {
-            let N = maxYellow / maxGreen
+            let N = Double(maxYellow) / Double(maxGreen)
             red   *= N
             green *= N
             blue  *= N
