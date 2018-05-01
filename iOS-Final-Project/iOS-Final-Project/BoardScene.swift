@@ -119,6 +119,7 @@ class BoardScene: SKScene {
                 type = "piston"
             } else if let obj = gridObject as? TriggerPad {
                 type = "triggerpad-"
+                //TODO: Change to triggerWillBeActive once that's implemented
                 if (!obj.triggerActive) {
                     type += "in"
                 }
