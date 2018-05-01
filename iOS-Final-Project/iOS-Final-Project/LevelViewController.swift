@@ -39,6 +39,7 @@ class LevelViewController: UIViewController {
     var speed = Double(2)
     var win = false
     var boardScene: BoardScene?
+    var runTimer = Timer()
     
     //increment these to keep track of score
     var totalIterations = 0
@@ -77,7 +78,7 @@ class LevelViewController: UIViewController {
         }
     }
     
-    func runRecursive() {
+    @objc func run() {
         totalIterations += 1
         win = Grid.advanceState()
         if win {
@@ -88,20 +89,11 @@ class LevelViewController: UIViewController {
         boardScene!.moduleRoot!.removeFromParent()
         boardScene!.renderInitialModules(gridObjects: Grid.getState())
         
-        if (!win && playing) {
-            DispatchQueue.main.asyncAfter(deadline: .now() + getSpeed()) {
-                if (self.playing) {
-                    self.runRecursive()
-                }
-            }
-        } else if (playing) {
+        if (win && playing) {
             //If we won, we actually need to render one more time
-            DispatchQueue.main.asyncAfter(deadline: .now() + getSpeed()) {
-                if (self.playing) {
-                    self.playing = false
-                    self.runRecursive()
-                }
-            }
+            self.playing = false
+        } else if (!playing && runTimer.isValid) {
+            runTimer.invalidate()
         }
     }
     
@@ -159,7 +151,7 @@ class LevelViewController: UIViewController {
             playPauseButton.setTitle("Pause", for: .normal)
             stopButton.isEnabled = true
             playing = true
-            runRecursive()
+            runTimer = Timer.scheduledTimer(timeInterval: getSpeed(), target: self, selector: #selector(self.run), userInfo: nil, repeats: true)
         } else {
             playPauseButton.setTitle("Play", for: .normal)
             playing = false
@@ -169,7 +161,7 @@ class LevelViewController: UIViewController {
     @IBAction func stepPressed(_ sender: UIButton) {
         stopButton.isEnabled = true
         //Only render one step
-        runRecursive()
+        run()
     }
     
     @IBAction func stopPressed(_ sender: UIButton) {
