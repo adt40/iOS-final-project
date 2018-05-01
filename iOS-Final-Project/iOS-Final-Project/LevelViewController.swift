@@ -69,6 +69,9 @@ class LevelViewController: UIViewController {
         
         //Render all initial modules
         boardScene!.renderInitialModules(gridObjects: levelData.gridObjects)
+        
+        //Render the module bank
+        boardScene!.renderModuleBank(availableModules: levelData.availableModules)
     }
     
     override func viewDidDisappear(_ animated: Bool) {

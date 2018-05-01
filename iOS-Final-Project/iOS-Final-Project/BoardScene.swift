@@ -16,11 +16,13 @@ class BoardScene: SKScene {
     var moduleSize = CGFloat(0)
     var gridRoot: SKNode?
     var moduleRoot: SKNode?
+    var moduleBankRoot: SKNode?
     var boardSpace: CGSize?
     let moduleBankHeight: CGFloat = 100
     
     let GRID_LAYER = CGFloat(1)
     let MODULE_LAYER = CGFloat(10)
+    let MODULE_BANK_LAYER = CGFloat(20)
     
     deinit {
         self.removeAllActions()
@@ -31,6 +33,18 @@ class BoardScene: SKScene {
         moduleRoot!.removeAllActions()
         moduleRoot!.removeAllChildren()
         moduleRoot = nil
+    }
+    
+    func renderModuleBank(availableModules: [String]) {
+        moduleBankRoot = SKNode()
+        moduleBankRoot!.zPosition = MODULE_BANK_LAYER
+        addChild(moduleBankRoot!)
+        
+        var moduleBankBackground = SKShapeNode(rect: CGRect(x: 0, y: 0, width: size.width, height: moduleBankHeight))
+        moduleBankBackground.fillColor = SKColor.white
+        moduleBankBackground.strokeColor = SKColor.gray
+        moduleBankBackground.zPosition = -1
+        moduleBankRoot!.addChild(moduleBankBackground)
     }
     
     //Only needs to be called once (renders actual grid lines)
