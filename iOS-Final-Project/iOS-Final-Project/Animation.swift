@@ -10,26 +10,26 @@ import Foundation
 import SpriteKit
 
 class Animation {
-    var speed: Double = 1
-    var tileSize: CGFloat = 100
+    static var speed: Double = 1
+    static var tileSize: CGFloat = 100
     
-    func setTileSize(size: CGFloat) {
+    static func setTileSize(size: CGFloat) {
         tileSize = size
     }
     
-    func setSpeed(speed: Double) {
+    static func setSpeed(speed: Double) {
         self.speed = speed
     }
     
-    func move(direction: Direction) {
-        return SKAction.moveBy(x: tileSize * direction.toVector().x, y: tileSize * direction.toVector().y, duration: speed)
+    static func move(direction: Direction) -> SKAction {
+        return SKAction.moveBy(x: tileSize * CGFloat(direction.toVector().x), y: tileSize * CGFloat(direction.toVector().y), duration: speed)
     }
     
-    func rotate(clockwise: Bool) {
+    static func rotate(clockwise: Bool) -> SKAction {
         if (clockwise) {
-            return SKAction.rotate(byAngle: -Mathf.pi / 2, duration: speed)
+            return SKAction.rotate(byAngle: -CGFloat.pi / 2, duration: speed)
         } else {
-            return SKAction.rotate(byAngle: Mathf.pi / 2, duration: speed)
+            return SKAction.rotate(byAngle: CGFloat.pi / 2, duration: speed)
         }
     }
 }

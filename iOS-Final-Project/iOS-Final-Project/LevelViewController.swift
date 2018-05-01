@@ -189,6 +189,7 @@ class LevelViewController: UIViewController {
     
     @IBAction func popupCloseButtonPressed(_ sender: UIButton) {
         speed = Double(popupSpeedSlider.value)
+        Animation.setSpeed(speed: getSpeed())
         UIView.animate(withDuration: 0.5, animations: {
             self.settingsPopupView.alpha = 0
         }) { (true) in

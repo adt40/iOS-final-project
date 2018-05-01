@@ -46,6 +46,9 @@ class BoardScene: SKScene {
         }
         moduleSize = tileSize - 4
         
+        //Set the newly calculated tile size in the Animation class
+        Animation.setTileSize(size: tileSize)
+        
         gridRoot = SKNode()
         gridRoot!.zPosition = GRID_LAYER
         addChild(gridRoot!)
