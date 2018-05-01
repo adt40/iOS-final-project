@@ -9,6 +9,7 @@
  Each GridObject will have its own unique (position, hasHitbox) tuple. This can be used to find specific GridObjects
  
 */
+import SpriteKit
 
 class GridObject {
 	var position : Vector
@@ -16,6 +17,7 @@ class GridObject {
 	var hasHitbox : Bool
     var facingDirection : Direction
 	var currentVelocity : (speed: Int, direction: Direction)
+    var uiSprite: SKNode?
     init(position: Vector, canMove: Bool, hasHitbox: Bool, facingDirection: Direction, currentVelocity: (speed: Int, direction: Direction)) {
 		self.position = position
 		self.canMove = canMove
@@ -23,6 +25,10 @@ class GridObject {
         self.facingDirection = facingDirection
 		self.currentVelocity = currentVelocity
 	}
+    
+    func assignSprite(sprite: SKNode) {
+        self.uiSprite = sprite
+    }
 
 	func move() {
 		if canMove {

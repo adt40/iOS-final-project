@@ -148,6 +148,7 @@ class BoardScene: SKScene {
                 newShape.position = CGPoint(x: bufferWidth + tileSize * CGFloat(gridObject.position.x) + moduleSize / 2 + (tileSize - moduleSize) / 2, y: size.height - tileSize * CGFloat(gridObject.position.y) - moduleSize / 2 - (tileSize - moduleSize) / 2)
                 newShape.zPosition = MODULE_LAYER + 1
                 moduleRoot!.addChild(newShape)
+                gridObject.assignSprite(sprite: newShape)
             } else if type == "gridcolorsocket" {
                 let module = gridObject as! GridColorSocket
                 var path = CGMutablePath()
@@ -171,6 +172,7 @@ class BoardScene: SKScene {
                 holeShape.zPosition = 1
                 
                 newShape.addChild(holeShape)
+                gridObject.assignSprite(sprite: newShape)
             } else {
                 //Select image file
                 
@@ -257,6 +259,7 @@ class BoardScene: SKScene {
                     newSprite.addChild(gear2)
                 }
                 moduleRoot!.addChild(newSprite)
+                gridObject.assignSprite(sprite: newSprite)
             }
         }
     }
