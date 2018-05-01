@@ -85,6 +85,12 @@ class LevelViewController: UIViewController {
         for gridObject in Grid.getState() {
             gridObject.uiSprite!.run(SKAction.move(to: CGPoint(x: CGFloat(gridObject.position.x) * boardScene!.tileSize + boardScene!.bufferWidth + boardScene!.tileSize / 2, y: boardScene!.size.height - CGFloat(gridObject.position.y) * boardScene!.tileSize - boardScene!.tileSize / 2), duration: getSpeed()))
             gridObject.uiSprite!.run(SKAction.rotate(toAngle: gridObject.facingDirection.toRadians(), duration: getSpeed(), shortestUnitArc: true))
+            
+            if (gridObject is Piston) {
+                if (gridObject as! Piston).extended {
+                    gridObject.uiSprite!.children[0].run(SKAction.sequence([SKAction.moveTo(y: boardScene!.moduleSize * 0.8, duration: getSpeed() * 0.4), SKAction.moveTo(y: 0, duration: getSpeed() * 0.6)]))
+                }
+            }
         }
         
         if (win && playing) {

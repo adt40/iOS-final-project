@@ -9,6 +9,7 @@
  
 */
 
+import SpriteKit
 
 class Piston : Module {
     var extended = false
