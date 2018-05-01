@@ -20,6 +20,7 @@ class LevelSelectViewController: UIViewController, UICollectionViewDataSource, U
     @IBOutlet weak var rightArrowButton: UIButton!
     
     @IBOutlet var PopupWindowView: UIView!
+    var background: UIVisualEffectView?
     
     var currentlySelectedData : (world: Int, level: Int, name: String, runtimeScore: Int, moduleScore: Int) = (world: 0, level: 0, name: "", runtimeScore: 0, moduleScore: 0)
     var levels = [Int]()
@@ -74,26 +75,37 @@ class LevelSelectViewController: UIViewController, UICollectionViewDataSource, U
         PopupWindowModuleScoreLabel.text = String(currentlySelectedData.moduleScore)
         PopupWindowView.frame = CGRect(x: self.view.bounds.width / 2 - 138, y: 200, width: 276, height: 211)
         PopupWindowView.alpha = 0
+        
+        background = UIVisualEffectView(frame: self.view.frame)
+        background!.effect = UIBlurEffect(style: UIBlurEffectStyle.extraLight)
+        background!.alpha = 0
+        
         UIView.animate(withDuration: 0.5) {
             self.PopupWindowView.alpha = 1
+            self.background!.alpha = 1
         }
+        
+        self.view.addSubview(background!)
         self.view.addSubview(PopupWindowView)
     }
     
     @IBAction func popupWindowStartLevelPressed(_ sender: UIButton) {
         PopupWindowView.removeFromSuperview()
+        background!.removeFromSuperview()
         performSegue(withIdentifier: "LevelSelected", sender: self)
     }
     
     @IBAction func popupWindowClosePressed(_ sender: UIButton) {
         UIView.animate(withDuration: 0.5, animations: {
             self.PopupWindowView.alpha = 0
+            self.background!.alpha = 0
         }) { (true) in
             self.PopupWindowView.removeFromSuperview()
+            self.background!.removeFromSuperview()
         }
     }
     
-    func updateLevelData(index: Int){
+    func updateLevelData(index: Int) {
 
         currentlySelectedData.world = currentWorld
         currentlySelectedData.level = index

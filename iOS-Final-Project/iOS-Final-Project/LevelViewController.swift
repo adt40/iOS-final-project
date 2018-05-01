@@ -35,6 +35,8 @@ class LevelViewController: UIViewController {
     var level : Int!
     var levelData : (name: String, gridSize: Vector, availableModules: [String], gridObjects: [GridObject])!
     
+    var background : UIVisualEffectView?
+    
     var playing = false
     var speed = Double(2)
     var win = false
@@ -81,9 +83,7 @@ class LevelViewController: UIViewController {
     @objc func run() {
         totalIterations += 1
         win = Grid.advanceState()
-        if win {
-            gameWon()
-        }
+        
         //Super inefficient way of doing this, will animate transitions directly later. For now though, this will get it working
         boardScene!.moduleRoot!.isHidden = true
         boardScene!.moduleRoot!.removeFromParent()
@@ -92,6 +92,7 @@ class LevelViewController: UIViewController {
         if (win && playing) {
             //If we won, we actually need to render one more time
             self.playing = false
+            gameWon()
         } else if (!playing && runTimer.isValid) {
             runTimer.invalidate()
         }
@@ -117,9 +118,16 @@ class LevelViewController: UIViewController {
         
         winPopupView.frame = CGRect(x: self.view.bounds.width / 2 - 138, y: 200, width: 276, height: 211)
         winPopupView.alpha = 0
+        
+        background = UIVisualEffectView(frame: self.view.frame)
+        background!.effect = UIBlurEffect(style: UIBlurEffectStyle.extraLight)
+        background!.alpha = 0
+        
         UIView.animate(withDuration: 0.5) {
             self.winPopupView.alpha = 1
+            self.background!.alpha = 1
         }
+        self.view.addSubview(background!)
         self.view.addSubview(winPopupView)
     }
     
@@ -176,6 +184,7 @@ class LevelViewController: UIViewController {
     
     @IBAction func levelSelectPressed(_ sender: UIButton) {
         winPopupView.removeFromSuperview()
+        background!.removeFromSuperview()
         _ = navigationController?.popViewController(animated: true)
     }
     
@@ -183,9 +192,16 @@ class LevelViewController: UIViewController {
     @IBAction func settingsPressed(_ sender: UIBarButtonItem) {
         settingsPopupView.frame = CGRect(x: self.view.bounds.width / 2 - 120, y: 200, width: 240, height: 128)
         settingsPopupView.alpha = 0
+        
+        background = UIVisualEffectView(frame: self.view.frame)
+        background!.effect = UIBlurEffect(style: UIBlurEffectStyle.extraLight)
+        background!.alpha = 0
+        
         UIView.animate(withDuration: 0.5) {
             self.settingsPopupView.alpha = 1
+            self.background!.alpha = 1
         }
+        self.view.addSubview(background!)
         self.view.addSubview(settingsPopupView)
     }
     
@@ -193,7 +209,9 @@ class LevelViewController: UIViewController {
         speed = Double(popupSpeedSlider.value)
         UIView.animate(withDuration: 0.5, animations: {
             self.settingsPopupView.alpha = 0
+            self.background!.alpha = 0
         }) { (true) in
+            self.background!.removeFromSuperview()
             self.settingsPopupView.removeFromSuperview()
         }
     }
