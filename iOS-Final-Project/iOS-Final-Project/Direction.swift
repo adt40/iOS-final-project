@@ -8,6 +8,7 @@
  */
 
 import Foundation
+import SpriteKit
 
 enum Direction {
     case up, down, left, right, neutral
@@ -24,6 +25,21 @@ enum Direction {
             return Vector(1, 0)
         case .neutral:
             return Vector(0, 0)
+        }
+    }
+    
+    func toRadians() -> CGFloat {
+        switch self {
+        case .up:
+            return 0
+        case .down:
+            return CGFloat.pi
+        case .left:
+            return CGFloat.pi / 2
+        case .right:
+            return 3 * CGFloat.pi / 2
+        case .neutral:
+            return 0
         }
     }
     

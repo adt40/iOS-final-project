@@ -81,10 +81,11 @@ class LevelViewController: UIViewController {
     @objc func run() {
         totalIterations += 1
         win = Grid.advanceState()
-        //Super inefficient way of doing this, will animate transitions directly later. For now though, this will get it working
-        boardScene!.moduleRoot!.isHidden = true
-        boardScene!.moduleRoot!.removeFromParent()
-        boardScene!.renderInitialModules(gridObjects: Grid.getState())
+        
+        for gridObject in Grid.getState() {
+            gridObject.uiSprite!.run(SKAction.move(to: CGPoint(x: CGFloat(gridObject.position.x) * boardScene!.tileSize + boardScene!.bufferWidth + boardScene!.tileSize / 2, y: boardScene!.size.height - CGFloat(gridObject.position.y) * boardScene!.tileSize - boardScene!.tileSize / 2), duration: getSpeed()))
+            gridObject.uiSprite!.run(SKAction.rotate(toAngle: gridObject.facingDirection.toRadians(), duration: getSpeed(), shortestUnitArc: true))
+        }
         
         if (win && playing) {
             //If we won, we actually need to render one more time

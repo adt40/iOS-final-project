@@ -22,7 +22,7 @@ class Animation {
     }
     
     static func move(direction: Direction) -> SKAction {
-        return SKAction.moveBy(x: tileSize * CGFloat(direction.toVector().x), y: tileSize * CGFloat(direction.toVector().y), duration: speed)
+        return SKAction.moveBy(x: tileSize * CGFloat(direction.toVector().x), y: -tileSize * CGFloat(direction.toVector().y), duration: speed)
     }
     
     static func rotate(clockwise: Bool) -> SKAction {
