@@ -20,6 +20,13 @@ class LevelViewController: UIViewController {
     @IBOutlet weak var popupSpeedSlider: UISlider!
     @IBOutlet weak var popupCloseButton: UIButton!
     
+    @IBOutlet var winPopupView: UIView!
+    @IBOutlet weak var runtimeScoreLabel: UILabel!
+    @IBOutlet weak var moduleScoreLabel: UILabel!
+    @IBOutlet weak var highScoreLabel: UILabel!
+    @IBOutlet weak var runtimeHighScoreLabel: UILabel!
+    @IBOutlet weak var moduleHighScoreLabel: UILabel!
+    
     @IBOutlet weak var levelNavItem: UINavigationItem!
     
     @IBOutlet weak var BoardView: SKView!
@@ -29,14 +36,13 @@ class LevelViewController: UIViewController {
     var levelData : (name: String, gridSize: Vector, availableModules: [String], gridObjects: [GridObject])!
     
     var playing = false
-    
     var speed = Double(2)
-    
     var win = false
-    
     var boardScene: BoardScene?
     
+    //increment these to keep track of score
     var totalIterations = 0
+    var modulesUsed = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,6 +102,30 @@ class LevelViewController: UIViewController {
         }
     }
     
+    func gameWon() {
+        runtimeScoreLabel.text = String(totalIterations)
+        moduleScoreLabel.text = String(modulesUsed)
+        
+        let levelReader = LevelFileReader()
+        let oldScores = levelReader.getLevelSelectData(world: world, level: level)
+        
+        if totalIterations > oldScores.runtimeScore && modulesUsed <= oldScores.moduleScore {
+            levelReader.updateScore(world: world, level: level, runtimeScore: totalIterations, moduleScore: oldScores.moduleScore)
+            highScoreLabel.isHidden = false
+        } else if totalIterations <= oldScores.runtimeScore && modulesUsed > oldScores.moduleScore {
+            levelReader.updateScore(world: world, level: level, runtimeScore: oldScores.moduleScore, moduleScore: modulesUsed)
+            highScoreLabel.isHidden = false
+        } else if totalIterations > oldScores.runtimeScore && modulesUsed > oldScores.moduleScore {
+            levelReader.updateScore(world: world, level: level, runtimeScore: totalIterations, moduleScore: modulesUsed)
+            highScoreLabel.isHidden = false
+        }
+        
+        let newHighScores = levelReader.getLevelSelectData(world: world, level: level)
+        runtimeHighScoreLabel.text = String(newHighScores.runtimeScore)
+        moduleHighScoreLabel.text = String(newHighScores.moduleScore)
+        
+    }
+    
     //-------------------------------------GRAPHICS--------------------------------
     
     //Initialize the BoardScene to display sprites
@@ -146,6 +176,15 @@ class LevelViewController: UIViewController {
     }
     
     //-----------------------------------------------------------------------------
+    
+    @IBAction func nextLevelPressed(_ sender: UIButton) {
+        
+    }
+    
+    @IBAction func levelSelectPressed(_ sender: UIButton) {
+        
+    }
+    
     
     @IBAction func settingsPressed(_ sender: UIBarButtonItem) {
         settingsPopupView.frame = CGRect(x: self.view.bounds.width / 2 - 120, y: 200, width: 240, height: 128)
