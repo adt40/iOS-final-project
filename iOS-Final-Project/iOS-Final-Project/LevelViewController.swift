@@ -80,6 +80,9 @@ class LevelViewController: UIViewController {
     func runRecursive() {
         totalIterations += 1
         win = Grid.advanceState()
+        if win {
+            gameWon()
+        }
         //Super inefficient way of doing this, will animate transitions directly later. For now though, this will get it working
         boardScene!.moduleRoot!.isHidden = true
         boardScene!.moduleRoot!.removeFromParent()
@@ -107,23 +110,25 @@ class LevelViewController: UIViewController {
         moduleScoreLabel.text = String(modulesUsed)
         
         let levelReader = LevelFileReader()
-        let oldScores = levelReader.getLevelSelectData(world: world, level: level)
         
-        if totalIterations > oldScores.runtimeScore && modulesUsed <= oldScores.moduleScore {
-            levelReader.updateScore(world: world, level: level, runtimeScore: totalIterations, moduleScore: oldScores.moduleScore)
+        let updated = levelReader.updateScore(world: world, level: level, runtimeScore: totalIterations, moduleScore: modulesUsed)
+        if updated {
             highScoreLabel.isHidden = false
-        } else if totalIterations <= oldScores.runtimeScore && modulesUsed > oldScores.moduleScore {
-            levelReader.updateScore(world: world, level: level, runtimeScore: oldScores.moduleScore, moduleScore: modulesUsed)
-            highScoreLabel.isHidden = false
-        } else if totalIterations > oldScores.runtimeScore && modulesUsed > oldScores.moduleScore {
-            levelReader.updateScore(world: world, level: level, runtimeScore: totalIterations, moduleScore: modulesUsed)
-            highScoreLabel.isHidden = false
+        } else {
+            highScoreLabel.isHidden = true
         }
         
         let newHighScores = levelReader.getLevelSelectData(world: world, level: level)
         runtimeHighScoreLabel.text = String(newHighScores.runtimeScore)
         moduleHighScoreLabel.text = String(newHighScores.moduleScore)
         
+        
+        winPopupView.frame = CGRect(x: self.view.bounds.width / 2 - 138, y: 200, width: 276, height: 211)
+        winPopupView.alpha = 0
+        UIView.animate(withDuration: 0.5) {
+            self.winPopupView.alpha = 1
+        }
+        self.view.addSubview(winPopupView)
     }
     
     //-------------------------------------GRAPHICS--------------------------------
@@ -177,12 +182,9 @@ class LevelViewController: UIViewController {
     
     //-----------------------------------------------------------------------------
     
-    @IBAction func nextLevelPressed(_ sender: UIButton) {
-        
-    }
-    
     @IBAction func levelSelectPressed(_ sender: UIButton) {
-        
+        winPopupView.removeFromSuperview()
+        _ = navigationController?.popViewController(animated: true)
     }
     
     

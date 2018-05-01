@@ -17,9 +17,27 @@ class LevelFileReader {
         if let file = Bundle.main.path(forResource: filename, ofType: "json") {
             jsonData = try? Data(contentsOf: URL(fileURLWithPath: file))
         } else {
-            print("file not found")
+            fatalError("file not found")
         }
         json = try! JSON(data: jsonData!)
+    }
+    
+    func saveJSON(world: Int, level: Int) {
+        do {
+            let jsonData = try json.rawData()
+            let filename = "level\(world)-\(level)"
+            if let file = Bundle.main.path(forResource: filename, ofType: "json") {
+                do {
+                    try jsonData.write(to: URL(fileURLWithPath: file))
+                } catch {
+                    fatalError("couldn't write to file")
+                }
+            } else {
+                fatalError("file not found")
+            }
+        } catch {
+            fatalError("\(error)")
+        }
     }
     
     func loadLevel(world: Int, level: Int) -> (name: String, gridSize: Vector, availableModules: [String], gridObjects: [GridObject]){
@@ -99,7 +117,9 @@ class LevelFileReader {
     }
     
     //will check to see if scores should be updated, so call this whenever a level is beaten regardless if it is a high score or not
-    func updateScore(world: Int, level: Int, runtimeScore: Int, moduleScore: Int) {
+    //returns true if a score was updated
+    func updateScore(world: Int, level: Int, runtimeScore: Int, moduleScore: Int) -> Bool {
+        var updated = false
         initJSON(filename: "level" + String(world) + "-" + String(level))
         let oldRuntimeScore = json["RuntimeScore"].intValue
         let oldModuleScore = json["ModuleScore"].intValue
@@ -107,11 +127,19 @@ class LevelFileReader {
         //low scores are good, but a score of 0 means it hasn't been beaten yet
         if (runtimeScore < oldRuntimeScore || oldRuntimeScore == 0) {
             json["RuntimeScore"].int = runtimeScore
+            updated = true
         }
         
         if (moduleScore < oldModuleScore || oldModuleScore == 0) {
             json["ModuleScore"].int = moduleScore
+            updated = true
         }
+        
+        if updated {
+            saveJSON(world: world, level: level)
+        }
+        
+        return updated
     }
     
     func getLevelCounts() -> [Int] {

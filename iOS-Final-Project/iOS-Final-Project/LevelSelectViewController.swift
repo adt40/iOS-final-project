@@ -81,6 +81,7 @@ class LevelSelectViewController: UIViewController, UICollectionViewDataSource, U
     }
     
     @IBAction func popupWindowStartLevelPressed(_ sender: UIButton) {
+        PopupWindowView.removeFromSuperview()
         performSegue(withIdentifier: "LevelSelected", sender: self)
     }
     
