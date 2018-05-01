@@ -18,6 +18,7 @@ class BoardScene: SKScene {
     var moduleRoot: SKNode?
     var moduleBankRoot: SKNode?
     var boardSpace: CGSize?
+    var currentlyDragging: (node: SKNode?, startPosition: CGPoint?, touchStart: CGPoint?, active: Bool) = (nil, nil, nil, false)
     let moduleBankHeight: CGFloat = 100
     let moduleBankPadding: CGFloat = 10
     let bankModuleSpacing: CGFloat = 10
@@ -71,6 +72,7 @@ class BoardScene: SKScene {
             var xPos = moduleBankPadding + (x * ((2 * bankModuleSpacing) + bankModuleSize)) +  bankModuleSpacing + (bankModuleSize / 2)
             var yPos = moduleBankHeight - moduleBankPadding - (y * (2 * bankModuleSpacing + bankModuleSize)) -  (bankModuleSpacing + bankModuleSize / 2)
             newSprite.position = CGPoint(x: xPos, y: yPos)
+            newSprite.name = "module-bank-" + module
             
             //Render any relevant subcomponents
             if (module == "piston") {
@@ -147,6 +149,7 @@ class BoardScene: SKScene {
                 
                 //Set its size
                 newSprite.size = CGSize(width: tileSize, height: tileSize)
+                newSprite.name = "tile(\(Int(newSprite.position.x)),\(Int(newSprite.position.y)))"
                 
                 //Figure out position of next tile
                 //If this tile was the first in the row, add a little extra for the glow effect
@@ -174,155 +177,229 @@ class BoardScene: SKScene {
         addChild(moduleRoot!)
         
         for gridObject in gridObjects {
+            generateModuleSprite(gridObject: gridObject)
+        }
+    }
+    
+    func generateModuleSprite(gridObject: GridObject) {
+        var filename: String
+        //Determine type of module
+        var type: String
+        if let _ = gridObject as? Piston {
+            type = "piston"
+        } else if let obj = gridObject as? TriggerPad {
+            type = "triggerpad-"
+            //TODO: Change to triggerWillBeActive once that's implemented
+            if (!obj.triggerActive) {
+                type += "in"
+            }
+            type += "active"
+        } else if let _ = gridObject as? Rotator {
+            type = "rotator-noarrow"
+        } else if gridObject is GridColor {
+            type = "gridcolor"
+        } else if gridObject is GridColorSocket {
+            type = "gridcolorsocket"
+        } else if gridObject is Wall {
+            type = "wall"
+        } else {
+            type = "temp"
+        }
+        
+        if type == "gridcolor" {
+            let path = CGMutablePath()
+            let module = gridObject as! GridColor
+            path.addArc(center: CGPoint.zero, radius: moduleSize / 4, startAngle: 0, endAngle: CGFloat.pi * 2, clockwise: true)
+            let newShape = SKShapeNode(path: path)
+            newShape.lineWidth = 1
+            let color = module.color.toRGB()
+            newShape.fillColor = SKColor(red: CGFloat(color.r)/255, green: CGFloat(color.g)/255, blue: CGFloat(color.b)/255, alpha: 0.8)
+            newShape.strokeColor = SKColor.white
             
-            //Determine type of module
-            var type: String
-            if let _ = gridObject as? Piston {
-                type = "piston"
-            } else if let obj = gridObject as? TriggerPad {
-                type = "triggerpad-"
-                //TODO: Change to triggerWillBeActive once that's implemented
-                if (!obj.triggerActive) {
-                    type += "in"
-                }
-                type += "active"
-            } else if let _ = gridObject as? Rotator {
-                type = "rotator-noarrow"
-            } else if gridObject is GridColor {
-                type = "gridcolor"
-            } else if gridObject is GridColorSocket {
-                type = "gridcolorsocket"
-            } else if gridObject is Wall {
-                type = "wall"
+            newShape.position = CGPoint(x: bufferWidth + tileSize * CGFloat(gridObject.position.x) + moduleSize / 2 + (tileSize - moduleSize) / 2, y: boardSpace!.height - tileSize * CGFloat(gridObject.position.y) - moduleSize / 2 - (tileSize - moduleSize) / 2)
+            newShape.zPosition = MODULE_LAYER + 1
+            moduleRoot!.addChild(newShape)
+            gridObject.assignSprite(sprite: newShape)
+        } else if type == "gridcolorsocket" {
+            let module = gridObject as! GridColorSocket
+            var path = CGMutablePath()
+            path.addRect(CGRect(x: -moduleSize / 2, y: -moduleSize / 2, width: moduleSize, height: moduleSize))
+            let newShape = SKShapeNode(path: path)
+            newShape.lineWidth = 1
+            let color = module.desiredColor.toRGB()
+            newShape.fillColor = SKColor(red: CGFloat(color.r)/255, green: CGFloat(color.g)/255, blue: CGFloat(color.b)/255, alpha: 0.8)
+            newShape.strokeColor = SKColor.white
+            
+            newShape.position = CGPoint(x: bufferWidth + tileSize * CGFloat(gridObject.position.x) + moduleSize / 2 + (tileSize - moduleSize) / 2, y: boardSpace!.height - tileSize * CGFloat(gridObject.position.y) - moduleSize / 2 - (tileSize - moduleSize) / 2)
+            newShape.zPosition = MODULE_LAYER - 1
+            moduleRoot!.addChild(newShape)
+            
+            path = CGMutablePath()
+            path.addArc(center: CGPoint.zero, radius: moduleSize / 4, startAngle: 0, endAngle: 2 * CGFloat.pi, clockwise: true)
+            let holeShape = SKShapeNode(path: path)
+            holeShape.fillColor = SKColor.white
+            holeShape.strokeColor = SKColor.black
+            holeShape.position = CGPoint.zero
+            holeShape.zPosition = 1
+            
+            newShape.addChild(holeShape)
+            gridObject.assignSprite(sprite: newShape)
+        } else {
+            //Select image file
+            
+            filename = "module-\(type).png"
+            
+            //Generate Sprite
+            let newSprite = SKSpriteNode(imageNamed: filename)
+            
+            //Set Sprite position
+            newSprite.position = CGPoint(x: bufferWidth + tileSize * CGFloat(gridObject.position.x) + moduleSize / 2 + (tileSize - moduleSize) / 2, y: boardSpace!.height - tileSize * CGFloat(gridObject.position.y) - moduleSize / 2 - (tileSize - moduleSize) / 2)
+            
+            //Set sprite rendering order
+            if (type == "triggerpad-active" || type == "triggerpad-inactive") {
+                newSprite.zPosition = MODULE_LAYER - 2
+            } else if (type == "rotator") {
+                newSprite.zPosition = MODULE_LAYER + 2
             } else {
-                type = "temp"
+                newSprite.zPosition = MODULE_LAYER
+            }
+        
+            //Set Sprite direction
+            if (gridObject.facingDirection == Direction.left) {
+                newSprite.zRotation = CGFloat.pi / 2
+            } else if (gridObject.facingDirection == Direction.down) {
+                newSprite.zRotation = CGFloat.pi
+            } else if (gridObject.facingDirection == Direction.right) {
+                newSprite.zRotation = 3 * CGFloat.pi / 2
             }
             
-            if type == "gridcolor" {
-                let path = CGMutablePath()
-                let module = gridObject as! GridColor
-                path.addArc(center: CGPoint.zero, radius: moduleSize / 4, startAngle: 0, endAngle: CGFloat.pi * 2, clockwise: true)
-                let newShape = SKShapeNode(path: path)
-                newShape.lineWidth = 1
-                let color = module.color.toRGB()
-                newShape.fillColor = SKColor(red: CGFloat(color.r)/255, green: CGFloat(color.g)/255, blue: CGFloat(color.b)/255, alpha: 0.8)
-                newShape.strokeColor = SKColor.white
-                
-                newShape.position = CGPoint(x: bufferWidth + tileSize * CGFloat(gridObject.position.x) + moduleSize / 2 + (tileSize - moduleSize) / 2, y: boardSpace!.height - tileSize * CGFloat(gridObject.position.y) - moduleSize / 2 - (tileSize - moduleSize) / 2)
-                newShape.zPosition = MODULE_LAYER + 1
-                moduleRoot!.addChild(newShape)
-                gridObject.assignSprite(sprite: newShape)
-            } else if type == "gridcolorsocket" {
-                let module = gridObject as! GridColorSocket
-                var path = CGMutablePath()
-                path.addRect(CGRect(x: -moduleSize / 2, y: -moduleSize / 2, width: moduleSize, height: moduleSize))
-                let newShape = SKShapeNode(path: path)
-                newShape.lineWidth = 1
-                let color = module.desiredColor.toRGB()
-                newShape.fillColor = SKColor(red: CGFloat(color.r)/255, green: CGFloat(color.g)/255, blue: CGFloat(color.b)/255, alpha: 0.8)
-                newShape.strokeColor = SKColor.white
-                
-                newShape.position = CGPoint(x: bufferWidth + tileSize * CGFloat(gridObject.position.x) + moduleSize / 2 + (tileSize - moduleSize) / 2, y: boardSpace!.height - tileSize * CGFloat(gridObject.position.y) - moduleSize / 2 - (tileSize - moduleSize) / 2)
-                newShape.zPosition = MODULE_LAYER - 1
-                moduleRoot!.addChild(newShape)
-                
-                path = CGMutablePath()
-                path.addArc(center: CGPoint.zero, radius: moduleSize / 4, startAngle: 0, endAngle: 2 * CGFloat.pi, clockwise: true)
-                let holeShape = SKShapeNode(path: path)
-                holeShape.fillColor = SKColor.white
-                holeShape.strokeColor = SKColor.black
-                holeShape.position = CGPoint.zero
-                holeShape.zPosition = 1
-                
-                newShape.addChild(holeShape)
-                gridObject.assignSprite(sprite: newShape)
-            } else {
-                //Select image file
-                
-                filename = "module-\(type).png"
-                
-                //Generate Sprite
-                let newSprite = SKSpriteNode(imageNamed: filename)
-                
-                //Set Sprite position
-                newSprite.position = CGPoint(x: bufferWidth + tileSize * CGFloat(gridObject.position.x) + moduleSize / 2 + (tileSize - moduleSize) / 2, y: boardSpace!.height - tileSize * CGFloat(gridObject.position.y) - moduleSize / 2 - (tileSize - moduleSize) / 2)
-                
-                //Set sprite rendering order
-                if (type == "triggerpad-active" || type == "triggerpad-inactive") {
-                    newSprite.zPosition = MODULE_LAYER - 2
-                } else if (type == "rotator") {
-                    newSprite.zPosition = MODULE_LAYER + 2
-                } else {
-                    newSprite.zPosition = MODULE_LAYER
-                }
-            
-                //Set Sprite direction
+            //Account for minor differences in size between modules
+            if (type == "rotator-noarrow") {
+                //Rotator is bigger so that it stretches into adjacent tiles to make rotation ability more intuitive
+                newSprite.size = CGSize(width: moduleSize, height: moduleSize * (73 / 60))
+                //Adjust position
                 if (gridObject.facingDirection == Direction.left) {
-                    newSprite.zRotation = CGFloat.pi / 2
+                    newSprite.position.x -= moduleSize * (13/120)
                 } else if (gridObject.facingDirection == Direction.down) {
-                    newSprite.zRotation = CGFloat.pi
+                    newSprite.position.y -= moduleSize * (13/120)
                 } else if (gridObject.facingDirection == Direction.right) {
-                    newSprite.zRotation = 3 * CGFloat.pi / 2
-                }
-                
-                //Account for minor differences in size between modules
-                if (type == "rotator-noarrow") {
-                    //Rotator is bigger so that it stretches into adjacent tiles to make rotation ability more intuitive
-                    newSprite.size = CGSize(width: moduleSize, height: moduleSize * (73 / 60))
-                    //Adjust position
-                    if (gridObject.facingDirection == Direction.left) {
-                        newSprite.position.x -= moduleSize * (13/120)
-                    } else if (gridObject.facingDirection == Direction.down) {
-                        newSprite.position.y -= moduleSize * (13/120)
-                    } else if (gridObject.facingDirection == Direction.right) {
-                        newSprite.position.x += moduleSize * (13/120)
-                    } else {
-                        newSprite.position.y += moduleSize * (13/120)
-                    }
+                    newSprite.position.x += moduleSize * (13/120)
                 } else {
-                    newSprite.size = CGSize(width: moduleSize, height: moduleSize)
+                    newSprite.position.y += moduleSize * (13/120)
                 }
-            
-                //Render any relevant subcomponents
-                if (type == "piston") {
-                    let pistonArm = SKSpriteNode(imageNamed: "module-piston-extension.png")
-                    pistonArm.size = newSprite.size
-                    pistonArm.position = CGPoint.zero
-                    let piston = gridObject as! Piston
-                    if (piston.extended) {
-                        pistonArm.position = CGPoint(x: 0, y: moduleSize * (6/8))
-                    }
-                    pistonArm.zPosition = -1
-                    newSprite.addChild(pistonArm)
-                } else if (type == "rotator-noarrow") {
-                    var arrow: SKSpriteNode
-                    if (gridObject as! Rotator).clockwise {
-                        arrow = SKSpriteNode(imageNamed: "module-rotator-arrow-clockwise.png")
-                    } else {
-                        arrow = SKSpriteNode(imageNamed: "module-rotator-arrow-counterclockwise.png")
-                    }
-                    arrow.position = CGPoint(x: 0, y: -moduleSize * (13/120))
-                    arrow.zPosition = 1
-                    
-                    newSprite.addChild(arrow)
-                    
-                    let gear1 = SKSpriteNode(imageNamed: "module-rotator-gear.png")
-                    let gear2 = SKSpriteNode(imageNamed: "module-rotator-gear.png")
-                    
-                    gear1.zPosition = -1
-                    gear2.zPosition = -1
-                    
-                    gear1.position = CGPoint(x: -moduleSize * (3/8), y: moduleSize / 2 + moduleSize * (1/10))
-                    gear2.position = CGPoint(x: moduleSize * (3/8), y: moduleSize / 2 + moduleSize * (1/10))
-                    
-                    gear1.size = CGSize(width: moduleSize * (14 / 60), height: moduleSize * (14 / 60))
-                    gear2.size = CGSize(width: moduleSize * (14 / 60), height: moduleSize * (14 / 60))
-                    
-                    newSprite.addChild(gear1)
-                    newSprite.addChild(gear2)
+            } else {
+                newSprite.size = CGSize(width: moduleSize, height: moduleSize)
+            }
+        
+            //Render any relevant subcomponents
+            if (type == "piston") {
+                let pistonArm = SKSpriteNode(imageNamed: "module-piston-extension.png")
+                pistonArm.size = newSprite.size
+                pistonArm.position = CGPoint.zero
+                let piston = gridObject as! Piston
+                if (piston.extended) {
+                    pistonArm.position = CGPoint(x: 0, y: moduleSize * (6/8))
                 }
-                moduleRoot!.addChild(newSprite)
-                gridObject.assignSprite(sprite: newSprite)
+                pistonArm.zPosition = -1
+                newSprite.addChild(pistonArm)
+            } else if (type == "rotator-noarrow") {
+                var arrow: SKSpriteNode
+                if (gridObject as! Rotator).clockwise {
+                    arrow = SKSpriteNode(imageNamed: "module-rotator-arrow-clockwise.png")
+                } else {
+                    arrow = SKSpriteNode(imageNamed: "module-rotator-arrow-counterclockwise.png")
+                }
+                arrow.position = CGPoint(x: 0, y: -moduleSize * (13/120))
+                arrow.zPosition = 1
+                
+                newSprite.addChild(arrow)
+                
+                let gear1 = SKSpriteNode(imageNamed: "module-rotator-gear.png")
+                let gear2 = SKSpriteNode(imageNamed: "module-rotator-gear.png")
+                
+                gear1.zPosition = -1
+                gear2.zPosition = -1
+                
+                gear1.position = CGPoint(x: -moduleSize * (3/8), y: moduleSize / 2 + moduleSize * (1/10))
+                gear2.position = CGPoint(x: moduleSize * (3/8), y: moduleSize / 2 + moduleSize * (1/10))
+                
+                gear1.size = CGSize(width: moduleSize * (14 / 60), height: moduleSize * (14 / 60))
+                gear2.size = CGSize(width: moduleSize * (14 / 60), height: moduleSize * (14 / 60))
+                
+                newSprite.addChild(gear1)
+                newSprite.addChild(gear2)
+            }
+            moduleRoot!.addChild(newSprite)
+            gridObject.assignSprite(sprite: newSprite)
+        }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if touches.count == 1 {
+            let touch = touches.first!
+            let positionInScene = touch.location(in: self)
+            print(positionInScene)
+            var touchedNodes = self.nodes(at: positionInScene)
+            var touchedBankModule: SKSpriteNode?
+            for node in touchedNodes {
+                if node.name != nil && node.name!.contains("module-bank-") {
+                    touchedBankModule = node as? SKSpriteNode
+                    break
+                }
+            }
+            if touchedBankModule == nil {
+                return
+            }
+            currentlyDragging.touchStart = positionInScene
+            currentlyDragging.startPosition = CGPoint(x: touchedBankModule!.position.x, y: touchedBankModule!.position.y)
+            currentlyDragging.node = touchedBankModule
+            currentlyDragging.active = true
+        }
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if (currentlyDragging.active) {
+            var newTouchPosition = touches.first!.location(in: self)
+            currentlyDragging.node!.position = newTouchPosition
+        }
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if (currentlyDragging.active) {
+            var newTouchPosition = touches.first!.location(in: self)
+            var touchedNodes = self.nodes(at: newTouchPosition)
+            var touchedTile: SKSpriteNode?
+            for node in touchedNodes {
+                if (node.name != nil && node.name!.contains("tile")) {
+                    touchedTile = node as! SKSpriteNode
+                    break;
+                }
+            }
+            if (touchedTile != nil) {
+                var position = Vector(Int(floor((touchedTile!.position.x - bufferWidth) / tileSize)), Int(floor((boardSpace!.height - touchedTile!.position.y) / tileSize)))
+                var gridObject: GridObject
+                if (currentlyDragging.node!.name!.contains("piston")) {
+                    gridObject = Piston(position: position, direction: Direction.up)
+                } else if (currentlyDragging.node!.name!.contains("trigger")) {
+                    gridObject = TriggerPad(position: position)
+                } else if (currentlyDragging.node!.name!.contains("wall")) {
+                    gridObject = Wall(position: position)
+                } else if (currentlyDragging.node!.name!.contains("rotator")) {
+                    gridObject = Rotator(position: position, direction: Direction.up, clockwise: true)
+                } else if (currentlyDragging.node!.name!.contains("colorzapper")) {
+                    gridObject = ColorZapper(position: position, direction: Direction.up, color: MixableColor(1, 0, 0))
+                } else {
+                    fatalError("No Correspinding Module Type Coded For Bank Module: \"\(currentlyDragging.node!.name!)\"")
+                }
+                Grid.addGridObject(gridObject: gridObject)
+                generateModuleSprite(gridObject: gridObject)
+                currentlyDragging.active = false
+            } else {
+                currentlyDragging.node!.run(SKAction.move(to: currentlyDragging.startPosition!, duration: 0.4))
+                currentlyDragging.node = nil
+                currentlyDragging.active = false
+                currentlyDragging.startPosition = nil
+                currentlyDragging.touchStart = nil
             }
         }
     }

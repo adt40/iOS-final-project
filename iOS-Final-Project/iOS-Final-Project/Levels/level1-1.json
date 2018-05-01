@@ -10,6 +10,8 @@
   },
   "AvailableModules": [
     "piston",
+    "trigger",
+    "trigger",
     "trigger"
   ],
   "GridObjects": [
