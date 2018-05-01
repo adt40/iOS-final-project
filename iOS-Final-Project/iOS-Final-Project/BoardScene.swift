@@ -19,6 +19,8 @@ class BoardScene: SKScene {
     var moduleBankRoot: SKNode?
     var boardSpace: CGSize?
     let moduleBankHeight: CGFloat = 100
+    let moduleBankPadding: CGFloat = 10
+    let bankModuleSpacing: CGFloat = 10
     
     let GRID_LAYER = CGFloat(1)
     let MODULE_LAYER = CGFloat(10)
@@ -36,15 +38,56 @@ class BoardScene: SKScene {
     }
     
     func renderModuleBank(availableModules: [String]) {
+        //Initialize Module Bank Container
         moduleBankRoot = SKNode()
         moduleBankRoot!.zPosition = MODULE_BANK_LAYER
         addChild(moduleBankRoot!)
         
+        //render module bank background
         var moduleBankBackground = SKShapeNode(rect: CGRect(x: 0, y: 0, width: size.width, height: moduleBankHeight))
         moduleBankBackground.fillColor = SKColor.white
         moduleBankBackground.strokeColor = SKColor.gray
         moduleBankBackground.zPosition = -1
         moduleBankRoot!.addChild(moduleBankBackground)
+        
+        //calculate the size of modules in the bank
+        var moduleBankRenderingRatio = floor((boardSpace!.width - 2 * moduleBankPadding) / (moduleBankHeight - 2 * moduleBankPadding))
+        var moduleGroups = ceil(CGFloat(availableModules.count) / moduleBankRenderingRatio)
+        var bankModuleSize = (moduleBankHeight - 2 * moduleBankPadding) / ceil(sqrt(moduleGroups)) - 2 * bankModuleSpacing
+        //Render them in the pattern described by the ratio we found
+        var x = CGFloat(0), y = CGFloat(0)
+        var newSprite: SKSpriteNode
+        var filename: String
+        for module in availableModules {
+            filename = "module-" + module
+            if module == "trigger" {
+                filename += "pad-inactive"
+            }
+            newSprite = SKSpriteNode(imageNamed: filename)
+            newSprite.zPosition = 2
+            moduleBankRoot!.addChild(newSprite)
+            
+            newSprite.size = CGSize(width: bankModuleSize, height: bankModuleSize)
+            var xPos = moduleBankPadding + (x * ((2 * bankModuleSpacing) + bankModuleSize)) +  bankModuleSpacing + (bankModuleSize / 2)
+            var yPos = moduleBankHeight - moduleBankPadding - (y * (2 * bankModuleSpacing + bankModuleSize)) -  (bankModuleSpacing + bankModuleSize / 2)
+            newSprite.position = CGPoint(x: xPos, y: yPos)
+            
+            //Render any relevant subcomponents
+            if (module == "piston") {
+                let pistonArm = SKSpriteNode(imageNamed: "module-piston-extension.png")
+                pistonArm.size = newSprite.size
+                pistonArm.position = CGPoint.zero
+                pistonArm.zPosition = -1
+                newSprite.addChild(pistonArm)
+            }
+            
+            if x < ceil(sqrt(moduleGroups)) * moduleBankRenderingRatio - 1 {
+                x += 1
+            } else if x >= ceil(sqrt(moduleGroups)) * moduleBankRenderingRatio - 1 {
+                x = 0
+                y += 1
+            }
+        }
     }
     
     //Only needs to be called once (renders actual grid lines)
