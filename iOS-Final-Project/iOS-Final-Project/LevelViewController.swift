@@ -35,6 +35,8 @@ class LevelViewController: UIViewController {
     var level : Int!
     var levelData : (name: String, gridSize: Vector, availableModules: [String], gridObjects: [GridObject])!
     
+    var background : UIVisualEffectView?
+    
     var playing = false
     var speed = Double(2)
     var win = false
@@ -67,6 +69,18 @@ class LevelViewController: UIViewController {
         
         //Render all initial modules
         boardScene!.renderInitialModules(gridObjects: levelData.gridObjects)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        playing = false
+        speed = 2
+        win = false
+        if runTimer.isValid {
+            runTimer.invalidate()
+        }
+        runTimer = Timer()
+        totalIterations = 0
+        modulesUsed = 0
     }
     
     //-----------------------------------------------------------------------------
@@ -103,6 +117,7 @@ class LevelViewController: UIViewController {
         if (win && playing) {
             //If we won, we actually need to render one more time
             self.playing = false
+            gameWon()
         } else if (!playing && runTimer.isValid) {
             runTimer.invalidate()
         }
@@ -113,23 +128,32 @@ class LevelViewController: UIViewController {
         moduleScoreLabel.text = String(modulesUsed)
         
         let levelReader = LevelFileReader()
-        let oldScores = levelReader.getLevelSelectData(world: world, level: level)
         
-        if totalIterations > oldScores.runtimeScore && modulesUsed <= oldScores.moduleScore {
-            levelReader.updateScore(world: world, level: level, runtimeScore: totalIterations, moduleScore: oldScores.moduleScore)
+        let updated = levelReader.updateScore(world: world, level: level, runtimeScore: totalIterations, moduleScore: modulesUsed)
+        if updated {
             highScoreLabel.isHidden = false
-        } else if totalIterations <= oldScores.runtimeScore && modulesUsed > oldScores.moduleScore {
-            levelReader.updateScore(world: world, level: level, runtimeScore: oldScores.moduleScore, moduleScore: modulesUsed)
-            highScoreLabel.isHidden = false
-        } else if totalIterations > oldScores.runtimeScore && modulesUsed > oldScores.moduleScore {
-            levelReader.updateScore(world: world, level: level, runtimeScore: totalIterations, moduleScore: modulesUsed)
-            highScoreLabel.isHidden = false
+        } else {
+            highScoreLabel.isHidden = true
         }
         
         let newHighScores = levelReader.getLevelSelectData(world: world, level: level)
         runtimeHighScoreLabel.text = String(newHighScores.runtimeScore)
         moduleHighScoreLabel.text = String(newHighScores.moduleScore)
         
+        
+        winPopupView.frame = CGRect(x: self.view.bounds.width / 2 - 138, y: 200, width: 276, height: 211)
+        winPopupView.alpha = 0
+        
+        background = UIVisualEffectView(frame: self.view.frame)
+        background!.effect = UIBlurEffect(style: UIBlurEffectStyle.extraLight)
+        background!.alpha = 0
+        
+        UIView.animate(withDuration: 0.5) {
+            self.winPopupView.alpha = 1
+            self.background!.alpha = 1
+        }
+        self.view.addSubview(background!)
+        self.view.addSubview(winPopupView)
     }
     
     //-------------------------------------GRAPHICS--------------------------------
@@ -183,21 +207,26 @@ class LevelViewController: UIViewController {
     
     //-----------------------------------------------------------------------------
     
-    @IBAction func nextLevelPressed(_ sender: UIButton) {
-        
-    }
-    
     @IBAction func levelSelectPressed(_ sender: UIButton) {
-        
+        winPopupView.removeFromSuperview()
+        background!.removeFromSuperview()
+        _ = navigationController?.popViewController(animated: true)
     }
     
     
     @IBAction func settingsPressed(_ sender: UIBarButtonItem) {
         settingsPopupView.frame = CGRect(x: self.view.bounds.width / 2 - 120, y: 200, width: 240, height: 128)
         settingsPopupView.alpha = 0
+        
+        background = UIVisualEffectView(frame: self.view.frame)
+        background!.effect = UIBlurEffect(style: UIBlurEffectStyle.extraLight)
+        background!.alpha = 0
+        
         UIView.animate(withDuration: 0.5) {
             self.settingsPopupView.alpha = 1
+            self.background!.alpha = 1
         }
+        self.view.addSubview(background!)
         self.view.addSubview(settingsPopupView)
     }
     
@@ -205,7 +234,9 @@ class LevelViewController: UIViewController {
         speed = Double(popupSpeedSlider.value)
         UIView.animate(withDuration: 0.5, animations: {
             self.settingsPopupView.alpha = 0
+            self.background!.alpha = 0
         }) { (true) in
+            self.background!.removeFromSuperview()
             self.settingsPopupView.removeFromSuperview()
         }
     }
