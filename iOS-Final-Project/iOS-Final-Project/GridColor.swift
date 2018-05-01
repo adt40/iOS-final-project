@@ -27,7 +27,6 @@ class GridColor : GridObject {
                 
                 if !Grid.isOutside(position: newPosition) && !Grid.isGridObjectAt(position: newPosition) {
                     position = newPosition
-                    uiSprite!.run(Animation.move(direction: currentVelocity.direction))
                 } else if let gridColor = Grid.getHittableGridObjectsAt(position: newPosition) as? GridColor {
                     mix(with: gridColor)
                     position = newPosition

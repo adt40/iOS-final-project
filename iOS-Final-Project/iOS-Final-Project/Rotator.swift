@@ -10,7 +10,6 @@ class Rotator : Module {
     
     override func performAction() {
         if let gridObject = Grid.getHittableGridObjectsAt(position: position + facingDirection.toVector()) {
-            gridObject.uiSprite!.run(Animation.rotate(clockwise: clockwise))
             if clockwise {
                 gridObject.facingDirection = gridObject.facingDirection.clockwise()
                 gridObject.currentVelocity.direction = gridObject.currentVelocity.direction.clockwise()

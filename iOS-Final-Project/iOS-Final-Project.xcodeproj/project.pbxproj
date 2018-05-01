@@ -36,7 +36,6 @@
 		82F07AD9207D38B700EF6CE0 /* ColorZapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F07AD8207D38B700EF6CE0 /* ColorZapper.swift */; };
 		93173850208828A40043CF0B /* LevelBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9317384F208828A40043CF0B /* LevelBoardViewController.swift */; };
 		9317385220882B660043CF0B /* BoardScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9317385120882B660043CF0B /* BoardScene.swift */; };
-		BC9C56A22097F4A60019A50C /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9C56A12097F4A60019A50C /* Animation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -71,7 +70,6 @@
 		82F07AD8207D38B700EF6CE0 /* ColorZapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorZapper.swift; sourceTree = "<group>"; };
 		9317384F208828A40043CF0B /* LevelBoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelBoardViewController.swift; sourceTree = "<group>"; };
 		9317385120882B660043CF0B /* BoardScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardScene.swift; sourceTree = "<group>"; };
-		BC9C56A12097F4A60019A50C /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,7 +108,6 @@
 				93173841208827020043CF0B /* Icons */,
 				8212ABB22042043A00A5328B /* Direction.swift */,
 				0190C89D203FC0B6001AE736 /* Grid.swift */,
-				BC9C56A12097F4A60019A50C /* Animation.swift */,
 				0190C89A203FC0B5001AE736 /* GridObject.swift */,
 				0190C898203FC0B4001AE736 /* Module.swift */,
 				8212ABA82041F4A300A5328B /* Wall.swift */,
@@ -252,7 +249,6 @@
 				82EB4BD8208133FD00C072E5 /* LevelSelectCollectionViewCell.swift in Sources */,
 				0190C8A5203FC0B7001AE736 /* TriggerPad.swift in Sources */,
 				8212ABAB2041F59500A5328B /* GridColor.swift in Sources */,
-				BC9C56A22097F4A60019A50C /* Animation.swift in Sources */,
 				8212ABAD2041F61700A5328B /* MixableColor.swift in Sources */,
 				8229DBE120682A2C00ACEC82 /* MainMenuViewController.swift in Sources */,
 				8260EDDB204E30AA001C44A9 /* LevelFileReader.swift in Sources */,
