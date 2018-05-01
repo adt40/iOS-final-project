@@ -16,6 +16,8 @@ class BoardScene: SKScene {
     var moduleSize = CGFloat(0)
     var gridRoot: SKNode?
     var moduleRoot: SKNode?
+    var boardSpace: CGSize?
+    let moduleBankHeight: CGFloat = 100
     
     let GRID_LAYER = CGFloat(1)
     let MODULE_LAYER = CGFloat(10)
@@ -33,26 +35,28 @@ class BoardScene: SKScene {
     
     //Only needs to be called once (renders actual grid lines)
     func renderGrid(gridSize: Vector) {
+        boardSpace = CGSize(width: size.width, height: size.height - 100)
         //Have to subtract 78 because of the 39 point blue glow on the edges on either side of grid
         //var tileSize = (size.width - glowEffectSize * 2) / CGFloat(gridSize.x)
         
         //At first, assign tile size based on width
-        tileSize = size.width / CGFloat(gridSize.x)
+        tileSize = boardSpace!.width / CGFloat(gridSize.x)
         bufferWidth = CGFloat(0)
         //If the tiles are going to overflow vertically, shrink them and add a buffer on the sides
-        if (tileSize * CGFloat(gridSize.y) > size.height) {
-            tileSize = size.height / CGFloat(gridSize.y)
-            bufferWidth = (size.width - tileSize * CGFloat(gridSize.x)) / 2
+        if (tileSize * CGFloat(gridSize.y) > boardSpace!.height) {
+            tileSize = boardSpace!.height / CGFloat(gridSize.y)
+            bufferWidth = (boardSpace!.width - tileSize * CGFloat(gridSize.x)) / 2
         }
         moduleSize = tileSize - 4
         
         gridRoot = SKNode()
+        gridRoot!.position.y = moduleBankHeight
         gridRoot!.zPosition = GRID_LAYER
         addChild(gridRoot!)
         var filename: String
         var newSprite: SKSpriteNode
         var currentXpos = tileSize / 2 + bufferWidth
-        var currentYpos = size.height - tileSize / 2
+        var currentYpos = boardSpace!.height - tileSize / 2
         var isCorner = true
         var isEdge = false
         var isCentral = false
@@ -108,6 +112,7 @@ class BoardScene: SKScene {
     func renderInitialModules(gridObjects: [GridObject]) {
         var filename: String
         moduleRoot = SKNode()
+        moduleRoot!.position.y = moduleBankHeight
         moduleRoot!.zPosition = MODULE_LAYER
         addChild(moduleRoot!)
         
@@ -146,7 +151,7 @@ class BoardScene: SKScene {
                 newShape.fillColor = SKColor(red: CGFloat(color.r)/255, green: CGFloat(color.g)/255, blue: CGFloat(color.b)/255, alpha: 0.8)
                 newShape.strokeColor = SKColor.white
                 
-                newShape.position = CGPoint(x: bufferWidth + tileSize * CGFloat(gridObject.position.x) + moduleSize / 2 + (tileSize - moduleSize) / 2, y: size.height - tileSize * CGFloat(gridObject.position.y) - moduleSize / 2 - (tileSize - moduleSize) / 2)
+                newShape.position = CGPoint(x: bufferWidth + tileSize * CGFloat(gridObject.position.x) + moduleSize / 2 + (tileSize - moduleSize) / 2, y: boardSpace!.height - tileSize * CGFloat(gridObject.position.y) - moduleSize / 2 - (tileSize - moduleSize) / 2)
                 newShape.zPosition = MODULE_LAYER + 1
                 moduleRoot!.addChild(newShape)
                 gridObject.assignSprite(sprite: newShape)
@@ -160,7 +165,7 @@ class BoardScene: SKScene {
                 newShape.fillColor = SKColor(red: CGFloat(color.r)/255, green: CGFloat(color.g)/255, blue: CGFloat(color.b)/255, alpha: 0.8)
                 newShape.strokeColor = SKColor.white
                 
-                newShape.position = CGPoint(x: bufferWidth + tileSize * CGFloat(gridObject.position.x) + moduleSize / 2 + (tileSize - moduleSize) / 2, y: size.height - tileSize * CGFloat(gridObject.position.y) - moduleSize / 2 - (tileSize - moduleSize) / 2)
+                newShape.position = CGPoint(x: bufferWidth + tileSize * CGFloat(gridObject.position.x) + moduleSize / 2 + (tileSize - moduleSize) / 2, y: boardSpace!.height - tileSize * CGFloat(gridObject.position.y) - moduleSize / 2 - (tileSize - moduleSize) / 2)
                 newShape.zPosition = MODULE_LAYER - 1
                 moduleRoot!.addChild(newShape)
                 
@@ -183,7 +188,7 @@ class BoardScene: SKScene {
                 let newSprite = SKSpriteNode(imageNamed: filename)
                 
                 //Set Sprite position
-                newSprite.position = CGPoint(x: bufferWidth + tileSize * CGFloat(gridObject.position.x) + moduleSize / 2 + (tileSize - moduleSize) / 2, y: size.height - tileSize * CGFloat(gridObject.position.y) - moduleSize / 2 - (tileSize - moduleSize) / 2)
+                newSprite.position = CGPoint(x: bufferWidth + tileSize * CGFloat(gridObject.position.x) + moduleSize / 2 + (tileSize - moduleSize) / 2, y: boardSpace!.height - tileSize * CGFloat(gridObject.position.y) - moduleSize / 2 - (tileSize - moduleSize) / 2)
                 
                 //Set sprite rendering order
                 if (type == "triggerpad-active" || type == "triggerpad-inactive") {
