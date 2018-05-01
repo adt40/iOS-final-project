@@ -393,14 +393,15 @@ class BoardScene: SKScene {
                 }
                 Grid.addGridObject(gridObject: gridObject)
                 generateModuleSprite(gridObject: gridObject)
-                currentlyDragging.active = false
+                currentlyDragging.node!.run(SKAction.sequence([SKAction.fadeOut(withDuration: 0.4), SKAction.move(to: currentlyDragging.startPosition!, duration: 0), SKAction.fadeIn(withDuration: 0.4)]))
+                gridObject.uiSprite!.run(SKAction.sequence([SKAction.fadeOut(withDuration: 0), SKAction.fadeIn(withDuration: 0.5)]))
             } else {
                 currentlyDragging.node!.run(SKAction.move(to: currentlyDragging.startPosition!, duration: 0.4))
-                currentlyDragging.node = nil
-                currentlyDragging.active = false
-                currentlyDragging.startPosition = nil
-                currentlyDragging.touchStart = nil
             }
+            currentlyDragging.node = nil
+            currentlyDragging.active = false
+            currentlyDragging.startPosition = nil
+            currentlyDragging.touchStart = nil
         }
     }
 }
