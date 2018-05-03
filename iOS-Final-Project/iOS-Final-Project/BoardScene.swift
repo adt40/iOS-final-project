@@ -83,6 +83,28 @@ class BoardScene: SKScene {
                 pistonArm.position = CGPoint.zero
                 pistonArm.zPosition = -1
                 newSprite.addChild(pistonArm)
+            } else if (module == "rotator") {
+                var arrow: SKSpriteNode
+                arrow = SKSpriteNode(imageNamed: "module-rotator-arrow-clockwise.png")
+                
+                arrow.size = CGSize(width: newSprite.size.height / 3, height: newSprite.size.height / 3)
+                arrow.position = CGPoint(x: 0, y: -newSprite.size.height / 12)
+                arrow.zPosition = 1
+                
+                let wheel = SKSpriteNode(imageNamed: "module-rotator-wheel.png")
+                wheel.size = newSprite.size
+                wheel.position = CGPoint.zero
+                wheel.zPosition = -1
+                
+                newSprite.addChild(arrow)
+                newSprite.addChild(wheel)
+            } else if (module == "colorzapper") {
+                let color = SKShapeNode(circleOfRadius: newSprite.size.height / 5)
+                color.zPosition = 2
+                color.position = CGPoint(x: 0, y: -newSprite.size.height / 5)
+                color.fillColor = UIColor(displayP3Red: 1.0, green: 1.0, blue: 1.0, alpha: 1)
+                color.strokeColor = UIColor(displayP3Red: 240 / 255, green: 200 / 255, blue: 38 / 255, alpha: 1)
+                newSprite.addChild(color)
             }
             
             if x < ceil(sqrt(moduleGroups)) * moduleBankRenderingRatio - 1 {
@@ -290,7 +312,7 @@ class BoardScene: SKScene {
                 }
                 
                 arrow.size = CGSize(width: moduleSize / 3, height: moduleSize / 3)
-                arrow.position = CGPoint(x: 0, y: -moduleSize / 6)
+                arrow.position = CGPoint(x: 0, y: -moduleSize / 12)
                 arrow.zPosition = 1
                 
                 let wheel = SKSpriteNode(imageNamed: "module-rotator-wheel.png")
