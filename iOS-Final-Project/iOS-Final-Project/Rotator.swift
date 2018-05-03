@@ -2,6 +2,7 @@ import Foundation
 
 class Rotator : Module {
     var clockwise : Bool
+    var rotating: Bool = false
     
     init(position: Vector, direction: Direction, clockwise: Bool) {
         self.clockwise = clockwise
@@ -18,5 +19,10 @@ class Rotator : Module {
                 gridObject.currentVelocity.direction = gridObject.currentVelocity.direction.counterClockwise()
             }
         }
+        rotating = true
+    }
+    
+    override func deactivate() {
+        rotating = false
     }
 }

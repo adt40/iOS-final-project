@@ -109,6 +109,12 @@ class LevelViewController: UIViewController {
                 } else {
                     (gridObject.uiSprite! as! SKSpriteNode).texture = SKTexture(imageNamed: "module-triggerpad-inactive")
                 }
+            } else if (gridObject is ColorZapper) {
+                (gridObject.uiSprite!.childNode(withName: "lightning") as! SKSpriteNode).isHidden = (gridObject as! ColorZapper).zapping
+            } else if (gridObject is Rotator) {
+                if (gridObject as! Rotator).rotating {
+                    gridObject.uiSprite!.childNode(withName: "wheel")!.run(SKAction.rotate(byAngle: (gridObject as! Rotator).clockwise ? -CGFloat.pi : CGFloat.pi, duration: getSpeed()))
+                }
             }
         }
         
@@ -363,22 +369,27 @@ class LevelViewController: UIViewController {
     @objc func clockwisePressed(_ sender: UIButton) {
         let rotator = selectedGridObject! as! Rotator
         rotator.clockwise = true
+        (rotator.uiSprite!.childNode(withName: "arrow") as! SKSpriteNode).texture = SKTexture(imageNamed: "module-rotator-arrow-clockwise.png")
     }
     @objc func counterclockwisePressed(_ sender: UIButton) {
         let rotator = selectedGridObject! as! Rotator
         rotator.clockwise = false
+        (rotator.uiSprite!.childNode(withName: "arrow") as! SKSpriteNode).texture = SKTexture(imageNamed: "module-rotator-arrow-counterclockwise.png")
     }
     @objc func redPressed(_ sender: UIButton) {
         let zapper = selectedGridObject! as! ColorZapper
         zapper.color = MixableColor(1, 0, 0)
+        (zapper.uiSprite!.childNode(withName: "color") as! SKShapeNode).fillColor = UIColor(displayP3Red: CGFloat(zapper.color.toRGB().r) / 255, green: CGFloat(zapper.color.toRGB().g) / 255, blue: CGFloat(zapper.color.toRGB().b) / 255, alpha: 1)
     }
     @objc func yellowPressed(_ sender: UIButton) {
         let zapper = selectedGridObject! as! ColorZapper
         zapper.color = MixableColor(0, 1, 0)
+        (zapper.uiSprite!.childNode(withName: "color") as! SKShapeNode).fillColor = UIColor(displayP3Red: CGFloat(zapper.color.toRGB().r) / 255, green: CGFloat(zapper.color.toRGB().g) / 255, blue: CGFloat(zapper.color.toRGB().b) / 255, alpha: 1)
     }
     @objc func bluePressed(_ sender: UIButton) {
         let zapper = selectedGridObject! as! ColorZapper
         zapper.color = MixableColor(0, 0, 1)
+        (zapper.uiSprite!.childNode(withName: "color") as! SKShapeNode).fillColor = UIColor(displayP3Red: CGFloat(zapper.color.toRGB().r) / 255, green: CGFloat(zapper.color.toRGB().g) / 255, blue: CGFloat(zapper.color.toRGB().b) / 255, alpha: 1)
     }
     
     @objc func updateTriggerPadMode(segmentedControl: UISegmentedControl) {

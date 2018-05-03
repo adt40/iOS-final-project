@@ -314,11 +314,13 @@ class BoardScene: SKScene {
                 arrow.size = CGSize(width: moduleSize / 3, height: moduleSize / 3)
                 arrow.position = CGPoint(x: 0, y: -moduleSize / 12)
                 arrow.zPosition = 1
+                arrow.name = "arrow"
                 
                 let wheel = SKSpriteNode(imageNamed: "module-rotator-wheel.png")
                 wheel.size = CGSize(width: moduleSize, height: moduleSize)
                 wheel.position = CGPoint.zero
                 wheel.zPosition = -1
+                wheel.name = "wheel"
                 
                 newSprite.addChild(arrow)
                 newSprite.addChild(wheel)
@@ -329,15 +331,17 @@ class BoardScene: SKScene {
                 lightning.size = CGSize(width: moduleSize * 2 / 3, height: moduleSize / 6)
                 lightning.zPosition = 1
                 lightning.position = CGPoint(x: 0, y: moduleSize * 5 / 12)
-                lightning.run(SKAction.repeatForever(SKAction.sequence([SKAction.rotate(toAngle: CGFloat.pi, duration: 0), SKAction.wait(forDuration: 0.1), SKAction.rotate(toAngle: 0, duration: 0)])))
+                lightning.run(SKAction.repeatForever(SKAction.sequence([SKAction.fadeIn(withDuration: 0.1), SKAction.wait(forDuration: 0.1), SKAction.fadeOut(withDuration: 0.1)])))
                 newSprite.addChild(lightning)
                 lightning.isHidden = !colorZapper.zapping
+                lightning.name = "lightning"
                 
                 let color = SKShapeNode(circleOfRadius: moduleSize / 5)
                 color.zPosition = 2
                 color.position = CGPoint(x: 0, y: -moduleSize / 5)
                 color.fillColor = UIColor(displayP3Red: CGFloat(colorZapper.color.toRGB().r) / 255, green: CGFloat(colorZapper.color.toRGB().g) / 255, blue: CGFloat(colorZapper.color.toRGB().b) / 255, alpha: 1)
                 color.strokeColor = UIColor(displayP3Red: 240 / 255, green: 200 / 255, blue: 38 / 255, alpha: 1)
+                color.name = "color"
                 newSprite.addChild(color)
             }
             moduleRoot!.addChild(newSprite)
