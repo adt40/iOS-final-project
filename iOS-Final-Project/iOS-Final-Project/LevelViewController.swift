@@ -185,6 +185,10 @@ class LevelViewController: UIViewController {
         self.view.addSubview(winPopupView)
     }
     
+    func isPlaying() -> Bool {
+        return playing
+    }
+    
     //-------------------------------------GRAPHICS--------------------------------
     
     //Initialize the BoardScene to display sprites
@@ -376,56 +380,111 @@ class LevelViewController: UIViewController {
     }
     
     @objc func upPressed(_ sender: UIButton) {
+        //Don't let them do anything if the simulation is running
+        if playing {
+            moduleOptionsView.isHidden = true
+            return
+        }
         selectedGridObject!.facingDirection = Direction.up
         selectedGridObject!.startDirection = Direction.up
         selectedGridObject!.uiSprite!.run(SKAction.rotate(toAngle: selectedGridObject!.facingDirection.toRadians(), duration: 0.2, shortestUnitArc: true))
     }
     @objc func rightPressed(_ sender: UIButton) {
+        //Don't let them do anything if the simulation is running
+        if playing {
+            moduleOptionsView.isHidden = true
+            return
+        }
         selectedGridObject!.facingDirection = Direction.right
         selectedGridObject!.startDirection = Direction.right
         selectedGridObject!.uiSprite!.run(SKAction.rotate(toAngle: selectedGridObject!.facingDirection.toRadians(), duration: 0.2, shortestUnitArc: true))
     }
     @objc func downPressed(_ sender: UIButton) {
+        //Don't let them do anything if the simulation is running
+        if playing {
+            moduleOptionsView.isHidden = true
+            return
+        }
         selectedGridObject!.facingDirection = Direction.down
         selectedGridObject!.startDirection = Direction.down
         selectedGridObject!.uiSprite!.run(SKAction.rotate(toAngle: selectedGridObject!.facingDirection.toRadians(), duration: 0.2, shortestUnitArc: true))
     }
     @objc func leftPressed(_ sender: UIButton) {
+        //Don't let them do anything if the simulation is running
+        if playing {
+            moduleOptionsView.isHidden = true
+            return
+        }
         selectedGridObject!.facingDirection = Direction.left
         selectedGridObject!.startDirection = Direction.left
         selectedGridObject!.uiSprite!.run(SKAction.rotate(toAngle: selectedGridObject!.facingDirection.toRadians(), duration: 0.2, shortestUnitArc: true))
     }
     @objc func clockwisePressed(_ sender: UIButton) {
+        //Don't let them do anything if the simulation is running
+        if playing {
+            moduleOptionsView.isHidden = true
+            return
+        }
         let rotator = selectedGridObject! as! Rotator
         rotator.clockwise = true
         (rotator.uiSprite!.childNode(withName: "arrow") as! SKSpriteNode).texture = SKTexture(imageNamed: "module-rotator-arrow-clockwise.png")
     }
     @objc func counterclockwisePressed(_ sender: UIButton) {
+        //Don't let them do anything if the simulation is running
+        if playing {
+            moduleOptionsView.isHidden = true
+            return
+        }
         let rotator = selectedGridObject! as! Rotator
         rotator.clockwise = false
         (rotator.uiSprite!.childNode(withName: "arrow") as! SKSpriteNode).texture = SKTexture(imageNamed: "module-rotator-arrow-counterclockwise.png")
     }
     @objc func redPressed(_ sender: UIButton) {
+        //Don't let them do anything if the simulation is running
+        if playing {
+            moduleOptionsView.isHidden = true
+            return
+        }
         let zapper = selectedGridObject! as! ColorZapper
         zapper.color = MixableColor(1, 0, 0)
         (zapper.uiSprite!.childNode(withName: "color") as! SKShapeNode).fillColor = SKColor(red: CGFloat(zapper.color.toRGB().r) / 255, green: CGFloat(zapper.color.toRGB().g) / 255, blue: CGFloat(zapper.color.toRGB().b) / 255, alpha: 1)
     }
     @objc func yellowPressed(_ sender: UIButton) {
+        //Don't let them do anything if the simulation is running
+        if playing {
+            moduleOptionsView.isHidden = true
+            return
+        }
         let zapper = selectedGridObject! as! ColorZapper
         zapper.color = MixableColor(0, 1, 0)
         (zapper.uiSprite!.childNode(withName: "color") as! SKShapeNode).fillColor = SKColor(red: CGFloat(zapper.color.toRGB().r) / 255, green: CGFloat(zapper.color.toRGB().g) / 255, blue: CGFloat(zapper.color.toRGB().b) / 255, alpha: 1)
     }
     @objc func bluePressed(_ sender: UIButton) {
+        //Don't let them do anything if the simulation is running
+        if playing {
+            moduleOptionsView.isHidden = true
+            return
+        }
         let zapper = selectedGridObject! as! ColorZapper
         zapper.color = MixableColor(0, 0, 1)
         (zapper.uiSprite!.childNode(withName: "color") as! SKShapeNode).fillColor = SKColor(red: CGFloat(zapper.color.toRGB().r) / 255, green: CGFloat(zapper.color.toRGB().g) / 255, blue: CGFloat(zapper.color.toRGB().b) / 255, alpha: 1)
     }
     
     @objc func updateTriggerPadMode(segmentedControl: UISegmentedControl) {
+        //Don't let them do anything if the simulation is running
+        if playing {
+            moduleOptionsView.isHidden = true
+            return
+        }
         (selectedGridObject as! TriggerPad).triggerOnEnter = segmentedControl.selectedSegmentIndex == 0
     }
     
     @objc func updateTriggerPadStartTime(segmentedControl: UISegmentedControl) {
+        //Don't let them do anything if the simulation is running
+        if playing {
+            moduleOptionsView.isHidden = true
+            return
+        }
         (selectedGridObject as! TriggerPad).triggerOnTimeStart += segmentedControl.selectedSegmentIndex * 2 - 1
         if (selectedGridObject as! TriggerPad).triggerOnTimeStart < 0 {
             (selectedGridObject as! TriggerPad).triggerOnTimeStart = 0
@@ -439,6 +498,11 @@ class LevelViewController: UIViewController {
     }
     
     @objc func updateTriggerPadRepeatTime(segmentedControl: UISegmentedControl) {
+        //Don't let them do anything if the simulation is running
+        if playing {
+            moduleOptionsView.isHidden = true
+            return
+        }
         (selectedGridObject as! TriggerPad).triggerOnTimeRepeat += segmentedControl.selectedSegmentIndex * 2 - 1
         if (selectedGridObject as! TriggerPad).triggerOnTimeRepeat < 0 {
             (selectedGridObject as! TriggerPad).triggerOnTimeRepeat = 0
@@ -466,6 +530,7 @@ class LevelViewController: UIViewController {
             stopButton.isEnabled = true
             playing = true
             runTimer = Timer.scheduledTimer(timeInterval: getSpeed(), target: self, selector: #selector(self.run), userInfo: nil, repeats: true)
+            moduleOptionsView.isHidden = true
         } else {
             playPauseButton.setTitle("Play", for: .normal)
             playing = false

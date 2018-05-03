@@ -350,6 +350,10 @@ class BoardScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        //Don't let them do anything if the simulation is running
+        if superView!.isPlaying() {
+            return
+        }
         if touches.count == 1 {
             let touch = touches.first!
             let positionInScene = touch.location(in: self)
@@ -386,6 +390,15 @@ class BoardScene: SKScene {
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         if (currentlyDragging.active) {
+            //Don't let them do anything if the simulation is running
+            if superView!.isPlaying() {
+                currentlyDragging.node!.run(SKAction.move(to: currentlyDragging.startPosition!, duration: 0.4))
+                currentlyDragging.node = nil
+                currentlyDragging.active = false
+                currentlyDragging.startPosition = nil
+                currentlyDragging.touchStart = nil
+                return
+            }
             let newTouchPosition = touches.first!.location(in: self)
             currentlyDragging.node!.position = newTouchPosition
         }
@@ -393,6 +406,15 @@ class BoardScene: SKScene {
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if (currentlyDragging.active) {
+            //Don't let them do anything if the simulation is running
+            if superView!.isPlaying() {
+                currentlyDragging.node!.run(SKAction.move(to: currentlyDragging.startPosition!, duration: 0.4))
+                currentlyDragging.node = nil
+                currentlyDragging.active = false
+                currentlyDragging.startPosition = nil
+                currentlyDragging.touchStart = nil
+                return
+            }
             let newTouchPosition = touches.first!.location(in: self)
             let touchedNodes = self.nodes(at: newTouchPosition)
             var touchedTile: SKSpriteNode?
