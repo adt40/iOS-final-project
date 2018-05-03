@@ -1,12 +1,12 @@
 {
-  "world": 1,
+  "world": 2,
   "level": 1,
-  "name": "Just a piston",
+  "name": "Name of the Game",
   "RuntimeScore": 0,
   "ModuleScore": 0,
   "GridSize": {
     "x": 3,
-    "y": 4
+    "y": 5
   },
   "AvailableModules": [
     "piston",
@@ -17,7 +17,7 @@
       "type": "color",
       "position": {
         "x": 1,
-        "y": 2
+        "y": 1
       },
       "color": {
         "r": 1,
@@ -26,15 +26,27 @@
       }
     },
     {
+      "type": "color",
+      "position": {
+        "x": 1,
+        "y": 3
+      },
+      "color": {
+        "r": 0,
+        "y": 0,
+        "b": 1
+      }
+    },
+    {
       "type": "socket",
       "position": {
         "x": 1,
-        "y": 0
+        "y": 4
       },
       "color": {
         "r": 1,
         "y": 0,
-        "b": 0
+        "b": 1
       }
     }
   ]

@@ -1,55 +1,23 @@
 {
-  "world": 2,
-  "level": 1,
-  "name": "testing level 1",
-  "RuntimeScore": 8,
-  "ModuleScore": 3,
+  "world": 1,
+  "level": 2,
+  "name": "Right angle",
+  "RuntimeScore": 0,
+  "ModuleScore": 0,
   "GridSize": {
     "x": 5,
-    "y": 6
+    "y": 5
   },
   "AvailableModules": [
     "piston",
     "trigger",
-    "rotator"
   ],
   "GridObjects": [
     {
-      "type": "rotator",
-      "position": {
-        "x": 4,
-        "y": 1
-      },
-      "direction": "down",
-      "clockwise": true
-    },
-    {
-      "type": "trigger",
+      "type": "color",
       "position": {
         "x": 1,
-        "y": 1
-      },
-      "onEnter": true,
-      "startTime": 0,
-      "repeatTime": 0
-    },
-    {
-      "type": "color",
-      "position": {
-        "x": 2,
-        "y": 4
-      },
-      "color": {
-        "r": 1,
-        "y": 0,
-        "b": 0
-      }
-    },
-    {
-      "type": "color",
-      "position": {
-        "x": 4,
-        "y": 4
+        "y": 3
       },
       "color": {
         "r": 0,
@@ -64,7 +32,7 @@
         "y": 0
       },
       "color": {
-        "r": 1,
+        "r": 0,
         "y": 0,
         "b": 1
       }

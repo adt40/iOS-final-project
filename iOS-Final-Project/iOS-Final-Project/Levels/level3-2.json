@@ -1,18 +1,26 @@
 {
-  "world": 1,
-  "level": 1,
-  "name": "Just a piston",
+  "world": 3,
+  "level": 2,
+  "name": "Bad Piston",
   "RuntimeScore": 0,
   "ModuleScore": 0,
   "GridSize": {
-    "x": 3,
+    "x": 2,
     "y": 4
   },
   "AvailableModules": [
-    "piston",
-    "trigger"
+    "trigger",
+    "rotator"
   ],
   "GridObjects": [
+    {
+      "type": "piston",
+      "position": {
+        "x": 1,
+        "y": 1
+      },
+      "direction": "right"
+    },
     {
       "type": "color",
       "position": {
@@ -20,21 +28,21 @@
         "y": 2
       },
       "color": {
-        "r": 1,
+        "r": 0,
         "y": 0,
-        "b": 0
+        "b": 1
       }
     },
     {
       "type": "socket",
       "position": {
         "x": 1,
-        "y": 0
+        "y": 3
       },
       "color": {
-        "r": 1,
+        "r": 0,
         "y": 0,
-        "b": 0
+        "b": 1
       }
     }
   ]

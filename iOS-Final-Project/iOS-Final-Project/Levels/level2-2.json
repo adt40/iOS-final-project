@@ -1,32 +1,20 @@
 {
-  "world": 1,
-  "level": 3,
-  "name": "Around the corner",
+  "world": 2,
+  "level": 2,
+  "name": "Right Angle pt 2",
   "RuntimeScore": 0,
   "ModuleScore": 0,
   "GridSize": {
-    "x": 5,
-    "y": 6
+    "x": 4,
+    "y": 4
   },
   "AvailableModules": [
     "piston",
-    "trigger",
+    "trigger"
   ],
   "GridObjects": [
     {
       "type": "color",
-      "position": {
-        "x": 1,
-        "y": 4
-      },
-      "color": {
-        "r": 0,
-        "y": 1,
-        "b": 0
-      }
-    },
-    {
-      "type": "socket",
       "position": {
         "x": 1,
         "y": 1
@@ -38,24 +26,27 @@
       }
     },
     {
-      "type": "wall",
+      "type": "color",
       "position": {
-        "x": 0,
-        "y": 3
+        "x": 3,
+        "y": 1
+      },
+      "color": {
+        "r": 1,
+        "y": 0,
+        "b": 0
       }
     },
     {
-      "type": "wall",
+      "type": "socket",
       "position": {
-        "x": 1,
+        "x": 3,
         "y": 3
-      }
-    },
-    {
-      "type": "wall",
-      "position": {
-        "x": 2,
-        "y": 3
+      },
+      "color": {
+        "r": 1,
+        "y": 1,
+        "b": 0
       }
     }
   ]

@@ -1,7 +1,7 @@
 {
   "world": 1,
-  "level": 3,
-  "name": "Around the corner",
+  "level": 4,
+  "name": "Walled In",
   "RuntimeScore": 0,
   "ModuleScore": 0,
   "GridSize": {
@@ -17,37 +17,51 @@
       "type": "color",
       "position": {
         "x": 1,
-        "y": 4
+        "y": 3
       },
       "color": {
-        "r": 0,
-        "y": 1,
-        "b": 0
+        "r": 1,
+        "y": 0,
+        "b": 1
       }
     },
     {
       "type": "socket",
       "position": {
-        "x": 1,
-        "y": 1
+        "x": 3,
+        "y": 2
       },
       "color": {
-        "r": 0,
-        "y": 1,
-        "b": 0
+        "r": 1,
+        "y": 0,
+        "b": 1
       }
     },
     {
       "type": "wall",
       "position": {
-        "x": 0,
-        "y": 3
+        "x": 3,
+        "y": 0
       }
     },
     {
       "type": "wall",
       "position": {
-        "x": 1,
+        "x": 4,
+        "y": 1
+      }
+    },
+    {
+      "type": "wall",
+      "position": {
+        "x": 4,
+        "y": 2
+      }
+    },
+    {
+      "type": "wall",
+      "position": {
+        "x": 3,
         "y": 3
       }
     },
@@ -55,7 +69,14 @@
       "type": "wall",
       "position": {
         "x": 2,
-        "y": 3
+        "y": 2
+      }
+    },
+    {
+      "type": "wall",
+      "position": {
+        "x": 2,
+        "y": 1
       }
     }
   ]

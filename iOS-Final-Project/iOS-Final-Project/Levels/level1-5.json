@@ -1,61 +1,72 @@
 {
   "world": 1,
-  "level": 3,
-  "name": "Around the corner",
+  "level": 5,
+  "name": "Wrong way",
   "RuntimeScore": 0,
   "ModuleScore": 0,
   "GridSize": {
-    "x": 5,
+    "x": 6,
     "y": 6
   },
   "AvailableModules": [
     "piston",
-    "trigger",
+    "trigger"
   ],
   "GridObjects": [
     {
+      "type": "piston",
+      "position": {
+        "x": 4,
+        "y": 4
+      },
+      "direction": "left"
+    },
+    {
+      "type": "trigger",
+      "position": {
+        "x": 3,
+        "y": 4
+      },
+      "onEnter": true,
+      "startTime": 0,
+      "repeatTime": 0
+    },
+    {
       "type": "color",
       "position": {
-        "x": 1,
+        "x": 3,
         "y": 4
       },
       "color": {
         "r": 0,
         "y": 1,
-        "b": 0
+        "b": 1
       }
     },
     {
       "type": "socket",
       "position": {
-        "x": 1,
-        "y": 1
+        "x": 5,
+        "y": 4
       },
       "color": {
         "r": 0,
         "y": 1,
-        "b": 0
+        "b": 1
       }
     },
     {
       "type": "wall",
       "position": {
-        "x": 0,
+        "x": 5,
         "y": 3
       }
     },
     {
       "type": "wall",
       "position": {
-        "x": 1,
-        "y": 3
-      }
-    },
-    {
-      "type": "wall",
-      "position": {
-        "x": 2,
-        "y": 3
+        "x": 5,
+        "y": 5
       }
     }
   ]

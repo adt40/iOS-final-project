@@ -44,28 +44,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eJR-58-785">
-                                <rect key="frame" x="325" y="291" width="50" height="84"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="48"/>
-                                <state key="normal" title="&gt;">
-                                    <color key="titleColor" red="0.36395089285714288" green="0.79748883928571423" blue="0.57215401785714282" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="rightArrowButtonPressed:" destination="C6V-2H-W6R" eventType="touchUpInside" id="gHz-aT-Sao"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IJ2-E5-ZPu">
-                                <rect key="frame" x="0.0" y="291" width="50" height="84"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="48"/>
-                                <state key="normal" title="&lt;">
-                                    <color key="titleColor" red="0.36395089289999999" green="0.79748883930000003" blue="0.57215401789999998" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="leftArrowButtonPressed:" destination="C6V-2H-W6R" eventType="touchUpInside" id="iK0-p8-DE3"/>
-                                </connections>
-                            </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="scaleToFill" fixedFrame="YES" scrollEnabled="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="pxd-G0-B5m">
                                 <rect key="frame" x="50" y="85" width="275" height="556"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -103,6 +81,28 @@
                                     <outlet property="delegate" destination="C6V-2H-W6R" id="TQs-Hc-5aD"/>
                                 </connections>
                             </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IJ2-E5-ZPu">
+                                <rect key="frame" x="0.0" y="291" width="50" height="84"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="48"/>
+                                <state key="normal" title="&lt;">
+                                    <color key="titleColor" red="0.36395089289999999" green="0.79748883930000003" blue="0.57215401789999998" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="leftArrowButtonPressed:" destination="C6V-2H-W6R" eventType="touchUpInside" id="iK0-p8-DE3"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eJR-58-785">
+                                <rect key="frame" x="325" y="291" width="50" height="84"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="48"/>
+                                <state key="normal" title="&gt;">
+                                    <color key="titleColor" red="0.36395089285714288" green="0.79748883928571423" blue="0.57215401785714282" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="rightArrowButtonPressed:" destination="C6V-2H-W6R" eventType="touchUpInside" id="gHz-aT-Sao"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="LJE-Yk-WcA"/>
