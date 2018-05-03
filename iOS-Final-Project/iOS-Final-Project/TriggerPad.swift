@@ -19,7 +19,7 @@ class TriggerPad : Module {
     var willTriggerNextTick : Bool
     
 	init(position: Vector) {
-		triggerOnEnter = false
+		triggerOnEnter = true
         triggerOnTimeStart = 0
         triggerOnTimeRepeat = 0
         willTriggerNextTick = false

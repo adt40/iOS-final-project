@@ -99,11 +99,6 @@ class Grid {
     }
     
 	static func advanceState() -> Bool {
-        let win = testForWin()
-        if win {
-            return win
-        }
-        
 		var modules : [Module] = []
 		for gridObject in state {
             if let module = gridObject as? Module {
@@ -119,10 +114,15 @@ class Grid {
         for gridObject in state {
             gridObject.move()
         }
+        currentTime += 1
         for gridObject in state {
             if let trigger = gridObject as? TriggerPad {
                 trigger.setWillTriggerNextTick()
             }
+        }
+        let win = testForWin()
+        if win {
+            return win
         }
         return false
 	}

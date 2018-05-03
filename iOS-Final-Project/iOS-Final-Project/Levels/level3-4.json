@@ -1,60 +1,61 @@
 {
-  "world": 1,
-  "level": 5,
-  "name": "Walled In",
+  "world": 3,
+  "level": 4,
+  "name": "Around the Corner pt 2",
   "RuntimeScore": 0,
   "ModuleScore": 0,
   "GridSize": {
-    "x": 5,
+    "x": 4,
     "y": 6
   },
   "AvailableModules": [
     "piston",
     "trigger",
+    "rotator",
   ],
   "GridObjects": [
     {
       "type": "color",
       "position": {
-        "x": 1,
-        "y": 3
+        "x": 2,
+        "y": 4
       },
       "color": {
         "r": 1,
-        "y": 0,
-        "b": 1
+        "y": 1,
+        "b": 0
       }
     },
     {
       "type": "socket",
       "position": {
-        "x": 3,
-        "y": 2
+        "x": 2,
+        "y": 0
       },
       "color": {
         "r": 1,
-        "y": 0,
-        "b": 1
+        "y": 1,
+        "b": 0
       }
     },
     {
       "type": "wall",
       "position": {
-        "x": 3,
+        "x": 0,
         "y": 0
       }
     },
     {
       "type": "wall",
       "position": {
-        "x": 4,
-        "y": 1
+        "x": 0,
+        "y": 4
       }
     },
     {
       "type": "wall",
       "position": {
-        "x": 4,
+        "x": 2,
         "y": 2
       }
     },
@@ -62,21 +63,7 @@
       "type": "wall",
       "position": {
         "x": 3,
-        "y": 3
-      }
-    },
-    {
-      "type": "wall",
-      "position": {
-        "x": 2,
         "y": 2
-      }
-    },
-    {
-      "type": "wall",
-      "position": {
-        "x": 2,
-        "y": 1
       }
     }
   ]

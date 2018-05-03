@@ -437,7 +437,9 @@ class LevelViewController: UIViewController {
     @IBAction func stepPressed(_ sender: UIButton) {
         stopButton.isEnabled = true
         //Only render one step
+        playing = true
         run()
+        playing = false
     }
     
     @IBAction func stopPressed(_ sender: UIButton) {

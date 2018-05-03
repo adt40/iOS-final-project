@@ -1,44 +1,25 @@
 {
   "world": 4,
-  "level": 1,
-  "name": "testing level 1",
-  "RuntimeScore": 8,
-  "ModuleScore": 3,
+  "level": 2,
+  "name": "Just one",
+  "RuntimeScore": 0,
+  "ModuleScore": 0,
   "GridSize": {
-    "x": 5,
+    "x": 4,
     "y": 6
   },
   "AvailableModules": [
     "piston",
     "trigger",
-    "rotator"
   ],
   "GridObjects": [
     {
-      "type": "rotator",
-      "position": {
-        "x": 4,
-        "y": 1
-      },
-      "direction": "down",
-      "clockwise": true
-    },
-    {
-      "type": "trigger",
-      "position": {
-        "x": 1,
-        "y": 1
-      },
-      "onEnter": true,
-      "startTime": 0,
-      "repeatTime": 0
-    },
-    {
-      "type": "color",
+      "type": "colorzapper",
       "position": {
         "x": 2,
-        "y": 4
+        "y": 3
       },
+      "direction": "left",
       "color": {
         "r": 1,
         "y": 0,
@@ -48,25 +29,49 @@
     {
       "type": "color",
       "position": {
-        "x": 4,
-        "y": 4
+        "x": 1,
+        "y": 5
       },
       "color": {
         "r": 0,
-        "y": 0,
-        "b": 1
+        "y": 1,
+        "b": 0
+      }
+    },
+    {
+      "type": "color",
+      "position": {
+        "x": 2,
+        "y": 5
+      },
+      "color": {
+        "r": 0,
+        "y": 1,
+        "b": 0
       }
     },
     {
       "type": "socket",
       "position": {
-        "x": 4,
+        "x": 1,
         "y": 0
       },
       "color": {
+        "r": 0,
+        "y": 1,
+        "b": 0
+      }
+    },
+    {
+      "type": "socket",
+      "position": {
+        "x": 1,
+        "y": 1
+      },
+      "color": {
         "r": 1,
-        "y": 0,
-        "b": 1
+        "y": 1,
+        "b": 0
       }
     }
   ]

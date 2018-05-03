@@ -1,27 +1,61 @@
 {
   "world": 4,
   "level": 3,
-  "name": "Testing level 2",
-  "RuntimeScore": 2,
-  "ModuleScore": 6,
+  "name": "Shoot the gap pt 2",
+  "RuntimeScore": 0,
+  "ModuleScore": 0,
   "GridSize": {
-    "x": 4,
-    "y": 4
+    "x": 7,
+    "y": 7
   },
   "AvailableModules": [
     "piston",
     "trigger",
-    "rotator",
-    "colorzapper"
   ],
   "GridObjects": [
     {
-      "type": "colorzapper",
+      "type": "piston",
       "position": {
         "x": 0,
-        "y": 1
+        "y": 3
       },
-      "direction": "right",
+      "direction": "right"
+    },
+    {
+      "type": "piston",
+      "position": {
+        "x": 6,
+        "y": 3
+      },
+      "direction": "left"
+    },
+    {
+      "type": "trigger",
+      "position": {
+        "x": 1,
+        "y": 3
+      },
+      "onEnter": true,
+      "startTime": 0,
+      "repeatTime": 0
+    },
+    {
+      "type": "trigger",
+      "position": {
+        "x": 5,
+        "y": 3
+      },
+      "onEnter": true,
+      "startTime": 0,
+      "repeatTime": 0
+    },
+    {
+      "type": "colorzapper",
+      "position": {
+        "x": 5,
+        "y": 3
+      },
+      "direction": "down",
       "color": {
         "r": 0,
         "y": 0,
@@ -31,8 +65,32 @@
     {
       "type": "color",
       "position": {
-        "x": 2,
-        "y": 3
+        "x": 1,
+        "y": 5
+      },
+      "color": {
+        "r": 1,
+        "y": 0,
+        "b": 0
+      }
+    },
+    {
+      "type": "color",
+      "position": {
+        "x": 3,
+        "y": 5
+      },
+      "color": {
+        "r": 1,
+        "y": 0,
+        "b": 0
+      }
+    },
+    {
+      "type": "color",
+      "position": {
+        "x": 5,
+        "y": 5
       },
       "color": {
         "r": 1,
@@ -49,7 +107,73 @@
       "color": {
         "r": 1,
         "y": 0,
+        "b": 0
+      }
+    },
+    {
+      "type": "socket",
+      "position": {
+        "x": 3,
+        "y": 1
+      },
+      "color": {
+        "r": 1,
+        "y": 0,
         "b": 1
+      }
+    },
+    {
+      "type": "socket",
+      "position": {
+        "x": 3,
+        "y": 2
+      },
+      "color": {
+        "r": 1,
+        "y": 0,
+        "b": 0
+      }
+    },
+    {
+      "type": "wall",
+      "position": {
+        "x": 0,
+        "y": 4
+      }
+    },
+    {
+      "type": "wall",
+      "position": {
+        "x": 1,
+        "y": 4
+      }
+    },
+    {
+      "type": "wall",
+      "position": {
+        "x": 2,
+        "y": 4
+      }
+    },
+    {
+      "type": "wall",
+      "position": {
+        "x": 4,
+        "y": 4
+      }
+    },
+    {
+      "type": "wall",
+      "position": {
+        "x": 5,
+        "y": 4
+      }
+    },
+    {
+      "type": "wall",
+      "position": {
+        "x": 6,
+        "y": 4
       }
     }
   ]

@@ -408,6 +408,7 @@ class BoardScene: SKScene {
                     fatalError("No Correspinding Module Type Coded For Bank Module: \"\(currentlyDragging.node!.name!)\"")
                 }
                 if let placedObject = gridObject {
+                    superView!.modulesUsed += 1
                     Grid.addGridObject(gridObject: placedObject)
                     generateModuleSprite(gridObject: placedObject)
                     currentlyDragging.node!.run(SKAction.sequence([SKAction.fadeOut(withDuration: 0.4), SKAction.move(to: currentlyDragging.startPosition!, duration: 0), SKAction.fadeIn(withDuration: 0.4)]))

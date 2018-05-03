@@ -2,6 +2,57 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:iOS-Final-Project.xcodeproj">
+      location = "group:../iOS-Final-Project/Levels/level1-1.json">
+   </FileRef>
+   <FileRef
+      location = "group:../iOS-Final-Project/Levels/level1-2.json">
+   </FileRef>
+   <FileRef
+      location = "group:../iOS-Final-Project/Levels/level1-3.json">
+   </FileRef>
+   <FileRef
+      location = "group:../iOS-Final-Project/Levels/level1-4.json">
+   </FileRef>
+   <FileRef
+      location = "group:../iOS-Final-Project/Levels/level1-5.json">
+   </FileRef>
+   <FileRef
+      location = "group:../iOS-Final-Project/Levels/level1-6.json">
+   </FileRef>
+   <FileRef
+      location = "group:../iOS-Final-Project/Levels/level2-1.json">
+   </FileRef>
+   <FileRef
+      location = "group:../iOS-Final-Project/Levels/level2-2.json">
+   </FileRef>
+   <FileRef
+      location = "group:../iOS-Final-Project/Levels/level2-3.json">
+   </FileRef>
+   <FileRef
+      location = "group:../iOS-Final-Project/Levels/level2-4.json">
+   </FileRef>
+   <FileRef
+      location = "group:../iOS-Final-Project/Levels/level3-1.json">
+   </FileRef>
+   <FileRef
+      location = "group:../iOS-Final-Project/Levels/level3-2.json">
+   </FileRef>
+   <FileRef
+      location = "group:../iOS-Final-Project/Levels/level3-3.json">
+   </FileRef>
+   <FileRef
+      location = "group:../iOS-Final-Project/Levels/level3-4.json">
+   </FileRef>
+   <FileRef
+      location = "group:../iOS-Final-Project/Levels/level4-1.json">
+   </FileRef>
+   <FileRef
+      location = "group:../iOS-Final-Project/Levels/level4-2.json">
+   </FileRef>
+   <FileRef
+      location = "group:../iOS-Final-Project/Levels/level4-3.json">
+   </FileRef>
+   <FileRef
+      location = "self:">
    </FileRef>
 </Workspace>
