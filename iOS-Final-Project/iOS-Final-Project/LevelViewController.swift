@@ -177,6 +177,10 @@ class LevelViewController: UIViewController {
     func displayOptionsFor(gridObject: GridObject) {
         selectedGridObject = gridObject
         
+        for subview in moduleOptionsView.subviews {
+            subview.removeFromSuperview()
+        }
+        
         let height = 25
         let viewWidth = Int(moduleOptionsView.frame.width)
         
@@ -199,26 +203,7 @@ class LevelViewController: UIViewController {
         } else if gridObject is Rotator {
             titleLabel.text = "Rotator"
             
-            let upButton = UIButton(frame: CGRect(x: height, y: height, width: height, height: height))
-            let rightButton = UIButton(frame: CGRect(x: height * 2, y: height * 2, width: height, height: height))
-            let downButton = UIButton(frame: CGRect(x: height, y: height * 3, width: height, height: height))
-            let leftButton = UIButton(frame: CGRect(x: 0, y: height * 2, width: height, height: height))
-            upButton.setTitle("▲", for: .normal)
-            rightButton.setTitle("▶", for: .normal)
-            downButton.setTitle("▼", for: .normal)
-            leftButton.setTitle("◀", for: .normal)
-            upButton.setTitleColor(.black, for: .normal)
-            rightButton.setTitleColor(.black, for: .normal)
-            downButton.setTitleColor(.black, for: .normal)
-            leftButton.setTitleColor(.black, for: .normal)
-            upButton.target(forAction: #selector(upPressed), withSender: upButton)
-            rightButton.target(forAction: #selector(rightPressed), withSender: rightButton)
-            downButton.target(forAction: #selector(downPressed), withSender: downButton)
-            leftButton.target(forAction: #selector(leftPressed), withSender: leftButton)
-            moduleOptionsView.addSubview(upButton)
-            moduleOptionsView.addSubview(rightButton)
-            moduleOptionsView.addSubview(downButton)
-            moduleOptionsView.addSubview(leftButton)
+            generateRotationControls(size: height)
             
             let clockwiseButton = UIButton(frame: CGRect(x: viewWidth / 2, y: height, width: height, height: height))
             let counterclockwiseButton = UIButton(frame: CGRect(x: viewWidth / 2, y: height * 2, width: height, height: height))
@@ -234,26 +219,7 @@ class LevelViewController: UIViewController {
         } else if gridObject is ColorZapper {
             titleLabel.text = "Color Zapper"
             
-            let upButton = UIButton(frame: CGRect(x: height, y: height, width: height, height: height))
-            let rightButton = UIButton(frame: CGRect(x: height * 2, y: height * 2, width: height, height: height))
-            let downButton = UIButton(frame: CGRect(x: height, y: height * 3, width: height, height: height))
-            let leftButton = UIButton(frame: CGRect(x: 0, y: height * 2, width: height, height: height))
-            upButton.setTitle("▲", for: .normal)
-            rightButton.setTitle("▶", for: .normal)
-            downButton.setTitle("▼", for: .normal)
-            leftButton.setTitle("◀", for: .normal)
-            upButton.setTitleColor(.black, for: .normal)
-            rightButton.setTitleColor(.black, for: .normal)
-            downButton.setTitleColor(.black, for: .normal)
-            leftButton.setTitleColor(.black, for: .normal)
-            upButton.target(forAction: #selector(upPressed), withSender: upButton)
-            rightButton.target(forAction: #selector(rightPressed), withSender: rightButton)
-            downButton.target(forAction: #selector(downPressed), withSender: downButton)
-            leftButton.target(forAction: #selector(leftPressed), withSender: leftButton)
-            moduleOptionsView.addSubview(upButton)
-            moduleOptionsView.addSubview(rightButton)
-            moduleOptionsView.addSubview(downButton)
-            moduleOptionsView.addSubview(leftButton)
+            generateRotationControls(size: height)
             
             let redButton = UIButton(frame: CGRect(x: viewWidth / 2, y: height, width: height, height: height))
             let yellowButton = UIButton(frame: CGRect(x: viewWidth / 2, y: height * 2, width: height, height: height))
