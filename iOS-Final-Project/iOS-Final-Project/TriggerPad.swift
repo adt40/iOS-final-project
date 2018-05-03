@@ -16,10 +16,13 @@ class TriggerPad : Module {
     var triggerOnTimeStart : Int
     var triggerOnTimeRepeat : Int //0 for no repetition
     
+    var willTriggerNextTick : Bool
+    
 	init(position: Vector) {
 		triggerOnEnter = false
         triggerOnTimeStart = 0
         triggerOnTimeRepeat = 0
+        willTriggerNextTick = false
 		super.init(position: position, canMove: false, canEdit: true, hasHitbox: false, facingDirection: Direction.neutral, currentVelocity: (0, Direction.neutral))
 	}
     
@@ -27,6 +30,7 @@ class TriggerPad : Module {
         self.triggerOnEnter = triggerOnEnter
         self.triggerOnTimeStart = triggerOnTimeStart
         self.triggerOnTimeRepeat = triggerOnTimeRepeat
+        willTriggerNextTick = false
         super.init(position: position, canMove: false, canEdit: true, hasHitbox: false, facingDirection: Direction.neutral, currentVelocity: (0, Direction.neutral))
     }
     
@@ -51,5 +55,14 @@ class TriggerPad : Module {
                 triggerActive = false
             }
         }
+        willTriggerNextTick = false
 	}
+    
+    func setWillTriggerNextTick() {
+        if triggerOnEnter {
+            if let _ = Grid.getHittableGridObjectsAt(position: position) {
+                willTriggerNextTick = true
+            }
+        }
+    }
 }

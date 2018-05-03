@@ -119,6 +119,11 @@ class Grid {
         for gridObject in state {
             gridObject.move()
         }
+        for gridObject in state {
+            if let trigger = gridObject as? TriggerPad {
+                trigger.setWillTriggerNextTick()
+            }
+        }
         return false
 	}
     
