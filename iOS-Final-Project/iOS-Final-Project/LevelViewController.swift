@@ -442,9 +442,6 @@ class LevelViewController: UIViewController {
     
     @objc func deleteSelectedModule() {
         Grid.removeGridObject(gridObject: selectedGridObject!)
-        selectedGridObject!.uiSprite!.run(SKAction.fadeOut(withDuration: 0.4))
-        selectedGridObject!.uiSprite!.removeFromParent()
-        selectedGridObject!.uiSprite = nil
         selectedGridObject = nil
         moduleOptionsView.isHidden = true
         modulesUsed -= 1
