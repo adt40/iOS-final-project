@@ -25,7 +25,7 @@ class GridColor : GridObject {
             if currentVelocity.speed > 0 {
                 let newPosition = position + currentVelocity.direction.toVector() * currentVelocity.speed
                 
-                if !Grid.isOutside(position: newPosition) && !Grid.isGridObjectAt(position: newPosition) {
+                if !Grid.isOutside(position: newPosition) && !Grid.isGridObjectAt(position: newPosition, hasHitbox: true) {
                     position = newPosition
                 } else if let gridColor = Grid.getHittableGridObjectsAt(position: newPosition) as? GridColor {
                     mix(with: gridColor)

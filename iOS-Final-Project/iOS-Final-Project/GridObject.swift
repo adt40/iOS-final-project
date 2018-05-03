@@ -37,7 +37,7 @@ class GridObject {
             if currentVelocity.speed > 0 {
                 let newPosition = position + currentVelocity.direction.toVector() * currentVelocity.speed
                 
-                if !Grid.isOutside(position: newPosition) && !Grid.isGridObjectAt(position: newPosition) {
+                if !Grid.isOutside(position: newPosition) && !Grid.isGridObjectAt(position: newPosition, hasHitbox: true) {
                     position = newPosition
                 } else {
                     currentVelocity.speed = 0

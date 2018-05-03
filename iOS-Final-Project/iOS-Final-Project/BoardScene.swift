@@ -118,19 +118,11 @@ class BoardScene: SKScene {
         var newSprite: SKSpriteNode
         var currentXpos = tileSize / 2 + bufferWidth
         var currentYpos = boardSpace!.height - tileSize / 2
-        var isCorner = true
-        var isEdge = false
-        var isCentral = false
         
         for y in 0..<gridSize.y {
             for x in 0..<gridSize.x {
                 //Initialize filename
                 filename = "tile-central-"
-                
-                //Classify tile
-                isCorner = x == 0 && y == 0 || x == gridSize.x - 1 && y == 0 || x == 0 && y == gridSize.y - 1 || x == gridSize.x - 1 && y == gridSize.y - 1
-                isEdge = x == 0 || x == gridSize.x - 1 || y == 0 || y == gridSize.y - 1
-                isCentral = !isCorner && !isEdge
                 
                 //Decide on color. Fun fact: on a checkerboard, the manhattan distance determines color!
                 if ((x + y) % 2 == 1) {
@@ -172,7 +164,6 @@ class BoardScene: SKScene {
     
     //Only needs to be called once (renders all modules)
     func renderInitialModules(gridObjects: [GridObject]) {
-        var filename: String
         moduleRoot = SKNode()
         moduleRoot!.position.y = moduleBankHeight
         moduleRoot!.zPosition = MODULE_LAYER
@@ -341,7 +332,6 @@ class BoardScene: SKScene {
         if touches.count == 1 {
             let touch = touches.first!
             let positionInScene = touch.location(in: self)
-            print(positionInScene)
             let touchedNodes = self.nodes(at: positionInScene)
             var touchedModule: SKSpriteNode?
             for node in touchedNodes {
@@ -393,24 +383,38 @@ class BoardScene: SKScene {
             }
             if (touchedTile != nil) {
                 let position = Vector(Int(floor((touchedTile!.position.x - bufferWidth) / tileSize)), Int(floor((boardSpace!.height - touchedTile!.position.y) / tileSize)))
-                var gridObject: GridObject
+                var gridObject: GridObject?
                 if (currentlyDragging.node!.name!.contains("piston")) {
-                    gridObject = Piston(position: position, direction: Direction.up)
+                    if (!Grid.isGridObjectAt(position: position, hasHitbox: true)) {
+                        gridObject = Piston(position: position, direction: Direction.up)
+                    }
                 } else if (currentlyDragging.node!.name!.contains("trigger")) {
-                    gridObject = TriggerPad(position: position)
+                    if (!Grid.isGridObjectAt(position: position, hasHitbox: false)) {
+                        gridObject = TriggerPad(position: position)
+                    }
                 } else if (currentlyDragging.node!.name!.contains("wall")) {
-                    gridObject = Wall(position: position)
+                    if (!Grid.isGridObjectAt(position: position, hasHitbox: true)) {
+                        gridObject = Wall(position: position)
+                    }
                 } else if (currentlyDragging.node!.name!.contains("rotator")) {
-                    gridObject = Rotator(position: position, direction: Direction.up, clockwise: true)
+                    if (!Grid.isGridObjectAt(position: position, hasHitbox: true)) {
+                        gridObject = Rotator(position: position, direction: Direction.up, clockwise: true)
+                    }
                 } else if (currentlyDragging.node!.name!.contains("colorzapper")) {
-                    gridObject = ColorZapper(position: position, direction: Direction.up, color: MixableColor(1, 0, 0))
+                    if (!Grid.isGridObjectAt(position: position, hasHitbox: true)) {
+                        gridObject = ColorZapper(position: position, direction: Direction.up, color: MixableColor(1, 0, 0))
+                    }
                 } else {
                     fatalError("No Correspinding Module Type Coded For Bank Module: \"\(currentlyDragging.node!.name!)\"")
                 }
-                Grid.addGridObject(gridObject: gridObject)
-                generateModuleSprite(gridObject: gridObject)
-                currentlyDragging.node!.run(SKAction.sequence([SKAction.fadeOut(withDuration: 0.4), SKAction.move(to: currentlyDragging.startPosition!, duration: 0), SKAction.fadeIn(withDuration: 0.4)]))
-                gridObject.uiSprite!.run(SKAction.sequence([SKAction.fadeOut(withDuration: 0), SKAction.fadeIn(withDuration: 0.5)]))
+                if let placedObject = gridObject {
+                    Grid.addGridObject(gridObject: placedObject)
+                    generateModuleSprite(gridObject: placedObject)
+                    currentlyDragging.node!.run(SKAction.sequence([SKAction.fadeOut(withDuration: 0.4), SKAction.move(to: currentlyDragging.startPosition!, duration: 0), SKAction.fadeIn(withDuration: 0.4)]))
+                    placedObject.uiSprite!.run(SKAction.sequence([SKAction.fadeOut(withDuration: 0), SKAction.fadeIn(withDuration: 0.5)]))
+                } else {
+                    currentlyDragging.node!.run(SKAction.move(to: currentlyDragging.startPosition!, duration: 0.4))
+                }
             } else {
                 currentlyDragging.node!.run(SKAction.move(to: currentlyDragging.startPosition!, duration: 0.4))
             }
