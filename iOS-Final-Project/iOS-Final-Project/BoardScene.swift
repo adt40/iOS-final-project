@@ -359,24 +359,29 @@ class BoardScene: SKScene {
             let positionInScene = touch.location(in: self)
             let touchedNodes = self.nodes(at: positionInScene)
             var touchedModule: SKSpriteNode?
+            var noModulesTouched: Bool = true
             for node in touchedNodes {
                 if node.name != nil && node.name!.contains("module-bank-") {
                     touchedModule = node as? SKSpriteNode
                     break
                 } else if node.name != nil && node.name!.contains("inplay-") {
+                    noModulesTouched = false
                     let position = Vector(Int(floor((positionInScene.x - bufferWidth) / tileSize)), Int(floor((boardSpace!.height - (positionInScene.y - moduleBankHeight)) / tileSize)))
                     let gridObjectsAtPosition = Grid.getAllGridObjectsAt(position: position)
                     for obj in gridObjectsAtPosition {
-                        if obj.canEdit {
+                        //If we have a selectedGridObject and this touched node is that object, skip it. This allows selecting between multiple modules on top of one another
+                        if obj.canEdit && (superView!.selectedGridObject == nil || !(superView!.selectedGridObject! == obj)) {
                             DispatchQueue.main.async {
                                 self.superView!.displayOptionsFor(gridObject: obj)
                             }
                             break //this sucks because you can place two objects on the same tile but oh well
                         }
                     }
-                } else {
-                    superView!.moduleOptionsView.isHidden = true
                 }
+            }
+            if noModulesTouched {
+                superView!.moduleOptionsView.isHidden = true
+                superView!.selectedGridObject = nil
             }
             if touchedModule == nil {
                 return
