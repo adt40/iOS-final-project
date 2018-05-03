@@ -181,7 +181,7 @@ class LevelViewController: UIViewController {
             subview.removeFromSuperview()
         }
         
-        let height = 25
+        let size = 25
         let viewWidth = Int(moduleOptionsView.frame.width)
         let viewHeight = Int(moduleOptionsView.frame.height)
         let optionLabelSize: CGFloat = 14
@@ -193,7 +193,7 @@ class LevelViewController: UIViewController {
         titleLabel.textAlignment = NSTextAlignment.center
         moduleOptionsView.addSubview(titleLabel)
         
-        let deleteButton = UIButton(frame: CGRect(x: viewWidth - 80, y: 5, width: 80, height: height))
+        let deleteButton = UIButton(frame: CGRect(x: viewWidth - 80, y: 5, width: 80, height: size))
         deleteButton.setTitle("Delete", for: .normal)
         deleteButton.setTitleColor(.red, for: .normal)
         deleteButton.addTarget(self, action: #selector(deleteSelectedModule), for: UIControlEvents.touchUpInside)
@@ -203,38 +203,38 @@ class LevelViewController: UIViewController {
         if gridObject is Piston {
             titleLabel.text = "Piston"
             
-            generateRotationControls(size: height, viewWidth: viewWidth, viewHeight: viewHeight)
+            generateRotationControls(size: size, viewWidth: viewWidth, viewHeight: viewHeight)
             
         } else if gridObject is Rotator {
             titleLabel.text = "Rotator"
             
-            generateRotationControls(size: height, viewWidth: viewWidth, viewHeight: viewHeight)
+            generateRotationControls(size: size, viewWidth: viewWidth, viewHeight: viewHeight)
             
-            let clockwiseButton = UIButton(frame: CGRect(x: viewWidth / 2, y: height, width: height, height: height))
-            let counterclockwiseButton = UIButton(frame: CGRect(x: viewWidth / 2, y: height * 2, width: height, height: height))
+            let clockwiseButton = UIButton(frame: CGRect(x: (viewWidth + size) / 2 + size * 2, y: size * 2, width: size, height: size))
+            let counterclockwiseButton = UIButton(frame: CGRect(x: (viewWidth + size) / 2 + size * 3, y: size * 2, width: size, height: size))
             clockwiseButton.setTitle("↻", for: .normal)
             counterclockwiseButton.setTitle("↺", for: .normal)
             clockwiseButton.setTitleColor(.black, for: .normal)
             counterclockwiseButton.setTitleColor(.black, for: .normal)
-            clockwiseButton.target(forAction: #selector(clockwisePressed), withSender: clockwiseButton)
-            counterclockwiseButton.target(forAction: #selector(counterclockwisePressed), withSender: counterclockwiseButton)
+            clockwiseButton.addTarget(self, action: #selector(clockwisePressed), for: UIControlEvents.touchUpInside)
+            counterclockwiseButton.addTarget(self, action: #selector(counterclockwisePressed), for: UIControlEvents.touchUpInside)
             moduleOptionsView.addSubview(clockwiseButton)
             moduleOptionsView.addSubview(counterclockwiseButton)
             
         } else if gridObject is ColorZapper {
             titleLabel.text = "Color Zapper"
             
-            generateRotationControls(size: height, viewWidth: viewWidth, viewHeight: viewHeight)
+            generateRotationControls(size: size, viewWidth: viewWidth, viewHeight: viewHeight)
             
-            let redButton = UIButton(frame: CGRect(x: viewWidth / 2, y: height, width: height, height: height))
-            let yellowButton = UIButton(frame: CGRect(x: viewWidth / 2, y: height * 2, width: height, height: height))
-            let blueButton = UIButton(frame: CGRect(x: viewWidth / 2, y: height * 3, width: height, height: height))
+            let redButton = UIButton(frame: CGRect(x: (viewWidth + size) / 2 + size * 2, y: size * 2, width: size, height: size))
+            let yellowButton = UIButton(frame: CGRect(x: (viewWidth + size) / 2 + size * 3, y: size * 2, width: size, height: size))
+            let blueButton = UIButton(frame: CGRect(x: (viewWidth + size) / 2 + size * 4, y: size * 2, width: size, height: size))
             redButton.backgroundColor = .red
             yellowButton.backgroundColor = .yellow
             blueButton.backgroundColor = .blue
-            redButton.target(forAction: #selector(redPressed), withSender: redButton)
-            yellowButton.target(forAction: #selector(yellowPressed), withSender: yellowButton)
-            blueButton.target(forAction: #selector(bluePressed), withSender: blueButton)
+            redButton.addTarget(self, action: #selector(redPressed), for: UIControlEvents.touchUpInside)
+            yellowButton.addTarget(self, action: #selector(yellowPressed), for: UIControlEvents.touchUpInside)
+            blueButton.addTarget(self, action: #selector(bluePressed), for: UIControlEvents.touchUpInside)
             moduleOptionsView.addSubview(redButton)
             moduleOptionsView.addSubview(yellowButton)
             moduleOptionsView.addSubview(blueButton)
