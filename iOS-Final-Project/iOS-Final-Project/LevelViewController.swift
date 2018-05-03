@@ -193,22 +193,22 @@ class LevelViewController: UIViewController {
         titleLabel.textAlignment = NSTextAlignment.center
         moduleOptionsView.addSubview(titleLabel)
         
-        let deleteButton = UIButton(frame: CGRect(x: viewWidth - 80, y: 0, width: 80, height: height))
-        deleteButton.setTitle("delete", for: .normal)
-        deleteButton.setTitleColor(.black, for: .normal)
-        //TODO: Give this an action
+        let deleteButton = UIButton(frame: CGRect(x: viewWidth - 80, y: 5, width: 80, height: height))
+        deleteButton.setTitle("Delete", for: .normal)
+        deleteButton.setTitleColor(.red, for: .normal)
+        deleteButton.addTarget(self, action: #selector(deleteSelectedModule), for: UIControlEvents.touchUpInside)
         moduleOptionsView.addSubview(deleteButton)
         
         //things on specific modules
         if gridObject is Piston {
             titleLabel.text = "Piston"
             
-            generateRotationControls(size: height)
+            generateRotationControls(size: height, viewWidth: viewWidth, viewHeight: viewHeight)
             
         } else if gridObject is Rotator {
             titleLabel.text = "Rotator"
             
-            generateRotationControls(size: height)
+            generateRotationControls(size: height, viewWidth: viewWidth, viewHeight: viewHeight)
             
             let clockwiseButton = UIButton(frame: CGRect(x: viewWidth / 2, y: height, width: height, height: height))
             let counterclockwiseButton = UIButton(frame: CGRect(x: viewWidth / 2, y: height * 2, width: height, height: height))
@@ -224,7 +224,7 @@ class LevelViewController: UIViewController {
         } else if gridObject is ColorZapper {
             titleLabel.text = "Color Zapper"
             
-            generateRotationControls(size: height)
+            generateRotationControls(size: height, viewWidth: viewWidth, viewHeight: viewHeight)
             
             let redButton = UIButton(frame: CGRect(x: viewWidth / 2, y: height, width: height, height: height))
             let yellowButton = UIButton(frame: CGRect(x: viewWidth / 2, y: height * 2, width: height, height: height))
@@ -321,11 +321,11 @@ class LevelViewController: UIViewController {
         moduleOptionsView.isHidden = false
     }
     
-    func generateRotationControls(size: Int) {
-        let upButton = UIButton(frame: CGRect(x: size, y: size, width: size, height: size))
-        let rightButton = UIButton(frame: CGRect(x: size * 2, y: size * 2, width: size, height: size))
-        let downButton = UIButton(frame: CGRect(x: size, y: size * 3, width: size, height: size))
-        let leftButton = UIButton(frame: CGRect(x: 0, y: size * 2, width: size, height: size))
+    func generateRotationControls(size: Int, viewWidth: Int, viewHeight: Int) {
+        let upButton = UIButton(frame: CGRect(x: (viewWidth - size) / 2, y: size, width: size, height: size))
+        let rightButton = UIButton(frame: CGRect(x: (viewWidth + size) / 2, y: size * 2, width: size, height: size))
+        let downButton = UIButton(frame: CGRect(x: (viewWidth - size) / 2, y: size * 3, width: size, height: size))
+        let leftButton = UIButton(frame: CGRect(x: (viewWidth - size * 3) / 2, y: size * 2, width: size, height: size))
         upButton.setTitle("▲", for: .normal)
         rightButton.setTitle("▶", for: .normal)
         downButton.setTitle("▼", for: .normal)
@@ -409,6 +409,15 @@ class LevelViewController: UIViewController {
             }
         }
         segmentedControl.selectedSegmentIndex = UISegmentedControlNoSegment
+    }
+    
+    @objc func deleteSelectedModule() {
+        Grid.removeGridObject(gridObject: selectedGridObject!)
+        selectedGridObject!.uiSprite!.run(SKAction.fadeOut(withDuration: 0.4))
+        selectedGridObject!.uiSprite!.removeFromParent()
+        selectedGridObject!.uiSprite = nil
+        selectedGridObject = nil
+        moduleOptionsView.isHidden = true
     }
     
     //-----------------------------------------------------------------------------
