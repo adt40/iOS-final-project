@@ -17,7 +17,7 @@ class GridColor : GridObject {
     
     init(position: Vector, color: MixableColor) {
         self.color = color
-        super.init(position: position, canMove: true, hasHitbox: true, facingDirection: Direction.neutral, currentVelocity: (speed: 0, direction: Direction.neutral))
+        super.init(position: position, canMove: true, canEdit: false, hasHitbox: true, facingDirection: Direction.neutral, currentVelocity: (speed: 0, direction: Direction.neutral))
     }
     
     override func move() {

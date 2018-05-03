@@ -27,6 +27,8 @@ class BoardScene: SKScene {
     let MODULE_LAYER = CGFloat(10)
     let MODULE_BANK_LAYER = CGFloat(20)
     
+    var superView : LevelViewController?
+    
     deinit {
         self.removeAllActions()
         self.removeAllChildren()
@@ -45,16 +47,16 @@ class BoardScene: SKScene {
         addChild(moduleBankRoot!)
         
         //render module bank background
-        var moduleBankBackground = SKShapeNode(rect: CGRect(x: 0, y: 0, width: size.width, height: moduleBankHeight))
+        let moduleBankBackground = SKShapeNode(rect: CGRect(x: 0, y: 0, width: size.width, height: moduleBankHeight))
         moduleBankBackground.fillColor = SKColor.white
         moduleBankBackground.strokeColor = SKColor.gray
         moduleBankBackground.zPosition = -1
         moduleBankRoot!.addChild(moduleBankBackground)
         
         //calculate the size of modules in the bank
-        var moduleBankRenderingRatio = floor((boardSpace!.width - 2 * moduleBankPadding) / (moduleBankHeight - 2 * moduleBankPadding))
-        var moduleGroups = ceil(CGFloat(availableModules.count) / moduleBankRenderingRatio)
-        var bankModuleSize = (moduleBankHeight - 2 * moduleBankPadding) / ceil(sqrt(moduleGroups)) - 2 * bankModuleSpacing
+        let moduleBankRenderingRatio = floor((boardSpace!.width - 2 * moduleBankPadding) / (moduleBankHeight - 2 * moduleBankPadding))
+        let moduleGroups = ceil(CGFloat(availableModules.count) / moduleBankRenderingRatio)
+        let bankModuleSize = (moduleBankHeight - 2 * moduleBankPadding) / ceil(sqrt(moduleGroups)) - 2 * bankModuleSpacing
         //Render them in the pattern described by the ratio we found
         var x = CGFloat(0), y = CGFloat(0)
         var newSprite: SKSpriteNode
@@ -69,8 +71,8 @@ class BoardScene: SKScene {
             moduleBankRoot!.addChild(newSprite)
             
             newSprite.size = CGSize(width: bankModuleSize, height: bankModuleSize)
-            var xPos = moduleBankPadding + (x * ((2 * bankModuleSpacing) + bankModuleSize)) +  bankModuleSpacing + (bankModuleSize / 2)
-            var yPos = moduleBankHeight - moduleBankPadding - (y * (2 * bankModuleSpacing + bankModuleSize)) -  (bankModuleSpacing + bankModuleSize / 2)
+            let xPos = moduleBankPadding + (x * ((2 * bankModuleSpacing) + bankModuleSize)) +  bankModuleSpacing + (bankModuleSize / 2)
+            let yPos = moduleBankHeight - moduleBankPadding - (y * (2 * bankModuleSpacing + bankModuleSize)) -  (bankModuleSpacing + bankModuleSize / 2)
             newSprite.position = CGPoint(x: xPos, y: yPos)
             newSprite.name = "module-bank-" + module
             
@@ -251,6 +253,7 @@ class BoardScene: SKScene {
             
             //Generate Sprite
             let newSprite = SKSpriteNode(imageNamed: filename)
+            newSprite.name = "inplay-\(type)"
             
             //Set Sprite position
             newSprite.position = CGPoint(x: bufferWidth + tileSize * CGFloat(gridObject.position.x) + moduleSize / 2 + (tileSize - moduleSize) / 2, y: boardSpace!.height - tileSize * CGFloat(gridObject.position.y) - moduleSize / 2 - (tileSize - moduleSize) / 2)
@@ -339,44 +342,57 @@ class BoardScene: SKScene {
             let touch = touches.first!
             let positionInScene = touch.location(in: self)
             print(positionInScene)
-            var touchedNodes = self.nodes(at: positionInScene)
-            var touchedBankModule: SKSpriteNode?
+            let touchedNodes = self.nodes(at: positionInScene)
+            var touchedModule: SKSpriteNode?
             for node in touchedNodes {
                 if node.name != nil && node.name!.contains("module-bank-") {
-                    touchedBankModule = node as? SKSpriteNode
+                    touchedModule = node as? SKSpriteNode
                     break
+                } else if node.name != nil && node.name!.contains("inplay-") {
+                    let position = Vector(Int(floor((positionInScene.x - bufferWidth) / tileSize)), Int(floor((boardSpace!.height - positionInScene.y) / tileSize)) + 1)
+                    let gridObjectsAtPosition = Grid.getAllGridObjectsAt(position: position)
+                    for obj in gridObjectsAtPosition {
+                        if obj.canEdit {
+                            DispatchQueue.main.async {
+                                self.superView!.displayOptionsFor(gridObject: obj)
+                            }
+                            break //this sucks because you can place two objects on the same tile but oh well
+                        }
+                    }
+                } else {
+                    superView!.moduleOptionsView.isHidden = true
                 }
             }
-            if touchedBankModule == nil {
+            if touchedModule == nil {
                 return
             }
             currentlyDragging.touchStart = positionInScene
-            currentlyDragging.startPosition = CGPoint(x: touchedBankModule!.position.x, y: touchedBankModule!.position.y)
-            currentlyDragging.node = touchedBankModule
+            currentlyDragging.startPosition = CGPoint(x: touchedModule!.position.x, y: touchedModule!.position.y)
+            currentlyDragging.node = touchedModule
             currentlyDragging.active = true
         }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         if (currentlyDragging.active) {
-            var newTouchPosition = touches.first!.location(in: self)
+            let newTouchPosition = touches.first!.location(in: self)
             currentlyDragging.node!.position = newTouchPosition
         }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if (currentlyDragging.active) {
-            var newTouchPosition = touches.first!.location(in: self)
-            var touchedNodes = self.nodes(at: newTouchPosition)
+            let newTouchPosition = touches.first!.location(in: self)
+            let touchedNodes = self.nodes(at: newTouchPosition)
             var touchedTile: SKSpriteNode?
             for node in touchedNodes {
                 if (node.name != nil && node.name!.contains("tile")) {
-                    touchedTile = node as! SKSpriteNode
+                    touchedTile = node as? SKSpriteNode
                     break;
                 }
             }
             if (touchedTile != nil) {
-                var position = Vector(Int(floor((touchedTile!.position.x - bufferWidth) / tileSize)), Int(floor((boardSpace!.height - touchedTile!.position.y) / tileSize)))
+                let position = Vector(Int(floor((touchedTile!.position.x - bufferWidth) / tileSize)), Int(floor((boardSpace!.height - touchedTile!.position.y) / tileSize)))
                 var gridObject: GridObject
                 if (currentlyDragging.node!.name!.contains("piston")) {
                     gridObject = Piston(position: position, direction: Direction.up)

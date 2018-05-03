@@ -68,6 +68,7 @@ class LevelFileReader {
                 if gridObject["canMove"].exists() {
                     piston.canMove = gridObject["canMove"].boolValue
                 }
+                piston.canEdit = false
                 gridObjects.append(piston)
             case "rotator":
                 let position = Vector(gridObject["position", "x"].intValue, gridObject["position", "y"].intValue)
@@ -77,6 +78,7 @@ class LevelFileReader {
                 if gridObject["canMove"].exists() {
                     rotator.canMove = gridObject["canMove"].boolValue
                 }
+                rotator.canEdit = false
                 gridObjects.append(rotator)
             case "colorzapper":
                 let position = Vector(gridObject["position", "x"].intValue, gridObject["position", "y"].intValue)
@@ -86,6 +88,7 @@ class LevelFileReader {
                 if gridObject["canMove"].exists() {
                     colorZapper.canMove = gridObject["canMove"].boolValue
                 }
+                colorZapper.canEdit = false
                 gridObjects.append(colorZapper)
             case "trigger":
                 let position = Vector(gridObject["position", "x"].intValue, gridObject["position", "y"].intValue)
@@ -93,6 +96,7 @@ class LevelFileReader {
                 let startTime = gridObject["startTime"].intValue
                 let repeatTime = gridObject["repeatTime"].intValue
                 let trigger = TriggerPad(position: position, triggerOnEnter: onEnter, triggerOnTimeStart: startTime, triggerOnTimeRepeat: repeatTime)
+                trigger.canEdit = false
                 gridObjects.append(trigger)
             case "wall":
                 let position = Vector(gridObject["position", "x"].intValue, gridObject["position", "y"].intValue)
@@ -100,6 +104,7 @@ class LevelFileReader {
                 if gridObject["canMove"].exists() {
                     wall.canMove = gridObject["canMove"].boolValue
                 }
+                wall.canEdit = false
                 gridObjects.append(wall)
             default:
                 print("invalid JSON module of type: " + type)

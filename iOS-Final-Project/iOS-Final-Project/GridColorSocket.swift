@@ -19,7 +19,7 @@ class GridColorSocket : GridObject {
     
     init(position: Vector, desiredColor: MixableColor) {
         self.desiredColor = desiredColor
-        super.init(position: position, canMove: false, hasHitbox: false, facingDirection: Direction.neutral, currentVelocity: (speed: 0, direction: Direction.neutral))
+        super.init(position: position, canMove: false, canEdit: false, hasHitbox: false, facingDirection: Direction.neutral, currentVelocity: (speed: 0, direction: Direction.neutral))
     }
     
     override func move() {

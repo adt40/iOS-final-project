@@ -15,7 +15,7 @@ class Piston : Module {
     var extended = false
     
     init(position: Vector, direction: Direction) {
-		super.init(position: position, canMove: true, hasHitbox: true, facingDirection: direction, currentVelocity: (0, Direction.neutral)) //default to up
+		super.init(position: position, canMove: true, canEdit: true, hasHitbox: true, facingDirection: direction, currentVelocity: (0, Direction.neutral)) //default to up
 	}
 
 	override func performAction() {

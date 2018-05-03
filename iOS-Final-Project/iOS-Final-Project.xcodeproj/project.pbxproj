@@ -103,9 +103,9 @@
 			isa = PBXGroup;
 			children = (
 				824989D5206096780057AB2B /* Levels */,
+				93173841208827020043CF0B /* Icons */,
 				0190C886203FC001001AE736 /* AppDelegate.swift */,
 				8260EDD6204E227C001C44A9 /* Rotator.swift */,
-				93173841208827020043CF0B /* Icons */,
 				8212ABB22042043A00A5328B /* Direction.swift */,
 				0190C89D203FC0B6001AE736 /* Grid.swift */,
 				0190C89A203FC0B5001AE736 /* GridObject.swift */,

@@ -5,7 +5,7 @@ class Rotator : Module {
     
     init(position: Vector, direction: Direction, clockwise: Bool) {
         self.clockwise = clockwise
-        super.init(position: position, canMove: true, hasHitbox: true, facingDirection: direction, currentVelocity: (0, Direction.neutral))
+        super.init(position: position, canMove: true, canEdit: true, hasHitbox: true, facingDirection: direction, currentVelocity: (0, Direction.neutral))
     }
     
     override func performAction() {

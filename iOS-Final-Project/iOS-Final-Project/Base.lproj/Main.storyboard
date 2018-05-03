@@ -218,8 +218,13 @@
                             </button>
                             <skView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G1n-5w-GrU">
                                 <rect key="frame" x="0.0" y="120" width="375" height="547"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </skView>
+                            <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bgj-Sq-QCd">
+                                <rect key="frame" x="0.0" y="567" width="375" height="100"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="N9N-MN-bKH"/>
@@ -236,6 +241,7 @@
                         <outlet property="highScoreLabel" destination="MGe-tR-eyo" id="Rab-dt-ft6"/>
                         <outlet property="levelNavItem" destination="bsD-ms-j8w" id="yzy-pn-Qn0"/>
                         <outlet property="moduleHighScoreLabel" destination="1p5-RL-yFM" id="BrJ-KD-0Mp"/>
+                        <outlet property="moduleOptionsView" destination="bgj-Sq-QCd" id="blA-k2-XUe"/>
                         <outlet property="moduleScoreLabel" destination="RsF-cA-s17" id="8CN-VG-cFB"/>
                         <outlet property="playPauseButton" destination="NdA-zM-jHb" id="LNp-Jy-y2P"/>
                         <outlet property="popupCloseButton" destination="EPK-zk-ifa" id="fwb-rU-6Pu"/>
@@ -370,7 +376,7 @@
                     <viewLayoutGuide key="safeArea" id="9gh-kd-1ay"/>
                 </view>
             </objects>
-            <point key="canvasLocation" x="2101.5999999999999" y="116.49175412293854"/>
+            <point key="canvasLocation" x="2437.5999999999999" y="115.59220389805098"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="2q4-aD-sRX">

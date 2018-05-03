@@ -14,7 +14,7 @@ class ColorZapper : Module {
     
     init(position: Vector, direction: Direction, color: MixableColor) {
         self.color = color
-        super.init(position: position, canMove: true, hasHitbox: true, facingDirection: direction, currentVelocity: (speed: 0, direction: Direction.neutral))
+        super.init(position: position, canMove: true, canEdit: true, hasHitbox: true, facingDirection: direction, currentVelocity: (speed: 0, direction: Direction.neutral))
     }
     
     override func performAction() {

@@ -13,6 +13,6 @@ import Foundation
 
 class Wall : Module {
     init(position: Vector) {
-        super.init(position: position, canMove: false, hasHitbox: true, facingDirection: Direction.neutral, currentVelocity: (speed: 0, direction: Direction.neutral))
+        super.init(position: position, canMove: false, canEdit: true, hasHitbox: true, facingDirection: Direction.neutral, currentVelocity: (speed: 0, direction: Direction.neutral))
     }
 }

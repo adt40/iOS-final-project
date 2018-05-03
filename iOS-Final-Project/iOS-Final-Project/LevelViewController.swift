@@ -27,6 +27,8 @@ class LevelViewController: UIViewController {
     @IBOutlet weak var runtimeHighScoreLabel: UILabel!
     @IBOutlet weak var moduleHighScoreLabel: UILabel!
     
+    @IBOutlet var moduleOptionsView: UIView!
+    
     @IBOutlet weak var levelNavItem: UINavigationItem!
     
     @IBOutlet weak var BoardView: SKView!
@@ -43,6 +45,8 @@ class LevelViewController: UIViewController {
     var boardScene: BoardScene?
     var runTimer = Timer()
     
+    var selectedGridObject : GridObject?
+    
     //increment these to keep track of score
     var totalIterations = 0
     var modulesUsed = 0
@@ -58,19 +62,10 @@ class LevelViewController: UIViewController {
         let levelTitle = String(world) + "-" + String(level) + ": " + levelData.name
         levelNavItem.title = levelTitle
         
-        //Initialize and fill the grid
         reloadGrid()
-        
-        //Instantiate the board scene
         initScene()
-        
-        //Render the grid
         boardScene!.renderGrid(gridSize: levelData.gridSize)
-        
-        //Render all initial modules
         boardScene!.renderInitialModules(gridObjects: levelData.gridObjects)
-        
-        //Render the module bank
         boardScene!.renderModuleBank(availableModules: levelData.availableModules)
     }
     
@@ -163,21 +158,174 @@ class LevelViewController: UIViewController {
     
     //Initialize the BoardScene to display sprites
     func initScene() {
-        //If we still have a previous boardScene
         boardScene = BoardScene(size: BoardView.bounds.size)
-        //Allow us to monitor FPS to keep an eye on performance
         BoardView.showsFPS = true
-      //Keey an eye on number of nodes to ensure it everything is generated properly
         BoardView.showsNodeCount = true
-       //I think this means things can be rendered in whatever order we want, not sure though. Will check.
         BoardView.ignoresSiblingOrder = true
         boardScene!.scaleMode = .resizeFill
-       //Present the scene!
+        boardScene!.superView = self //so boardScene has access to this scenes stuff (maybe)
         BoardView.presentScene(boardScene)
     }
     
     func getSpeed() -> Double {
         return 1 / pow(speed, 1.5)
+    }
+    
+    //------------------------------------------------------------------------------
+    //Module Options Menu
+    
+    func displayOptionsFor(gridObject: GridObject) {
+        selectedGridObject = gridObject
+        
+        let height = 25
+        let viewWidth = Int(moduleOptionsView.frame.width)
+        
+        //things on every module
+        let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: viewWidth - 80, height: height))
+        moduleOptionsView.addSubview(titleLabel)
+        
+        let deleteButton = UIButton(frame: CGRect(x: viewWidth - 80, y: 0, width: 80, height: height))
+        deleteButton.setTitle("delete", for: .normal)
+        deleteButton.setTitleColor(.black, for: .normal)
+        //TODO: Give this an action
+        moduleOptionsView.addSubview(deleteButton)
+        
+        //things on specific modules
+        if gridObject is Piston {
+            titleLabel.text = "Piston"
+            
+            let upButton = UIButton(frame: CGRect(x: height, y: height, width: height, height: height))
+            let rightButton = UIButton(frame: CGRect(x: height * 2, y: height * 2, width: height, height: height))
+            let downButton = UIButton(frame: CGRect(x: height, y: height * 3, width: height, height: height))
+            let leftButton = UIButton(frame: CGRect(x: 0, y: height * 2, width: height, height: height))
+            upButton.setTitle("▲", for: .normal)
+            rightButton.setTitle("▶", for: .normal)
+            downButton.setTitle("▼", for: .normal)
+            leftButton.setTitle("◀", for: .normal)
+            upButton.setTitleColor(.black, for: .normal)
+            rightButton.setTitleColor(.black, for: .normal)
+            downButton.setTitleColor(.black, for: .normal)
+            leftButton.setTitleColor(.black, for: .normal)
+            upButton.target(forAction: #selector(upPressed), withSender: upButton)
+            rightButton.target(forAction: #selector(rightPressed), withSender: rightButton)
+            downButton.target(forAction: #selector(downPressed), withSender: downButton)
+            leftButton.target(forAction: #selector(leftPressed), withSender: leftButton)
+            moduleOptionsView.addSubview(upButton)
+            moduleOptionsView.addSubview(rightButton)
+            moduleOptionsView.addSubview(downButton)
+            moduleOptionsView.addSubview(leftButton)
+            
+        } else if gridObject is Rotator {
+            titleLabel.text = "Rotator"
+            
+            let upButton = UIButton(frame: CGRect(x: height, y: height, width: height, height: height))
+            let rightButton = UIButton(frame: CGRect(x: height * 2, y: height * 2, width: height, height: height))
+            let downButton = UIButton(frame: CGRect(x: height, y: height * 3, width: height, height: height))
+            let leftButton = UIButton(frame: CGRect(x: 0, y: height * 2, width: height, height: height))
+            upButton.setTitle("▲", for: .normal)
+            rightButton.setTitle("▶", for: .normal)
+            downButton.setTitle("▼", for: .normal)
+            leftButton.setTitle("◀", for: .normal)
+            upButton.setTitleColor(.black, for: .normal)
+            rightButton.setTitleColor(.black, for: .normal)
+            downButton.setTitleColor(.black, for: .normal)
+            leftButton.setTitleColor(.black, for: .normal)
+            upButton.target(forAction: #selector(upPressed), withSender: upButton)
+            rightButton.target(forAction: #selector(rightPressed), withSender: rightButton)
+            downButton.target(forAction: #selector(downPressed), withSender: downButton)
+            leftButton.target(forAction: #selector(leftPressed), withSender: leftButton)
+            moduleOptionsView.addSubview(upButton)
+            moduleOptionsView.addSubview(rightButton)
+            moduleOptionsView.addSubview(downButton)
+            moduleOptionsView.addSubview(leftButton)
+            
+            let clockwiseButton = UIButton(frame: CGRect(x: viewWidth / 2, y: height, width: height, height: height))
+            let counterclockwiseButton = UIButton(frame: CGRect(x: viewWidth / 2, y: height * 2, width: height, height: height))
+            clockwiseButton.setTitle("↻", for: .normal)
+            counterclockwiseButton.setTitle("↺", for: .normal)
+            clockwiseButton.setTitleColor(.black, for: .normal)
+            counterclockwiseButton.setTitleColor(.black, for: .normal)
+            clockwiseButton.target(forAction: #selector(clockwisePressed), withSender: clockwiseButton)
+            counterclockwiseButton.target(forAction: #selector(counterclockwisePressed), withSender: counterclockwiseButton)
+            moduleOptionsView.addSubview(clockwiseButton)
+            moduleOptionsView.addSubview(counterclockwiseButton)
+            
+        } else if gridObject is ColorZapper {
+            titleLabel.text = "Color Zapper"
+            
+            let upButton = UIButton(frame: CGRect(x: height, y: height, width: height, height: height))
+            let rightButton = UIButton(frame: CGRect(x: height * 2, y: height * 2, width: height, height: height))
+            let downButton = UIButton(frame: CGRect(x: height, y: height * 3, width: height, height: height))
+            let leftButton = UIButton(frame: CGRect(x: 0, y: height * 2, width: height, height: height))
+            upButton.setTitle("▲", for: .normal)
+            rightButton.setTitle("▶", for: .normal)
+            downButton.setTitle("▼", for: .normal)
+            leftButton.setTitle("◀", for: .normal)
+            upButton.setTitleColor(.black, for: .normal)
+            rightButton.setTitleColor(.black, for: .normal)
+            downButton.setTitleColor(.black, for: .normal)
+            leftButton.setTitleColor(.black, for: .normal)
+            upButton.target(forAction: #selector(upPressed), withSender: upButton)
+            rightButton.target(forAction: #selector(rightPressed), withSender: rightButton)
+            downButton.target(forAction: #selector(downPressed), withSender: downButton)
+            leftButton.target(forAction: #selector(leftPressed), withSender: leftButton)
+            moduleOptionsView.addSubview(upButton)
+            moduleOptionsView.addSubview(rightButton)
+            moduleOptionsView.addSubview(downButton)
+            moduleOptionsView.addSubview(leftButton)
+            
+            let redButton = UIButton(frame: CGRect(x: viewWidth / 2, y: height, width: height, height: height))
+            let yellowButton = UIButton(frame: CGRect(x: viewWidth / 2, y: height * 2, width: height, height: height))
+            let blueButton = UIButton(frame: CGRect(x: viewWidth / 2, y: height * 3, width: height, height: height))
+            redButton.backgroundColor = .red
+            yellowButton.backgroundColor = .yellow
+            blueButton.backgroundColor = .blue
+            redButton.target(forAction: #selector(redPressed), withSender: redButton)
+            yellowButton.target(forAction: #selector(yellowPressed), withSender: yellowButton)
+            blueButton.target(forAction: #selector(bluePressed), withSender: blueButton)
+            moduleOptionsView.addSubview(redButton)
+            moduleOptionsView.addSubview(yellowButton)
+            moduleOptionsView.addSubview(blueButton)
+            
+        } else if gridObject is TriggerPad {
+            //ugh TODO all of this
+        } else if gridObject is Wall {
+            titleLabel.text = "Wall"
+        }
+        moduleOptionsView.isHidden = false
+    }
+    
+    @objc func upPressed(_ sender: UIButton) {
+        selectedGridObject!.facingDirection = Direction.up
+    }
+    @objc func rightPressed(_ sender: UIButton) {
+        selectedGridObject!.facingDirection = Direction.right
+    }
+    @objc func downPressed(_ sender: UIButton) {
+        selectedGridObject!.facingDirection = Direction.down
+    }
+    @objc func leftPressed(_ sender: UIButton) {
+        selectedGridObject!.facingDirection = Direction.left
+    }
+    @objc func clockwisePressed(_ sender: UIButton) {
+        let rotator = selectedGridObject! as! Rotator
+        rotator.clockwise = true
+    }
+    @objc func counterclockwisePressed(_ sender: UIButton) {
+        let rotator = selectedGridObject! as! Rotator
+        rotator.clockwise = false
+    }
+    @objc func redPressed(_ sender: UIButton) {
+        let zapper = selectedGridObject! as! ColorZapper
+        zapper.color = MixableColor(1, 0, 0)
+    }
+    @objc func yellowPressed(_ sender: UIButton) {
+        let zapper = selectedGridObject! as! ColorZapper
+        zapper.color = MixableColor(0, 1, 0)
+    }
+    @objc func bluePressed(_ sender: UIButton) {
+        let zapper = selectedGridObject! as! ColorZapper
+        zapper.color = MixableColor(0, 0, 1)
     }
     
     //-----------------------------------------------------------------------------
