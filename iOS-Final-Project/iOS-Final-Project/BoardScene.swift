@@ -102,8 +102,8 @@ class BoardScene: SKScene {
                 let color = SKShapeNode(circleOfRadius: newSprite.size.height / 5)
                 color.zPosition = 2
                 color.position = CGPoint(x: 0, y: -newSprite.size.height / 5)
-                color.fillColor = UIColor(displayP3Red: 1.0, green: 1.0, blue: 1.0, alpha: 1)
-                color.strokeColor = UIColor(displayP3Red: 240 / 255, green: 200 / 255, blue: 38 / 255, alpha: 1)
+                color.fillColor = SKColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1)
+                color.strokeColor = SKColor(red: 240 / 255, green: 200 / 255, blue: 38 / 255, alpha: 1)
                 newSprite.addChild(color)
             }
             
@@ -339,8 +339,8 @@ class BoardScene: SKScene {
                 let color = SKShapeNode(circleOfRadius: moduleSize / 5)
                 color.zPosition = 2
                 color.position = CGPoint(x: 0, y: -moduleSize / 5)
-                color.fillColor = UIColor(displayP3Red: CGFloat(colorZapper.color.toRGB().r) / 255, green: CGFloat(colorZapper.color.toRGB().g) / 255, blue: CGFloat(colorZapper.color.toRGB().b) / 255, alpha: 1)
-                color.strokeColor = UIColor(displayP3Red: 240 / 255, green: 200 / 255, blue: 38 / 255, alpha: 1)
+                color.fillColor = SKColor(red: CGFloat(colorZapper.color.toRGB().r) / 255, green: CGFloat(colorZapper.color.toRGB().g) / 255, blue: CGFloat(colorZapper.color.toRGB().b) / 255, alpha: 1)
+                color.strokeColor = SKColor(red: 240 / 255, green: 200 / 255, blue: 38 / 255, alpha: 1)
                 color.name = "color"
                 newSprite.addChild(color)
             }
