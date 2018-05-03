@@ -103,8 +103,7 @@ class LevelViewController: UIViewController {
                     gridObject.uiSprite!.children[0].run(SKAction.sequence([SKAction.moveTo(y: boardScene!.moduleSize * 0.8, duration: getSpeed() * 0.4), SKAction.moveTo(y: 0, duration: getSpeed() * 0.6)]))
                 }
             } else if (gridObject is TriggerPad) {
-                //TODO: Change to triggerWillBeActive once that's implemented
-                if (gridObject as! TriggerPad).triggerActive {
+                if (gridObject as! TriggerPad).triggerActive || (gridObject as! TriggerPad).willTriggerNextTick {
                     (gridObject.uiSprite! as! SKSpriteNode).texture = SKTexture(imageNamed: "module-triggerpad-active")
                 } else {
                     (gridObject.uiSprite! as! SKSpriteNode).texture = SKTexture(imageNamed: "module-triggerpad-inactive")
