@@ -183,9 +183,14 @@ class LevelViewController: UIViewController {
         
         let height = 25
         let viewWidth = Int(moduleOptionsView.frame.width)
+        let viewHeight = Int(moduleOptionsView.frame.height)
+        let optionLabelSize: CGFloat = 14
+        let optionSize: CGFloat = 15
         
         //things on every module
-        let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: viewWidth - 80, height: height))
+        let titleLabel = UILabel(frame: CGRect(x: 40, y: 10, width: viewWidth - 80, height: 18))
+        titleLabel.font = UIFont.systemFont(ofSize: 16)
+        titleLabel.textAlignment = NSTextAlignment.center
         moduleOptionsView.addSubview(titleLabel)
         
         let deleteButton = UIButton(frame: CGRect(x: viewWidth - 80, y: 0, width: 80, height: height))
@@ -235,10 +240,74 @@ class LevelViewController: UIViewController {
             moduleOptionsView.addSubview(blueButton)
             
         } else if gridObject is TriggerPad {
-            //ugh TODO all of this
+            titleLabel.text = "Trigger Pad"
+            //Left side of controls
+            let modeSwitchLabel = UILabel(frame: CGRect(x: viewWidth / 4 - 50, y: viewHeight - 65, width: 100, height: 15))
+            let modeSwitch = UISegmentedControl(frame: CGRect(x: viewWidth / 4 - 65, y: viewHeight - 45, width: 130, height: 25))
+            modeSwitch.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: optionSize)],
+                                                                                      for: .normal)
+            modeSwitchLabel.text = "Trigger Mode"
+            modeSwitchLabel.font = UIFont(descriptor: modeSwitchLabel.font.fontDescriptor, size: optionLabelSize)
+            modeSwitchLabel.textAlignment = NSTextAlignment.center
+            modeSwitch.insertSegment(withTitle: "Press", at: 0, animated: true)
+            modeSwitch.insertSegment(withTitle: "Timer", at: 1, animated: true)
+            if (gridObject as! TriggerPad).triggerOnEnter {
+                modeSwitch.selectedSegmentIndex = 0
+            } else {
+                modeSwitch.selectedSegmentIndex = 1
+            }
+
+            moduleOptionsView.addSubview(modeSwitchLabel)
+            moduleOptionsView.addSubview(modeSwitch)
+            
+            //Center divider
+            let divider = UIView(frame: CGRect(x: viewWidth / 2, y: 40, width: 1, height: viewHeight - 60))
+            divider.backgroundColor = UIColor.gray
+            
+            moduleOptionsView.addSubview(divider)
+            
+            //Right side of controls
+            let startTimeLabel = UILabel(frame: CGRect(x: 3 * viewWidth / 4 - 60, y: viewHeight - 76, width: 120, height: 15))
+            startTimeLabel.text = "Auto Activate After:"
+            startTimeLabel.font = UIFont(descriptor: modeSwitchLabel.font.fontDescriptor, size: optionLabelSize - 3)
+            startTimeLabel.textAlignment = NSTextAlignment.center
+            let startTimeField = UILabel(frame: CGRect(x: 3 * viewWidth / 4 - 70, y: viewHeight - 64, width: 60, height: 20))
+            startTimeField.font = UIFont(descriptor: modeSwitchLabel.font.fontDescriptor, size: optionSize - 3)
+            startTimeField.textAlignment = NSTextAlignment.center
+            startTimeField.text = "\((gridObject as! TriggerPad).triggerOnTimeStart) Step\((gridObject as! TriggerPad).triggerOnTimeStart == 1 ? "" : "s")"
+            let startTimeControl = UISegmentedControl(frame: CGRect(x: 3 * viewWidth / 4 - 10 , y: viewHeight - 62, width: 80, height: 16))
+            startTimeControl.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: optionSize)],
+                                              for: .normal)
+            startTimeControl.insertSegment(withTitle: "-", at: 0, animated: true)
+            startTimeControl.insertSegment(withTitle: "+", at: 1, animated: true)
+            moduleOptionsView.addSubview(startTimeLabel)
+            moduleOptionsView.addSubview(startTimeField)
+            moduleOptionsView.addSubview(startTimeControl)
+            
+            let repeatTimeLabel = UILabel(frame: CGRect(x: 3 * viewWidth / 4 - 60, y: viewHeight - 40, width: 120, height: 15))
+            repeatTimeLabel.text = "Reactivate Every:"
+            repeatTimeLabel.font = UIFont(descriptor: modeSwitchLabel.font.fontDescriptor, size: optionLabelSize - 3)
+            repeatTimeLabel.textAlignment = NSTextAlignment.center
+            let repeatTimeField = UILabel(frame: CGRect(x: 3 * viewWidth / 4 - 70, y: viewHeight - 28, width: 60, height: 20))
+            repeatTimeField.font = UIFont(descriptor: modeSwitchLabel.font.fontDescriptor, size: optionSize - 3)
+            repeatTimeField.textAlignment = NSTextAlignment.center
+            repeatTimeField.text = (gridObject as! TriggerPad).triggerOnTimeRepeat == 0 ? "Never" : "\((gridObject as! TriggerPad).triggerOnTimeRepeat) Step\((gridObject as! TriggerPad).triggerOnTimeRepeat == 1 ? "" : "s")"
+            let repeatTimeControl = UISegmentedControl(frame: CGRect(x: 3 * viewWidth / 4 - 10 , y: viewHeight - 26, width: 80, height: 16))
+            repeatTimeControl.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: optionSize)],
+                                                    for: .normal)
+            repeatTimeControl.insertSegment(withTitle: "-", at: 0, animated: true)
+            repeatTimeControl.insertSegment(withTitle: "+", at: 1, animated: true)
+            moduleOptionsView.addSubview(repeatTimeLabel)
+            moduleOptionsView.addSubview(repeatTimeField)
+            moduleOptionsView.addSubview(repeatTimeControl)
         } else if gridObject is Wall {
             titleLabel.text = "Wall"
+        } else {
+            //Just in case so that the force unwrap below won't crash everything.
+            titleLabel.text = ""
         }
+        
+        titleLabel.text = titleLabel.text! + " Settings"
         moduleOptionsView.isHidden = false
     }
     
