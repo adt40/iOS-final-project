@@ -11,6 +11,7 @@ import Foundation
 class ColorZapper : Module {
     
     var color : MixableColor
+    var zapping: Bool = false
     
     init(position: Vector, direction: Direction, color: MixableColor) {
         self.color = color
@@ -23,5 +24,10 @@ class ColorZapper : Module {
                 gridColor.addColor(color)
             }
         }
+        zapping = true
+    }
+    
+    override func deactivate() {
+        zapping = false
     }
 }

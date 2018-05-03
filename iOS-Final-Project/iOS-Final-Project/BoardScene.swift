@@ -188,13 +188,15 @@ class BoardScene: SKScene {
             }
             type += "active"
         } else if let _ = gridObject as? Rotator {
-            type = "rotator-noarrow"
+            type = "rotator"
         } else if gridObject is GridColor {
             type = "gridcolor"
         } else if gridObject is GridColorSocket {
             type = "gridcolorsocket"
         } else if gridObject is Wall {
             type = "wall"
+        } else if gridObject is ColorZapper {
+            type = "colorzapper"
         } else {
             type = "temp"
         }
@@ -252,8 +254,6 @@ class BoardScene: SKScene {
             //Set sprite rendering order
             if (type == "triggerpad-active" || type == "triggerpad-inactive") {
                 newSprite.zPosition = MODULE_LAYER - 2
-            } else if (type == "rotator") {
-                newSprite.zPosition = MODULE_LAYER + 2
             } else {
                 newSprite.zPosition = MODULE_LAYER
             }
@@ -267,23 +267,8 @@ class BoardScene: SKScene {
                 newSprite.zRotation = 3 * CGFloat.pi / 2
             }
             
-            //Account for minor differences in size between modules
-            if (type == "rotator-noarrow") {
-                //Rotator is bigger so that it stretches into adjacent tiles to make rotation ability more intuitive
-                newSprite.size = CGSize(width: moduleSize, height: moduleSize * (73 / 60))
-                //Adjust position
-                if (gridObject.facingDirection == Direction.left) {
-                    newSprite.position.x -= moduleSize * (13/120)
-                } else if (gridObject.facingDirection == Direction.down) {
-                    newSprite.position.y -= moduleSize * (13/120)
-                } else if (gridObject.facingDirection == Direction.right) {
-                    newSprite.position.x += moduleSize * (13/120)
-                } else {
-                    newSprite.position.y += moduleSize * (13/120)
-                }
-            } else {
-                newSprite.size = CGSize(width: moduleSize, height: moduleSize)
-            }
+            //Set Sprite size
+            newSprite.size = CGSize(width: moduleSize, height: moduleSize)
         
             //Render any relevant subcomponents
             if (type == "piston") {
@@ -296,32 +281,42 @@ class BoardScene: SKScene {
                 }
                 pistonArm.zPosition = -1
                 newSprite.addChild(pistonArm)
-            } else if (type == "rotator-noarrow") {
+            } else if (type == "rotator") {
                 var arrow: SKSpriteNode
                 if (gridObject as! Rotator).clockwise {
                     arrow = SKSpriteNode(imageNamed: "module-rotator-arrow-clockwise.png")
                 } else {
                     arrow = SKSpriteNode(imageNamed: "module-rotator-arrow-counterclockwise.png")
                 }
-                arrow.position = CGPoint(x: 0, y: -moduleSize * (13/120))
+                
+                arrow.size = CGSize(width: moduleSize / 3, height: moduleSize / 3)
+                arrow.position = CGPoint(x: 0, y: -moduleSize / 6)
                 arrow.zPosition = 1
                 
+                let wheel = SKSpriteNode(imageNamed: "module-rotator-wheel.png")
+                wheel.size = CGSize(width: moduleSize, height: moduleSize)
+                wheel.position = CGPoint.zero
+                wheel.zPosition = -1
+                
                 newSprite.addChild(arrow)
+                newSprite.addChild(wheel)
+            } else if (type == "colorzapper") {
+                let colorZapper: ColorZapper = gridObject as! ColorZapper
+            
+                let lightning = SKSpriteNode(imageNamed: "module-colorzapper-lightning")
+                lightning.size = CGSize(width: moduleSize * 2 / 3, height: moduleSize / 6)
+                lightning.zPosition = 1
+                lightning.position = CGPoint(x: 0, y: moduleSize * 5 / 12)
+                lightning.run(SKAction.repeatForever(SKAction.sequence([SKAction.rotate(toAngle: CGFloat.pi, duration: 0), SKAction.wait(forDuration: 0.1), SKAction.rotate(toAngle: 0, duration: 0)])))
+                newSprite.addChild(lightning)
+                lightning.isHidden = !colorZapper.zapping
                 
-                let gear1 = SKSpriteNode(imageNamed: "module-rotator-gear.png")
-                let gear2 = SKSpriteNode(imageNamed: "module-rotator-gear.png")
-                
-                gear1.zPosition = -1
-                gear2.zPosition = -1
-                
-                gear1.position = CGPoint(x: -moduleSize * (3/8), y: moduleSize / 2 + moduleSize * (1/10))
-                gear2.position = CGPoint(x: moduleSize * (3/8), y: moduleSize / 2 + moduleSize * (1/10))
-                
-                gear1.size = CGSize(width: moduleSize * (14 / 60), height: moduleSize * (14 / 60))
-                gear2.size = CGSize(width: moduleSize * (14 / 60), height: moduleSize * (14 / 60))
-                
-                newSprite.addChild(gear1)
-                newSprite.addChild(gear2)
+                let color = SKShapeNode(circleOfRadius: moduleSize / 3)
+                color.zPosition = 2
+                color.position = CGPoint(x: 0, y: -moduleSize / 5)
+                color.fillColor = UIColor(displayP3Red: CGFloat(colorZapper.color.toRGB().r) / 255, green: CGFloat(colorZapper.color.toRGB().g) / 255, blue: CGFloat(colorZapper.color.toRGB().b) / 255, alpha: 1)
+                color.strokeColor = UIColor(displayP3Red: 240 / 255, green: 200 / 255, blue: 38 / 255, alpha: 1)
+                newSprite.addChild(color)
             }
             moduleRoot!.addChild(newSprite)
             gridObject.assignSprite(sprite: newSprite)
