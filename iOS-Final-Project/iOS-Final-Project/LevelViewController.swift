@@ -256,6 +256,8 @@ class LevelViewController: UIViewController {
             } else {
                 modeSwitch.selectedSegmentIndex = 1
             }
+            
+            modeSwitch.addTarget(self, action: #selector(updateTriggerPadMode), for: UIControlEvents.valueChanged)
 
             moduleOptionsView.addSubview(modeSwitchLabel)
             moduleOptionsView.addSubview(modeSwitch)
@@ -275,11 +277,15 @@ class LevelViewController: UIViewController {
             startTimeField.font = UIFont(descriptor: modeSwitchLabel.font.fontDescriptor, size: optionSize - 3)
             startTimeField.textAlignment = NSTextAlignment.center
             startTimeField.text = "\((gridObject as! TriggerPad).triggerOnTimeStart) Step\((gridObject as! TriggerPad).triggerOnTimeStart == 1 ? "" : "s")"
+            startTimeField.tag = 10
             let startTimeControl = UISegmentedControl(frame: CGRect(x: 3 * viewWidth / 4 - 10 , y: viewHeight - 62, width: 80, height: 16))
             startTimeControl.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: optionSize)],
                                               for: .normal)
             startTimeControl.insertSegment(withTitle: "-", at: 0, animated: true)
             startTimeControl.insertSegment(withTitle: "+", at: 1, animated: true)
+            
+            startTimeControl.addTarget(self, action: #selector(updateTriggerPadStartTime), for: UIControlEvents.valueChanged)
+            
             moduleOptionsView.addSubview(startTimeLabel)
             moduleOptionsView.addSubview(startTimeField)
             moduleOptionsView.addSubview(startTimeControl)
@@ -292,11 +298,15 @@ class LevelViewController: UIViewController {
             repeatTimeField.font = UIFont(descriptor: modeSwitchLabel.font.fontDescriptor, size: optionSize - 3)
             repeatTimeField.textAlignment = NSTextAlignment.center
             repeatTimeField.text = (gridObject as! TriggerPad).triggerOnTimeRepeat == 0 ? "Never" : "\((gridObject as! TriggerPad).triggerOnTimeRepeat) Step\((gridObject as! TriggerPad).triggerOnTimeRepeat == 1 ? "" : "s")"
+            repeatTimeField.tag = 20
             let repeatTimeControl = UISegmentedControl(frame: CGRect(x: 3 * viewWidth / 4 - 10 , y: viewHeight - 26, width: 80, height: 16))
             repeatTimeControl.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: optionSize)],
                                                     for: .normal)
             repeatTimeControl.insertSegment(withTitle: "-", at: 0, animated: true)
             repeatTimeControl.insertSegment(withTitle: "+", at: 1, animated: true)
+            
+            repeatTimeControl.addTarget(self, action: #selector(updateTriggerPadRepeatTime), for: UIControlEvents.valueChanged)
+            
             moduleOptionsView.addSubview(repeatTimeLabel)
             moduleOptionsView.addSubview(repeatTimeField)
             moduleOptionsView.addSubview(repeatTimeControl)
@@ -369,6 +379,36 @@ class LevelViewController: UIViewController {
     @objc func bluePressed(_ sender: UIButton) {
         let zapper = selectedGridObject! as! ColorZapper
         zapper.color = MixableColor(0, 0, 1)
+    }
+    
+    @objc func updateTriggerPadMode(segmentedControl: UISegmentedControl) {
+        (selectedGridObject as! TriggerPad).triggerOnEnter = segmentedControl.selectedSegmentIndex == 0
+    }
+    
+    @objc func updateTriggerPadStartTime(segmentedControl: UISegmentedControl) {
+        (selectedGridObject as! TriggerPad).triggerOnTimeStart += segmentedControl.selectedSegmentIndex * 2 - 1
+        if (selectedGridObject as! TriggerPad).triggerOnTimeStart < 0 {
+            (selectedGridObject as! TriggerPad).triggerOnTimeStart = 0
+        }
+        for subview in segmentedControl.superview!.subviews {
+            if subview.tag == 10 {
+                (subview as! UILabel).text = "\((selectedGridObject as! TriggerPad).triggerOnTimeStart) Step\((selectedGridObject as! TriggerPad).triggerOnTimeStart == 1 ? "" : "s")"
+            }
+        }
+        segmentedControl.selectedSegmentIndex = UISegmentedControlNoSegment
+    }
+    
+    @objc func updateTriggerPadRepeatTime(segmentedControl: UISegmentedControl) {
+        (selectedGridObject as! TriggerPad).triggerOnTimeRepeat += segmentedControl.selectedSegmentIndex * 2 - 1
+        if (selectedGridObject as! TriggerPad).triggerOnTimeRepeat < 0 {
+            (selectedGridObject as! TriggerPad).triggerOnTimeRepeat = 0
+        }
+        for subview in segmentedControl.superview!.subviews {
+            if subview.tag == 20 {
+                (subview as! UILabel).text = (selectedGridObject as! TriggerPad).triggerOnTimeRepeat == 0 ? "Never" : "\((selectedGridObject as! TriggerPad).triggerOnTimeRepeat) Step\((selectedGridObject as! TriggerPad).triggerOnTimeRepeat == 1 ? "" : "s")"
+            }
+        }
+        segmentedControl.selectedSegmentIndex = UISegmentedControlNoSegment
     }
     
     //-----------------------------------------------------------------------------
