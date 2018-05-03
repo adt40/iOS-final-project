@@ -364,7 +364,7 @@ class BoardScene: SKScene {
                     touchedModule = node as? SKSpriteNode
                     break
                 } else if node.name != nil && node.name!.contains("inplay-") {
-                    let position = Vector(Int(floor((positionInScene.x - bufferWidth) / tileSize)), Int(floor((boardSpace!.height - positionInScene.y) / tileSize)) + 1)
+                    let position = Vector(Int(floor((positionInScene.x - bufferWidth) / tileSize)), Int(floor((boardSpace!.height - (positionInScene.y - moduleBankHeight)) / tileSize)))
                     let gridObjectsAtPosition = Grid.getAllGridObjectsAt(position: position)
                     for obj in gridObjectsAtPosition {
                         if obj.canEdit {
