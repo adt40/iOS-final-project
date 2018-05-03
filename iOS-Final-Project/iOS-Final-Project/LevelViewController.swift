@@ -193,26 +193,7 @@ class LevelViewController: UIViewController {
         if gridObject is Piston {
             titleLabel.text = "Piston"
             
-            let upButton = UIButton(frame: CGRect(x: height, y: height, width: height, height: height))
-            let rightButton = UIButton(frame: CGRect(x: height * 2, y: height * 2, width: height, height: height))
-            let downButton = UIButton(frame: CGRect(x: height, y: height * 3, width: height, height: height))
-            let leftButton = UIButton(frame: CGRect(x: 0, y: height * 2, width: height, height: height))
-            upButton.setTitle("▲", for: .normal)
-            rightButton.setTitle("▶", for: .normal)
-            downButton.setTitle("▼", for: .normal)
-            leftButton.setTitle("◀", for: .normal)
-            upButton.setTitleColor(.black, for: .normal)
-            rightButton.setTitleColor(.black, for: .normal)
-            downButton.setTitleColor(.black, for: .normal)
-            leftButton.setTitleColor(.black, for: .normal)
-            upButton.target(forAction: #selector(upPressed), withSender: upButton)
-            rightButton.target(forAction: #selector(rightPressed), withSender: rightButton)
-            downButton.target(forAction: #selector(downPressed), withSender: downButton)
-            leftButton.target(forAction: #selector(leftPressed), withSender: leftButton)
-            moduleOptionsView.addSubview(upButton)
-            moduleOptionsView.addSubview(rightButton)
-            moduleOptionsView.addSubview(downButton)
-            moduleOptionsView.addSubview(leftButton)
+            generateRotationControls(size: height)
             
         } else if gridObject is Rotator {
             titleLabel.text = "Rotator"
@@ -294,17 +275,44 @@ class LevelViewController: UIViewController {
         moduleOptionsView.isHidden = false
     }
     
+    func generateRotationControls(size: Int) {
+        let upButton = UIButton(frame: CGRect(x: size, y: size, width: size, height: size))
+        let rightButton = UIButton(frame: CGRect(x: size * 2, y: size * 2, width: size, height: size))
+        let downButton = UIButton(frame: CGRect(x: size, y: size * 3, width: size, height: size))
+        let leftButton = UIButton(frame: CGRect(x: 0, y: size * 2, width: size, height: size))
+        upButton.setTitle("▲", for: .normal)
+        rightButton.setTitle("▶", for: .normal)
+        downButton.setTitle("▼", for: .normal)
+        leftButton.setTitle("◀", for: .normal)
+        upButton.setTitleColor(.black, for: .normal)
+        rightButton.setTitleColor(.black, for: .normal)
+        downButton.setTitleColor(.black, for: .normal)
+        leftButton.setTitleColor(.black, for: .normal)
+        upButton.addTarget(self, action: #selector(upPressed), for: UIControlEvents.touchUpInside)
+        rightButton.addTarget(self, action: #selector(rightPressed), for: UIControlEvents.touchUpInside)
+        downButton.addTarget(self, action: #selector(downPressed), for: UIControlEvents.touchUpInside)
+        leftButton.addTarget(self, action: #selector(leftPressed), for: UIControlEvents.touchUpInside)
+        moduleOptionsView.addSubview(upButton)
+        moduleOptionsView.addSubview(rightButton)
+        moduleOptionsView.addSubview(downButton)
+        moduleOptionsView.addSubview(leftButton)
+    }
+    
     @objc func upPressed(_ sender: UIButton) {
         selectedGridObject!.facingDirection = Direction.up
+        selectedGridObject!.uiSprite!.run(SKAction.rotate(toAngle: selectedGridObject!.facingDirection.toRadians(), duration: 0.2, shortestUnitArc: true))
     }
     @objc func rightPressed(_ sender: UIButton) {
         selectedGridObject!.facingDirection = Direction.right
+        selectedGridObject!.uiSprite!.run(SKAction.rotate(toAngle: selectedGridObject!.facingDirection.toRadians(), duration: 0.2, shortestUnitArc: true))
     }
     @objc func downPressed(_ sender: UIButton) {
         selectedGridObject!.facingDirection = Direction.down
+        selectedGridObject!.uiSprite!.run(SKAction.rotate(toAngle: selectedGridObject!.facingDirection.toRadians(), duration: 0.2, shortestUnitArc: true))
     }
     @objc func leftPressed(_ sender: UIButton) {
         selectedGridObject!.facingDirection = Direction.left
+        selectedGridObject!.uiSprite!.run(SKAction.rotate(toAngle: selectedGridObject!.facingDirection.toRadians(), duration: 0.2, shortestUnitArc: true))
     }
     @objc func clockwisePressed(_ sender: UIButton) {
         let rotator = selectedGridObject! as! Rotator
