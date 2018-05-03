@@ -67,6 +67,7 @@ class LevelViewController: UIViewController {
         boardScene!.renderGrid(gridSize: levelData.gridSize)
         boardScene!.renderInitialModules(gridObjects: levelData.gridObjects)
         boardScene!.renderModuleBank(availableModules: levelData.availableModules)
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
     }
     
     override func viewDidDisappear(_ animated: Bool) {

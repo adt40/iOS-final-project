@@ -40,9 +40,9 @@ class Grid {
         return state
     }
     
-    static func isGridObjectAt(position: Vector) -> Bool {
+    static func isGridObjectAt(position: Vector, hasHitbox: Bool) -> Bool {
         for gridObject in state {
-            if gridObject.position == position && gridObject.hasHitbox {
+            if gridObject.position == position && (hasHitbox ? gridObject.hasHitbox : !gridObject.hasHitbox) {
                 return true
             }
         }
