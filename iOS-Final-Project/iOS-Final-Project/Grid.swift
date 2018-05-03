@@ -10,11 +10,13 @@
  
 */
 
+import SpriteKit
 
 class Grid {
 	static private var state : [GridObject] = []
     static private var maxGridPosition : Vector = Vector(0, 0)
 	static var currentTime : Int = 0
+    static var speed : Double = 2
 	
     static func initialize(size: Vector) {
         maxGridPosition = Vector(size.x - 1, size.y - 1)
@@ -31,6 +33,7 @@ class Grid {
         for i in 0..<state.count {
             if (state[i].position == gridObject.position) && (state[i].hasHitbox == gridObject.hasHitbox) {
                 state.remove(at: i)
+                gridObject.uiSprite?.run(SKAction.sequence([SKAction.fadeAlpha(to: 0, duration: 1 / pow(speed, 1.5)), SKAction.removeFromParent()]))
                 break
             }
         }

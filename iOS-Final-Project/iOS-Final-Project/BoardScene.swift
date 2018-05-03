@@ -231,7 +231,7 @@ class BoardScene: SKScene {
             newShape.lineWidth = 1
             let color = module.color.toRGB()
             newShape.fillColor = SKColor(red: CGFloat(color.r)/255, green: CGFloat(color.g)/255, blue: CGFloat(color.b)/255, alpha: 0.8)
-            newShape.strokeColor = SKColor.white
+            newShape.strokeColor = SKColor.black
             
             newShape.position = CGPoint(x: bufferWidth + tileSize * CGFloat(gridObject.position.x) + moduleSize / 2 + (tileSize - moduleSize) / 2, y: boardSpace!.height - tileSize * CGFloat(gridObject.position.y) - moduleSize / 2 - (tileSize - moduleSize) / 2)
             newShape.zPosition = MODULE_LAYER + 1
