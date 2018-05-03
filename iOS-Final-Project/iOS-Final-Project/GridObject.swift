@@ -13,18 +13,22 @@ import SpriteKit
 
 class GridObject {
 	var position : Vector
+    let startPosition : Vector
 	var canMove : Bool
     var canEdit : Bool
 	var hasHitbox : Bool
     var facingDirection : Direction
+    var startDirection : Direction
 	var currentVelocity : (speed: Int, direction: Direction)
     var uiSprite: SKNode?
     init(position: Vector, canMove: Bool, canEdit: Bool, hasHitbox: Bool, facingDirection: Direction, currentVelocity: (speed: Int, direction: Direction)) {
 		self.position = position
+        self.startPosition = position
 		self.canMove = canMove
         self.canEdit = canEdit
 		self.hasHitbox = hasHitbox
         self.facingDirection = facingDirection
+        self.startDirection = facingDirection
 		self.currentVelocity = currentVelocity
 	}
     
@@ -46,4 +50,8 @@ class GridObject {
             }
 		}
 	}
+    
+    static func == (left: GridObject, right: GridObject) -> Bool {
+        return left.startPosition == right.startPosition && left.hasHitbox == right.hasHitbox
+    }
 }

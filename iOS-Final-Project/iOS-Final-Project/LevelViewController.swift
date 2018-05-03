@@ -56,6 +56,7 @@ class LevelViewController: UIViewController {
 
         let levelReader = LevelFileReader()
         levelData = levelReader.loadLevel(world: world, level: level)
+
         //levelData should have all the info needed to initialize things
         
         //Set title of the level
@@ -89,6 +90,30 @@ class LevelViewController: UIViewController {
         for gridObject in levelData.gridObjects {
             Grid.addGridObject(gridObject: gridObject)
         }
+    }
+    
+    func resetGridObjects() {
+        for gridObject in Grid.getState() {
+            if !gridObject.canEdit {
+                Grid.removeGridObject(gridObject: gridObject)
+            } else {
+                gridObject.position = gridObject.startPosition
+                gridObject.facingDirection = gridObject.startDirection
+                gridObject.uiSprite!.run(SKAction.move(to: CGPoint(x: CGFloat(gridObject.position.x) * boardScene!.tileSize + boardScene!.bufferWidth + boardScene!.tileSize / 2, y: boardScene!.boardSpace!.height - CGFloat(gridObject.position.y) * boardScene!.tileSize - boardScene!.tileSize / 2), duration: 0))
+                gridObject.uiSprite!.run(SKAction.rotate(toAngle: gridObject.facingDirection.toRadians(), duration: 0, shortestUnitArc: true))
+            }
+        }
+        
+        //load objects from file data so its just easier
+        let levelReader = LevelFileReader()
+        levelData = levelReader.loadLevel(world: world, level: level)
+        
+        for gridObject in levelData.gridObjects {
+            Grid.addGridObject(gridObject: gridObject)
+        }
+        boardScene!.renderInitialModules(gridObjects: levelData.gridObjects)
+        
+        Grid.currentTime = 0
     }
     
     @objc func run() {
@@ -346,18 +371,22 @@ class LevelViewController: UIViewController {
     
     @objc func upPressed(_ sender: UIButton) {
         selectedGridObject!.facingDirection = Direction.up
+        selectedGridObject!.startDirection = Direction.up
         selectedGridObject!.uiSprite!.run(SKAction.rotate(toAngle: selectedGridObject!.facingDirection.toRadians(), duration: 0.2, shortestUnitArc: true))
     }
     @objc func rightPressed(_ sender: UIButton) {
         selectedGridObject!.facingDirection = Direction.right
+        selectedGridObject!.startDirection = Direction.right
         selectedGridObject!.uiSprite!.run(SKAction.rotate(toAngle: selectedGridObject!.facingDirection.toRadians(), duration: 0.2, shortestUnitArc: true))
     }
     @objc func downPressed(_ sender: UIButton) {
         selectedGridObject!.facingDirection = Direction.down
+        selectedGridObject!.startDirection = Direction.down
         selectedGridObject!.uiSprite!.run(SKAction.rotate(toAngle: selectedGridObject!.facingDirection.toRadians(), duration: 0.2, shortestUnitArc: true))
     }
     @objc func leftPressed(_ sender: UIButton) {
         selectedGridObject!.facingDirection = Direction.left
+        selectedGridObject!.startDirection = Direction.left
         selectedGridObject!.uiSprite!.run(SKAction.rotate(toAngle: selectedGridObject!.facingDirection.toRadians(), duration: 0.2, shortestUnitArc: true))
     }
     @objc func clockwisePressed(_ sender: UIButton) {
@@ -418,6 +447,7 @@ class LevelViewController: UIViewController {
         selectedGridObject!.uiSprite = nil
         selectedGridObject = nil
         moduleOptionsView.isHidden = true
+        modulesUsed -= 1
     }
     
     //-----------------------------------------------------------------------------
@@ -447,7 +477,7 @@ class LevelViewController: UIViewController {
         stopButton.isEnabled = false
         playing = false
         totalIterations = 0
-        reloadGrid()
+        resetGridObjects()
     }
     
     //-----------------------------------------------------------------------------
@@ -477,6 +507,7 @@ class LevelViewController: UIViewController {
     
     @IBAction func popupCloseButtonPressed(_ sender: UIButton) {
         speed = Double(popupSpeedSlider.value)
+        Grid.speed = Double(popupSpeedSlider.value)
         UIView.animate(withDuration: 0.5, animations: {
             self.settingsPopupView.alpha = 0
             self.background!.alpha = 0

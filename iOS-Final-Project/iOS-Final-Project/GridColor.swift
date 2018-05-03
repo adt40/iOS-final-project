@@ -10,6 +10,7 @@
  */
 
 import Foundation
+import SpriteKit
 
 class GridColor : GridObject {
     
@@ -42,9 +43,18 @@ class GridColor : GridObject {
     func mix(with gridColor: GridColor) {
         addColor(gridColor.color)
         Grid.removeGridObject(gridObject: gridColor)
+        updateSpriteColor()
     }
     
     func addColor(_ color: MixableColor) {
         self.color = self.color + color
+        updateSpriteColor()
+    }
+    
+    func updateSpriteColor() {
+        if let shapeNode = uiSprite! as? SKShapeNode {
+            let newColor = color.toRGB()
+            shapeNode.fillColor = UIColor(red: CGFloat(newColor.r)/255, green: CGFloat(newColor.g)/255, blue: CGFloat(newColor.b)/255, alpha: 1)
+        }
     }
 }
