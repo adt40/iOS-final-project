@@ -311,7 +311,7 @@ class BoardScene: SKScene {
                 newSprite.addChild(lightning)
                 lightning.isHidden = !colorZapper.zapping
                 
-                let color = SKShapeNode(circleOfRadius: moduleSize / 3)
+                let color = SKShapeNode(circleOfRadius: moduleSize / 5)
                 color.zPosition = 2
                 color.position = CGPoint(x: 0, y: -moduleSize / 5)
                 color.fillColor = UIColor(displayP3Red: CGFloat(colorZapper.color.toRGB().r) / 255, green: CGFloat(colorZapper.color.toRGB().g) / 255, blue: CGFloat(colorZapper.color.toRGB().b) / 255, alpha: 1)
