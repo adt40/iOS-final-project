@@ -248,6 +248,7 @@
                         <outlet property="popupSpeedSlider" destination="Zn3-Wb-fTD" id="F8m-Gu-cDg"/>
                         <outlet property="runtimeHighScoreLabel" destination="0Ie-ga-auZ" id="0S4-eR-zwm"/>
                         <outlet property="runtimeScoreLabel" destination="waB-kw-Q0K" id="AMa-Er-Dlh"/>
+                        <outlet property="settingsButton" destination="qXG-yM-oQH" id="AZb-vL-7XX"/>
                         <outlet property="settingsPopupView" destination="c9L-qN-SJW" id="7Fz-0C-D1w"/>
                         <outlet property="stepButton" destination="XWP-jr-KuA" id="Pci-ja-wwk"/>
                         <outlet property="stopButton" destination="xw2-gC-50o" id="2QK-6j-ET3"/>

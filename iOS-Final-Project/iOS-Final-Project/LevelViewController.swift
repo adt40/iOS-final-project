@@ -16,6 +16,7 @@ class LevelViewController: UIViewController {
     @IBOutlet weak var stepButton: UIButton!
     @IBOutlet weak var stopButton: UIButton!
     
+    @IBOutlet weak var settingsButton: UIBarButtonItem!
     @IBOutlet var settingsPopupView: UIView!
     @IBOutlet weak var popupSpeedSlider: UISlider!
     @IBOutlet weak var popupCloseButton: UIButton!
@@ -531,9 +532,14 @@ class LevelViewController: UIViewController {
             playing = true
             runTimer = Timer.scheduledTimer(timeInterval: getSpeed(), target: self, selector: #selector(self.run), userInfo: nil, repeats: true)
             moduleOptionsView.isHidden = true
+            selectedGridObject = nil
+            settingsButton.isEnabled = false
         } else {
             playPauseButton.setTitle("Play", for: .normal)
             playing = false
+            moduleOptionsView.isHidden = true
+            selectedGridObject = nil
+            settingsButton.isEnabled = true
         }
     }
     
@@ -543,6 +549,7 @@ class LevelViewController: UIViewController {
         playing = true
         run()
         playing = false
+        //Decided not to close the module options view here because a user might want to see a module's settings while stepping.
     }
     
     @IBAction func stopPressed(_ sender: UIButton) {
@@ -550,6 +557,9 @@ class LevelViewController: UIViewController {
         stopButton.isEnabled = false
         playing = false
         totalIterations = 0
+        moduleOptionsView.isHidden = true
+        selectedGridObject = nil
+        settingsButton.isEnabled = true
         resetGridObjects()
     }
     
