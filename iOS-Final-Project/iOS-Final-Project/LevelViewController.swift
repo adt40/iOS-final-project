@@ -529,13 +529,15 @@ class LevelViewController: UIViewController {
     }
     
     @objc func deleteSelectedModule() {
-        selectedGridObject = nil
-        moduleOptionsView.isHidden = true
         if playing || totalIterations > 0 {
+            selectedGridObject = nil
+            moduleOptionsView.isHidden = true
             return
         }
         Grid.removeGridObject(gridObject: selectedGridObject!)
         modulesUsed -= 1
+        selectedGridObject = nil
+        moduleOptionsView.isHidden = true
     }
     
     //-----------------------------------------------------------------------------
