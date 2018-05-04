@@ -1,7 +1,7 @@
 {
   "world": 1,
   "level": 4,
-  "name": "Diagonal?",
+  "name": "Walled In",
   "RuntimeScore": 0,
   "ModuleScore": 0,
   "GridSize": {
@@ -9,57 +9,67 @@
     "y": 6
   },
   "AvailableModules": [
-    "wall"
+    "piston",
+    "trigger",
   ],
   "GridObjects": [
-    {
-      "type": "piston",
-      "position": {
-        "x": 0,
-        "y": 4
-      },
-      "direction": "right"
-    },
-    {
-      "type": "piston",
-      "position": {
-        "x": 1,
-        "y": 5
-      },
-      "direction": "up"
-    },
-    {
-      "type": "trigger",
-      "position": {
-        "x": 1,
-        "y": 4
-      },
-      "onEnter": true,
-      "startTime": 0,
-      "repeatTime": 0
-    },
     {
       "type": "color",
       "position": {
         "x": 1,
-        "y": 4
+        "y": 1
       },
       "color": {
         "r": 1,
-        "y": 1,
-        "b": 0
+        "y": 0,
+        "b": 1
       }
     },
     {
       "type": "socket",
       "position": {
         "x": 3,
-        "y": 0
+        "y": 1
       },
       "color": {
         "r": 1,
-        "y": 1,
-        "b": 0
+        "y": 0,
+        "b": 1
+      }
+    },
+    {
+      "type": "wall",
+      "position": {
+        "x": 3,
+        "y": 0
+      }
+    },
+    {
+      "type": "wall",
+      "position": {
+        "x": 4,
+        "y": 1
+      }
+    },
+    {
+      "type": "wall",
+      "position": {
+        "x": 4,
+        "y": 2
+      }
+    },
+    {
+      "type": "wall",
+      "position": {
+        "x": 2,
+        "y": 2
+      }
+    },
+    {
+      "type": "wall",
+      "position": {
+        "x": 2,
+        "y": 1
       }
     }
   ]
