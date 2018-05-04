@@ -351,7 +351,7 @@ class BoardScene: SKScene {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         //Don't let them do anything if the simulation is running
-        if superView!.isPlaying() {
+        if superView!.playing {
             return
         }
         if touches.count == 1 {
@@ -396,7 +396,7 @@ class BoardScene: SKScene {
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         if (currentlyDragging.active) {
             //Don't let them do anything if the simulation is running
-            if superView!.isPlaying() {
+            if superView!.playing || superView!.totalIterations > 0 {
                 currentlyDragging.node!.run(SKAction.move(to: currentlyDragging.startPosition!, duration: 0.4))
                 currentlyDragging.node = nil
                 currentlyDragging.active = false
@@ -412,7 +412,7 @@ class BoardScene: SKScene {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if (currentlyDragging.active) {
             //Don't let them do anything if the simulation is running
-            if superView!.isPlaying() {
+            if superView!.playing || superView!.totalIterations > 0 {
                 currentlyDragging.node!.run(SKAction.move(to: currentlyDragging.startPosition!, duration: 0.4))
                 currentlyDragging.node = nil
                 currentlyDragging.active = false

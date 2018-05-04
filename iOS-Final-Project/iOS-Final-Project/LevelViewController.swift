@@ -382,8 +382,9 @@ class LevelViewController: UIViewController {
     
     @objc func upPressed(_ sender: UIButton) {
         //Don't let them do anything if the simulation is running
-        if playing {
+        if playing || totalIterations > 0 {
             moduleOptionsView.isHidden = true
+            selectedGridObject = nil
             return
         }
         selectedGridObject!.facingDirection = Direction.up
@@ -392,8 +393,9 @@ class LevelViewController: UIViewController {
     }
     @objc func rightPressed(_ sender: UIButton) {
         //Don't let them do anything if the simulation is running
-        if playing {
+        if playing || totalIterations > 0 {
             moduleOptionsView.isHidden = true
+            selectedGridObject = nil
             return
         }
         selectedGridObject!.facingDirection = Direction.right
@@ -402,8 +404,9 @@ class LevelViewController: UIViewController {
     }
     @objc func downPressed(_ sender: UIButton) {
         //Don't let them do anything if the simulation is running
-        if playing {
+        if playing || totalIterations > 0 {
             moduleOptionsView.isHidden = true
+            selectedGridObject = nil
             return
         }
         selectedGridObject!.facingDirection = Direction.down
@@ -412,8 +415,9 @@ class LevelViewController: UIViewController {
     }
     @objc func leftPressed(_ sender: UIButton) {
         //Don't let them do anything if the simulation is running
-        if playing {
+        if playing || totalIterations > 0 {
             moduleOptionsView.isHidden = true
+            selectedGridObject = nil
             return
         }
         selectedGridObject!.facingDirection = Direction.left
@@ -422,8 +426,9 @@ class LevelViewController: UIViewController {
     }
     @objc func clockwisePressed(_ sender: UIButton) {
         //Don't let them do anything if the simulation is running
-        if playing {
+        if playing || totalIterations > 0 {
             moduleOptionsView.isHidden = true
+            selectedGridObject = nil
             return
         }
         let rotator = selectedGridObject! as! Rotator
@@ -432,8 +437,9 @@ class LevelViewController: UIViewController {
     }
     @objc func counterclockwisePressed(_ sender: UIButton) {
         //Don't let them do anything if the simulation is running
-        if playing {
+        if playing || totalIterations > 0 {
             moduleOptionsView.isHidden = true
+            selectedGridObject = nil
             return
         }
         let rotator = selectedGridObject! as! Rotator
@@ -442,8 +448,9 @@ class LevelViewController: UIViewController {
     }
     @objc func redPressed(_ sender: UIButton) {
         //Don't let them do anything if the simulation is running
-        if playing {
+        if playing || totalIterations > 0 {
             moduleOptionsView.isHidden = true
+            selectedGridObject = nil
             return
         }
         let zapper = selectedGridObject! as! ColorZapper
@@ -452,8 +459,9 @@ class LevelViewController: UIViewController {
     }
     @objc func yellowPressed(_ sender: UIButton) {
         //Don't let them do anything if the simulation is running
-        if playing {
+        if playing || totalIterations > 0 {
             moduleOptionsView.isHidden = true
+            selectedGridObject = nil
             return
         }
         let zapper = selectedGridObject! as! ColorZapper
@@ -462,8 +470,9 @@ class LevelViewController: UIViewController {
     }
     @objc func bluePressed(_ sender: UIButton) {
         //Don't let them do anything if the simulation is running
-        if playing {
+        if playing || totalIterations > 0 {
             moduleOptionsView.isHidden = true
+            selectedGridObject = nil
             return
         }
         let zapper = selectedGridObject! as! ColorZapper
@@ -473,8 +482,9 @@ class LevelViewController: UIViewController {
     
     @objc func updateTriggerPadMode(segmentedControl: UISegmentedControl) {
         //Don't let them do anything if the simulation is running
-        if playing {
+        if playing || totalIterations > 0 {
             moduleOptionsView.isHidden = true
+            selectedGridObject = nil
             return
         }
         (selectedGridObject as! TriggerPad).triggerOnEnter = segmentedControl.selectedSegmentIndex == 0
@@ -482,8 +492,9 @@ class LevelViewController: UIViewController {
     
     @objc func updateTriggerPadStartTime(segmentedControl: UISegmentedControl) {
         //Don't let them do anything if the simulation is running
-        if playing {
+        if playing || totalIterations > 0 {
             moduleOptionsView.isHidden = true
+            selectedGridObject = nil
             return
         }
         (selectedGridObject as! TriggerPad).triggerOnTimeStart += segmentedControl.selectedSegmentIndex * 2 - 1
@@ -500,8 +511,9 @@ class LevelViewController: UIViewController {
     
     @objc func updateTriggerPadRepeatTime(segmentedControl: UISegmentedControl) {
         //Don't let them do anything if the simulation is running
-        if playing {
+        if playing || totalIterations > 0 {
             moduleOptionsView.isHidden = true
+            selectedGridObject = nil
             return
         }
         (selectedGridObject as! TriggerPad).triggerOnTimeRepeat += segmentedControl.selectedSegmentIndex * 2 - 1
@@ -517,9 +529,12 @@ class LevelViewController: UIViewController {
     }
     
     @objc func deleteSelectedModule() {
-        Grid.removeGridObject(gridObject: selectedGridObject!)
         selectedGridObject = nil
         moduleOptionsView.isHidden = true
+        if playing || totalIterations > 0 {
+            return
+        }
+        Grid.removeGridObject(gridObject: selectedGridObject!)
         modulesUsed -= 1
     }
     
